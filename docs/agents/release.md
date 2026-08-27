@@ -85,41 +85,55 @@ git -c user.name="agentic-se-framework" \
     tag -a "v<version>" -m "agentic-se-framework <version>"
 ```
 
-## Panorama SVG snapshot refresh
+## Panorama diagram single-source refresh
 
 `README.md` embeds `docs/html/panorama.en.svg` and `panorama.zh.svg` as static
-preview images. These are **snapshots**: if the source panorama diagrams in
-`docs/new_project_skill_panorama.{en,zh}.md` change, the SVGs must be
-re-extracted or the release ships a stale picture.
+preview images.
 
-Refresh procedure (run against the working tree on `master` before snapshotting):
+**English edition is single-sourced**: edit only the standalone
+`docs/html/panorama.en.svg`, then re-inject the `<svg>` block into its two
+inline copies (`docs/new_project_skill_panorama.en.md` and
+`docs/html/new_project_skill_panorama.en.html`):
 
-1. In the source `.md`, locate the inline `<svg ...> ... </svg>` block (one per
-   language edition).
-2. Extract that block verbatim into `docs/html/panorama.<lang>.svg` (same
-   `viewBox`, same content; no HTML wrapper). The root `<svg>` element MUST keep
-   `xmlns="http://www.w3.org/2000/svg"` in both the `.md` source and the
-   extracted `.svg`: the standalone file is loaded through an `<img>` tag, where
-   browsers parse SVG as XML and reject a missing namespace (broken image on the
-   GitHub project page). Keep source and snapshot byte-identical, `xmlns`
-   included.
-3. Re-run the red-line scan below — the SVGs must stay free of the private
-   tokens like any other shipped file.
+```powershell
+ops/refresh_panorama.ps1          # re-inject md + html from the SVG
+ops/refresh_panorama.ps1 -Check   # pre-release gate; fails on drift
+```
+
+The root `<svg>` element MUST keep `xmlns="http://www.w3.org/2000/svg"`: the
+standalone file is loaded through an `<img>` tag, where browsers parse SVG as
+XML and reject a missing namespace (broken image on the GitHub project page).
+
+**Chinese edition** keeps its inline SVG in
+`docs/new_project_skill_panorama.zh.md` as the source; `panorama.zh.svg` is an
+extracted snapshot — re-extract by hand if the zh diagram changes, or extend
+`refresh_panorama.ps1` with a `-Lang zh` mode.
+
+After any refresh, re-run the red-line scan below — the SVGs must stay free of
+the private tokens like any other shipped file.
 
 ## Release procedure (milestone snapshot)
 
 Public history must stay clean: never mirror `origin` history (early history
-contains private paths/emails/forge addresses). Publish a fresh orphan snapshot
-instead.
+contains private paths/emails/forge addresses). The public `main` branch grows
+one normal commit per release — each release commit's parent is the previous
+public release, so GitHub shows an accumulating commit count instead of a
+perpetual `1 commit` from orphan roots.
 
 ```bash
-# 1. from a clean working tree on master
-git checkout --orphan public-main
+# 1. sync the local release branch to the latest public release
+git fetch public
+git checkout -B public-main public/main
 
-# 2. stage everything; .gitignore excludes private files
+# 2. overlay the milestone content from master — tracked files only, so
+#    .gitignore keeps private files out; `origin` history is NOT copied
+git checkout master -- .
+
+# 3. if a file from a previous release must no longer ship, remove it
+#    explicitly (e.g. `git rm --cached <path>`): the overlay only adds/overwrites
+
+# 4. stage & VERIFY before committing — anything below must be absent
 git add -A
-
-# 3. VERIFY before committing — anything below must be absent
 git status
 #   - no manifests/install-targets.toml (personal)
 #   - no logs/, no vendor/mattpocock/upstream/, no .scratch/
@@ -128,10 +142,10 @@ git grep -I -i -n -E "doubleelec|qq\.com|weixin|[CDE]:[\\/]Users" -- . ':!docs/a
 #     scan-string is excluded via ':!docs/agents/release.md'; README is
 #     excluded because it deliberately carries the public Pages URL)
 
-# 4. commit with the PUBLIC identity override (see above)
+# 5. commit with the PUBLIC identity override (see above)
 git commit -m "chore: release agentic-se-framework <version>"
 
-# 5. push the snapshot only
+# 6. push — a fast-forward onto the previous release; commits accumulate
 git push public public-main:main
 ```
 
@@ -149,8 +163,9 @@ git checkout master
       outside LICENSE, `docs/agents/release.md` (the guide's own scan tokens),
       and `README.md` (its deliberate public Pages URL)
 - [ ] Author/committer metadata show the public identity, not the machine's
-- [ ] Panorama SVGs (`docs/html/panorama.{en,zh}.svg`) present and in sync with
-      `docs/new_project_skill_panorama.{en,zh}.md` (see refresh procedure above)
+- [ ] `ops/refresh_panorama.ps1 -Check` passes (English md/html match
+      `docs/html/panorama.en.svg`); zh `panorama.zh.svg` present and in sync
+      with `docs/new_project_skill_panorama.zh.md` (see refresh procedure above)
 - [ ] No orphan-snapshot leftovers staged (e.g. temporary branch files)
 - [ ] Public remote URL is HTTPS (local SSH client is too old for GitHub's
       post-quantum KEX handshake)
@@ -161,8 +176,9 @@ git checkout master
 
 - `choose_kex: unsupported KEX method sntrup761x25519-sha512@openssh.com`
   → local OpenSSH predates GitHub's post-quantum KEX; use HTTPS for `public`.
-- Push rejected at `public` → confirm the snapshot commit is orphan-based and
-  you're pushing `public-main:main`, never a mirror of `origin/master`.
+- Push rejected at `public` → confirm `public-main` is at the latest
+  `public/main` and you're pushing `public-main:main` as a fast-forward, never
+  a mirror of `origin/master`.
 - Forgot the identity override → rewrite the snapshot commit with the public
   identity and force-push only if the outlet has no collaborators yet;
   otherwise coordinate before rewriting public history.

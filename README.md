@@ -47,8 +47,8 @@
 
 Interactive bilingual skill panorama (rendered on GitHub Pages from `docs/html/`):
 
-- English: <https://doubleelec.github.io/agentic-se-framework/docs/html/new_project_skill_panorama.en.html>
-- Chinese: <https://doubleelec.github.io/agentic-se-framework/docs/html/new_project_skill_panorama.zh.html>
+- English: <https://doubleelec.github.io/agentic-se-framework/html/new_project_skill_panorama.en.html>
+- Chinese: <https://doubleelec.github.io/agentic-se-framework/html/new_project_skill_panorama.zh.html>
 
 Static snapshot (English):
 

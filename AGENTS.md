@@ -79,15 +79,20 @@ This repo keeps two remotes with strictly separate roles:
 Rules:
 
 1. **Never mirror `origin` history to `public`.** Early history contains
-   personal absolute paths, emails, and internal forge addresses. Always
-   publish via a fresh orphan snapshot (below).
-2. **Release via sanitized orphan snapshot, per milestone:**
+   personal absolute paths, emails, and internal forge addresses. Public
+   history holds sanitized release snapshots only — never `origin` ancestry.
+2. **Release as cumulative snapshot commits on the public branch, per milestone:**
+   the public `main` branch grows one normal commit per release, each commit's
+   parent being the previous public release — not an orphan root, so the
+   homepage commit count rises instead of staying stuck at `1 commit`.
    ```bash
-   git checkout --orphan public-main
+   git fetch public
+   git checkout -B public-main public/main    # local release branch = latest public release
+   git checkout master -- .                   # overlay master's tracked tree, NOT its history
    git add -A
    git status          # verify: no personal paths / credentials / internal addresses
-   git commit -m "chore: release agentic-se-framework <version>"
-   git push public public-main:main
+   git commit -m "chore: release agentic-se-framework <version>"   # public identity
+   git push public public-main:main           # fast-forward; commits accumulate
    ```
    `.gitignore` covers `manifests/install-targets.toml`, `.scratch/`, `logs/`,
    `vendor/mattpocock/upstream/`; those must never appear in `git status` above.
