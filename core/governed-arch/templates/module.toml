@@ -1,0 +1,87 @@
+# <module_name>/module.toml
+# Module-level Architecture-as-Code manifest.
+#
+# This file governs ONLY the direct children of <module_name>/.
+# All descriptions here may be used by automated documentation generators.
+
+# ── Module Metadata ─────────────────────────────────────────
+[module]
+name = "<module_name>"
+description = """
+[Core Functionality]
+One-line high-level description.
+Multi-line detailed responsibility description...
+
+[Design Philosophy]
+Explain key patterns, state constraints, or modular isolation design intent...
+"""
+submodules = [
+    "file1.py",
+    "subdir1",
+]
+consumers = [
+    "other_module/ - Reason why it depends on this module",
+]
+data_flow = """
+[Input Data]
+...
+
+[Processing Logic]
+...
+
+[Output & Side Effects]
+...
+"""
+# Optional: mark this module as owning semantic red lines (windowing /
+# handover / aggregation contracts). When true, governance fails unless at
+# least one invariant rule binds a live test_ref.
+# require_invariants = true
+
+# ── Public Surface (Expose is Lock) ──────────────────────────────────
+[public_api]
+exposed = []
+reason = "Description of why these APIs are exposed"
+
+# ── Public Interface Contracts (Signature Specs) ─────────────────────
+# Path keys should be written relative to the project root.
+# exposed must stay consistent with __init__.py::__all__.
+# [interface_lock."<module_name>/<file>.py".specs."<FuncName>"]
+# params = [
+#   { name = "param1", type = "int", default = "0", description = "Meaning of param1" }
+# ]
+# returns = { type = "...", description = "..." }
+
+# ── Intra-module dependency rules ────────────────────────────────────
+# submodule keys are short names relative to this module directory.
+# [submodule."file1.py"]
+# depends_on = ["file2.py"]         # Legacy: simple allowlist
+# internal_depends = ["file2.py"]  # Recommended: Same-module siblings
+# external_depends = ["core"]      # Recommended: Cross-module gateways (facades)
+
+# ── Core Flows & Algorithms (Optional Structured Chapter) ─────────────
+# Rendered as its own HTML section before Semantic Invariants. Each block
+# selects its rendering via kind:
+#   flow        → Mermaid flowchart (linear pipeline)
+#   gates       → HTML table with numbered gate badges
+#   priority    → HTML table with priority badges (P0..P3)
+#   principles  → card-style list
+# Steps may carry: seq, title, desc, check, priority,
+#                  ref (→ interface-contract anchor),
+#                  invariant / constraint (→ semantic-invariant anchor).
+# [[design.flows]]
+# id = "example_flow"
+# title = "Example Pipeline"
+# kind = "flow"
+# summary = "Short overview line"
+# [[design.flows.steps]]
+# seq = "0"
+# title = "Step title"
+# desc = "Step detail"
+# ref = "SomeFunction"   # must match a governed contract name
+# constraint = "Red-line note"
+
+# ── Semantic Invariants ──────────────────────────────────────────────
+# [[invariant.<domain>.rules]]
+# id = "..."
+# desc = "..."  # This description may be rendered as a red-line rule in docs
+# test_ref = "tests/<module_name>/test_invariants.py::test_..."

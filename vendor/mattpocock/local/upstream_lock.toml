@@ -1,0 +1,144 @@
+[upstream]
+repo = "https://github.com/mattpocock/skills.git"
+branch = "main"
+tracked_commit = "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+tracked_commit_time = "2026-08-24T15:19:57+01:00"
+notes = "This file records the upstream snapshot currently used as the comparison baseline for local skills."
+
+[[skill]]
+publish_name = "diagnosing-bugs"
+source_path = "skills/engineering/diagnosing-bugs"
+upstream_path = "skills/engineering/diagnosing-bugs"
+status = "mapped"
+
+[[skill]]
+publish_name = "code-review"
+source_path = "skills/engineering/code-review"
+upstream_path = "skills/engineering/code-review"
+status = "mapped"
+
+[[skill]]
+publish_name = "codebase-design"
+source_path = "skills/engineering/codebase-design"
+upstream_path = "skills/engineering/codebase-design"
+status = "mapped"
+
+[[skill]]
+publish_name = "grill-with-docs"
+source_path = "skills/engineering/grill-with-docs"
+upstream_path = "skills/engineering/grill-with-docs"
+status = "mapped"
+
+[[skill]]
+publish_name = "domain-modeling"
+source_path = "skills/engineering/domain-modeling"
+upstream_path = "skills/engineering/domain-modeling"
+status = "mapped"
+
+[[skill]]
+publish_name = "improve-codebase-architecture"
+source_path = "skills/engineering/improve-codebase-architecture"
+upstream_path = "skills/engineering/improve-codebase-architecture"
+status = "mapped"
+
+[[skill]]
+publish_name = "prototype"
+source_path = "skills/engineering/prototype"
+upstream_path = "skills/engineering/prototype"
+status = "mapped"
+
+[[skill]]
+publish_name = "research"
+source_path = "skills/engineering/research"
+upstream_path = "skills/engineering/research"
+status = "mapped"
+
+[[skill]]
+publish_name = "setup-matt-pocock-skills"
+source_path = "skills/engineering/setup-matt-pocock-skills"
+upstream_path = "skills/engineering/setup-matt-pocock-skills"
+status = "mapped"
+
+[[skill]]
+publish_name = "tdd"
+source_path = "skills/engineering/tdd"
+upstream_path = "skills/engineering/tdd"
+status = "mapped"
+
+[[skill]]
+publish_name = "to-spec"
+source_path = "skills/engineering/to-spec"
+upstream_path = "skills/engineering/to-spec"
+status = "mapped"
+
+[[skill]]
+publish_name = "to-tickets"
+source_path = "skills/engineering/to-tickets"
+upstream_path = "skills/engineering/to-tickets"
+status = "mapped"
+
+[[skill]]
+publish_name = "triage"
+source_path = "skills/engineering/triage"
+upstream_path = "skills/engineering/triage"
+status = "mapped"
+
+[[skill]]
+publish_name = "grill-me"
+source_path = "skills/productivity/grill-me"
+upstream_path = "skills/productivity/grill-me"
+status = "mapped"
+
+[[skill]]
+publish_name = "grilling"
+source_path = "skills/productivity/grilling"
+upstream_path = "skills/productivity/grilling"
+status = "mapped"
+
+[[skill]]
+publish_name = "handoff"
+source_path = "skills/productivity/handoff"
+upstream_path = "skills/productivity/handoff"
+status = "mapped"
+
+[[skill]]
+publish_name = "implement"
+source_path = "skills/engineering/implement"
+upstream_path = "skills/engineering/implement"
+status = "mapped"
+
+[[skill]]
+publish_name = "teach"
+source_path = "skills/productivity/teach"
+upstream_path = "skills/productivity/teach"
+status = "mapped"
+
+[[skill]]
+publish_name = "to-questionnaire"
+source_path = "skills/productivity/to-questionnaire"
+upstream_path = "skills/productivity/to-questionnaire"
+status = "mapped"
+
+[[skill]]
+publish_name = "writing-for-agents"
+source_path = "skills/productivity/writing-for-agents"
+upstream_path = "skills/productivity/writing-for-agents"
+status = "mapped"
+
+[[skill]]
+publish_name = "resolving-merge-conflicts"
+source_path = "skills/engineering/resolving-merge-conflicts"
+upstream_path = "skills/engineering/resolving-merge-conflicts"
+status = "mapped"
+
+[[skill]]
+publish_name = "wizard"
+source_path = "skills/engineering/wizard"
+upstream_path = "skills/engineering/wizard"
+status = "mapped"
+
+[[skill]]
+publish_name = "wayfinder"
+source_path = "skills/engineering/wayfinder"
+upstream_path = "skills/engineering/wayfinder"
+status = "mapped"

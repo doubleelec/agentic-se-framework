@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skill Panorama for New Software Projects</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --surface: #fbfbfd;
+      --text: #1f2328;
+      --muted: #5b6472;
+      --border: #d8dee8;
+      --brand: #6f42ff;
+      --code-bg: #f3f5f8;
+      --quote: #eef2ff;
+      --max-width: 1280px;
+      --shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 20px 64px;
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+    }
+    .meta {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    h1, h2, h3, h4 {
+      line-height: 1.3;
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+    }
+    h1 { margin-top: 0; font-size: 2rem; }
+    h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.2em; }
+    h3 { font-size: 1.2rem; }
+    p, ul, ol, blockquote, table, pre { margin: 0 0 1em; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+      background: var(--code-bg);
+      padding: 0.12em 0.35em;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
+    blockquote {
+      border-left: 4px solid var(--brand);
+      margin-left: 0;
+      padding: 12px 16px;
+      background: var(--quote);
+      border-radius: 0 10px 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { background: var(--code-bg); }
+    img { max-width: 100%; height: auto; }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2em 0;
+    }
+    .index-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .index-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    ul, ol {
+      padding-left: 28px;
+      margin: 14px 0;
+    }
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .mermaid {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      margin: 20px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      overflow-x: auto;
+      text-align: center;
+    }
+    .mermaid svg {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      margin: 0 auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 35,
+        rankSpacing: 40,
+        padding: 12
+      },
+      gantt: {
+        useMaxWidth: false,
+        leftPadding: 220,
+        rightPadding: 30,
+        barHeight: 26,
+        barGap: 8,
+        fontSize: 12.5,
+        sectionFontSize: 13.5,
+        axisFormat: '%m-%d'
+      },
+      themeVariables: {
+        fontSize: '13px',
+        lineHeight: '1.4'
+      }
+    });
+  </script>
+</head>
+<body>
+  <main>
+    <div class="meta">Source: <code>docs/new_project_skill_panorama.en.md</code></div>
+    <h1 id="skill-panorama-for-new-software-projects">Skill Panorama for New Software Projects</h1>
+<blockquote>
+<p>This is the English counterpart of <a href="new_project_skill_panorama.zh.md"><code>new_project_skill_panorama.zh.md</code></a>. The two versions share identical section numbering, table structure, and figure geometry; the Chinese edition is the source of truth for content changes.</p>
+</blockquote>
+<h2 id="1-purpose-and-theoretical-positioning">1. Purpose and Theoretical Positioning</h2>
+<p>This document is not a "skill catalog" but an engineering methodology manual for new software projects. The core questions it answers are:</p>
+<ul>
+<li>When requirements are still vague, how should a project start without rushing headlong into coding;</li>
+<li>How to keep the process compatible with mainstream, foundational software engineering theory, so that it is easy to understand, promote, and tailor;</li>
+<li>How to elevate software architecture design from "drawing diagrams by experience" into a rigorous activity with stakeholders, concerns, quality attributes, and an evaluation loop;</li>
+<li>How the skills in the current <code>agentic-se-framework</code> workspace should map onto this methodology.</li>
+</ul>
+<h3 id="11-theoretical-positioning-and-core-principles">1.1 Theoretical Positioning and Core Principles</h3>
+<p>On the mainstream software engineering track, this methodology stays aligned in spirit with <code>SWEBOK</code>, <code>ISO/IEC/IEEE 12207</code>, <code>29148</code>, and <code>15289</code>; on software architecture it centers on <code>ISO/IEC/IEEE 42010</code>, quality attribute scenarios, <code>QAW</code>, <code>ATAM</code>, and <code>ADR</code>, establishing a complete, detailed, and deliberate architecture workflow:</p>
+<ul>
+<li><strong>Concurrent, iterative, recursive life cycle</strong>: life cycle processes are not a rigid single line; requirements, architecture, design, implementation, verification, validation, operation, and maintenance are continuous activities along the same engineering mainline;</li>
+<li><strong>Architecture centered on description and decisions</strong>: architecture is not a handful of isolated sketches, but an organized description of "stakeholders, concerns, viewpoints, views, correspondences, decisions (ADRs) and their rationale";</li>
+<li><strong>Quality attributes as scenarios</strong>: quality attributes must not remain slogans (such as "high performance"); they must be turned into concrete, measurable scenarios;</li>
+<li><strong>Shift-left verification and real-scenario validation</strong>: verification runs through requirements, design, prototypes, code review, and testing end to end;</li>
+<li><strong>Tailorable process, non-negotiable questions</strong>: small projects may compress artifact forms, but must still answer "what problem is being solved, which quality attributes drive the structure, why it is designed this way, and how effectiveness is proven".</li>
+</ul>
+<h3 id="12-scope-and-skill-sources">1.2 Scope and Skill Sources</h3>
+<p>This document builds on the currently published skill set:<br>
+- <code>vendor/mattpocock/local/*</code>: locally maintained and enhanced software engineering derivative skills;<br>
+- <code>core/*</code>: this repository's original architecture governance, ticket tracking, and delivery evolution skills.</p>
+<p>What this document aims to establish is "a promotable mainline + tailorable branches + an auditable artifact system", not a rigid pipeline.</p>
+<h2 id="2-methodology-overview">2. Methodology Overview</h2>
+<p>From the classical software engineering perspective, a sound mainline for a new project is not "code first" but:</p>
+<ol>
+<li>Establish the collaboration and governance foundation;</li>
+<li>Clarify the problem, stakeholders, goals, and constraints;</li>
+<li>Establish domain language, boundaries, and architecture drivers, then synthesize them into a complete architecture description and an implementation process plan;</li>
+<li>Produce specifications that are reviewable, verifiable, and traceable;</li>
+<li>Decompose into executable work packages and establish state flow;</li>
+<li>Verify unknowns, risks, and key assumptions early;</li>
+<li>Enter implementation, integration, and layered verification;</li>
+<li>Set deliberate gates for high-risk changes;</li>
+<li>Before delivery, run conformance checks against conventions, specifications, and architecture;</li>
+<li>Release, hand over, observe in operation, and feed follow-up inputs back into the maintenance loop.</li>
+</ol>
+<p>Mapped onto the current skills, the trunk path typically is:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Timing</th>
+<th style="text-align: left;">Preferred skill(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Project bootstrap</td>
+<td style="text-align: left;"><a href="#setup-matt-pocock-skills"><code>setup-matt-pocock-skills</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Requirements elicitation (choose one)</td>
+<td style="text-align: left;"><a href="#wayfinder"><code>wayfinder</code></a> / <a href="#grill-with-docs"><code>grill-with-docs</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Concept unification, architecture synthesis &amp; constraint enforcement</td>
+<td style="text-align: left;"><a href="#domain-modeling"><code>domain-modeling</code></a> → <a href="#codebase-design"><code>codebase-design</code></a> → <a href="#to-arch"><code>to-arch</code></a> → <a href="#governed-arch"><code>governed-arch</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Specification</td>
+<td style="text-align: left;"><a href="#to-spec"><code>to-spec</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Ticket decomposition</td>
+<td style="text-align: left;"><a href="#to-tickets"><code>to-tickets</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Bug &amp; standalone-item tracking</td>
+<td style="text-align: left;"><a href="#to-issues"><code>to-issues</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">High-uncertainty exploration</td>
+<td style="text-align: left;"><a href="#research"><code>research</code></a> / <a href="#prototype"><code>prototype</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Coding</td>
+<td style="text-align: left;"><a href="#implement"><code>implement</code></a> + <a href="#tdd"><code>tdd</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">High-risk change</td>
+<td style="text-align: left;"><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pre-merge check</td>
+<td style="text-align: left;"><a href="#code-review"><code>code-review</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Handover</td>
+<td style="text-align: left;"><a href="#handoff"><code>handoff</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Operation phase</td>
+<td style="text-align: left;"><a href="#triage"><code>triage</code></a> / <a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The point is not that "the order must be one-size-fits-all", but that every phase must answer one clear engineering question and leave behind the corresponding artifacts.</p>
+<div style="margin: 20px 0 28px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="100%" height="auto" role="img" aria-label="Software engineering life cycle and skill mapping diagram">
+    <defs>
+      <marker id="arrow-main" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M1 1 L7 4 L1 7 Z" fill="#6f42ff"></path>
+      </marker>
+      <marker id="arrow-dashed" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M1 1 L7 4 L1 7 Z" fill="#cbd5e1"></path>
+      </marker>
+    </defs>
+    <!-- Background -->
+    <rect x="0" y="0" width="1120" height="620" rx="12" fill="#ffffff"></rect>
+
+    <!-- Row 1: Core engineering goals (aligned with main phases) -->
+    <rect x="8" y="14" width="168" height="32" rx="16" fill="#475569"></rect>
+    <text x="92" y="35" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Core Engineering Goals</text>
+
+    <rect x="260" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="320" y="40" text-anchor="middle" font-size="14" fill="#334155">Clarify problem</text>
+    <text x="320" y="58" text-anchor="middle" font-size="14" fill="#334155">and concerns</text>
+
+    <rect x="440" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="500" y="40" text-anchor="middle" font-size="14" fill="#334155">Unify concepts</text>
+    <text x="500" y="58" text-anchor="middle" font-size="14" fill="#334155">&amp; arch constraints</text>
+
+    <rect x="620" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="680" y="40" text-anchor="middle" font-size="14" fill="#334155">Form contracts</text>
+    <text x="680" y="58" text-anchor="middle" font-size="14" fill="#334155">&amp; work tickets</text>
+
+    <rect x="780" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="840" y="40" text-anchor="middle" font-size="14" fill="#334155">Meet baselines</text>
+    <text x="840" y="58" text-anchor="middle" font-size="14" fill="#334155">&amp; real scenarios</text>
+
+    <!-- Vertical connectors (goal alignment) -->
+    <line x1="320" y1="68" x2="320" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="500" y1="68" x2="500" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="680" y1="68" x2="680" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="840" y1="68" x2="840" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+
+    <!-- Row 2: Engineering main phases -->
+    <rect x="8" y="96" width="168" height="32" rx="16" fill="#6f42ff"></rect>
+    <text x="92" y="117" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Engineering Phases</text>
+
+    <line x1="158" y1="180" x2="1050" y2="180" stroke="#6f42ff" stroke-width="3" marker-end="url(#arrow-main)"></line>
+
+    <rect x="95" y="150" width="125" height="60" rx="14" fill="#f5f3ff" stroke="#c4b5fd"></rect>
+    <text x="158" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Bootstrap</text>
+
+    <rect x="250" y="150" width="140" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="320" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Elicitation</text>
+
+    <rect x="420" y="150" width="160" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="500" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Arch &amp; Boundary Design</text>
+
+    <rect x="610" y="150" width="140" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="680" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Spec &amp; Breakdown</text>
+
+    <rect x="780" y="150" width="130" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="845" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Iterative Loop</text>
+
+    <rect x="940" y="150" width="140" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="1010" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Run &amp; Evolve</text>
+
+    <!-- Phase -> skill connectors -->
+    <line x1="158" y1="210" x2="158" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="320" y1="210" x2="320" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="500" y1="210" x2="500" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="680" y1="210" x2="680" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="845" y1="210" x2="845" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="1010" y1="210" x2="1010" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+
+    <!-- Row 3: Executing skill line -->
+    <rect x="8" y="220" width="168" height="32" rx="16" fill="#0f766e"></rect>
+    <text x="92" y="241" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Executing Skills</text>
+
+    <rect x="95" y="260" width="125" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="158" y="325" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">setup</text>
+
+    <rect x="250" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="320" y="305" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">wayfinder</text>
+    <text x="320" y="325" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">grill-with-docs</text>
+    <text x="320" y="345" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-questionnaire</text>
+
+    <rect x="420" y="260" width="160" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="500" y="290" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">domain-modeling</text>
+    <text x="500" y="309" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">codebase-design</text>
+    <text x="500" y="328" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-arch</text>
+    <text x="500" y="347" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
+
+    <rect x="610" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="680" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-spec</text>
+    <text x="680" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-tickets</text>
+
+    <rect x="780" y="260" width="130" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="845" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement / tdd</text>
+    <text x="845" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review</text>
+    <text x="845" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">handoff</text>
+    <text x="845" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">failsafe-loop</text>
+
+    <rect x="940" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="1010" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-issues</text>
+    <text x="1010" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">triage</text>
+    <text x="1010" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">diagnosing-bugs</text>
+    <text x="1010" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
+
+    <!-- Skill -> artifact connectors -->
+    <line x1="158" y1="380" x2="158" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="320" y1="380" x2="320" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="500" y1="380" x2="500" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="680" y1="380" x2="680" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="845" y1="380" x2="845" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="1010" y1="380" x2="1010" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+
+    <!-- Row 4: Artifact line (concise names) -->
+    <rect x="8" y="390" width="168" height="32" rx="16" fill="#1d4ed8"></rect>
+    <text x="92" y="411" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Artifacts</text>
+
+    <rect x="95" y="430" width="125" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="158" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">AGENTS.md</text>
+    <text x="158" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">issue-tracker.md</text>
+    <text x="158" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">triage-labels.md</text>
+
+    <rect x="250" y="430" width="140" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="320" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">map.md</text>
+    <text x="320" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">CONTEXT.md</text>
+    <text x="320" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">to-questionnaire-*.md</text>
+
+    <rect x="400" y="430" width="200" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="500" y="452" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">CONTEXT.md / ADR</text>
+    <text x="500" y="472" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/architecture.md</text>
+    <text x="500" y="492" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/action-plan.md</text>
+    <text x="500" y="510" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">architecture.toml / module.toml</text>
+
+    <rect x="610" y="430" width="140" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="680" y="450" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">.scratch/&lt;slug&gt;/</text>
+    <text x="680" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">spec.md</text>
+    <text x="680" y="488" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">.scratch/&lt;slug&gt;/</text>
+    <text x="680" y="506" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">tickets/NN-*.md</text>
+
+    <rect x="780" y="430" width="130" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="845" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">src/ + tests/</text>
+    <text x="845" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">review report</text>
+    <text x="845" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">failsafe snapshots</text>
+
+    <rect x="940" y="430" width="140" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="1010" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/issues/*.md</text>
+    <text x="1010" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/issues/_summary.md</text>
+    <text x="1010" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">diagnosis records</text>
+
+    <!-- Bottom auxiliary band -->
+    <line x1="20" y1="546" x2="1100" y2="546" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4"></line>
+    <rect x="10" y="558" width="1100" height="48" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="5 3"></rect>
+    <text x="40" y="587" font-size="16" font-weight="700" fill="#b45309">Auxiliary Skills</text>
+    <text x="275" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">research</text>
+    <text x="425" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">prototype</text>
+    <text x="575" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">to-issues</text>
+    <text x="725" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">improve-arch</text>
+    <text x="875" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">teach</text>
+    <text x="1025" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">handoff</text>
+  </svg>
+</div>
+
+<h2 id="3-operating-manual-phase-by-phase-guidance">3. Operating Manual: Phase-by-Phase Guidance</h2>
+<p>The following is detailed operational guidance for each phase of the software engineering life cycle: which skills to use at each phase, how to use them, and which artifacts to expect.</p>
+<h3 id="31-phase-0-bootstrap-collaboration-foundation">3.1 Phase 0: Bootstrap (Collaboration Foundation)</h3>
+<p><strong>Goal</strong>: Establish the collaboration foundation for the team (agents and humans).</p>
+<p><strong>Skills and logical relations</strong>: [mandatory single skill]</p>
+<ul>
+<li><strong><a href="#setup-matt-pocock-skills"><code>setup-matt-pocock-skills</code></a></strong><ul>
+<li><strong>How to use</strong>: at the very start of the project, invoked directly by the human.</li>
+<li><strong>What happens</strong>: it generates <code>AGENTS.md</code> at the repository root and establishes conventions under <code>docs/agents/</code> for the issue tracker, triage labels, and domain docs.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Phase artifacts</strong>:<br>
+- <code>AGENTS.md</code>: collaboration foundation and agent behavior guide at the repository root<br>
+- <code>docs/agents/issue-tracker.md</code>: dual-stream tracker convention (Tickets / Issues)<br>
+- <code>docs/agents/triage-labels.md</code>: triage role and status label definitions<br>
+- <code>docs/agents/domain.md</code>: single-context domain documentation convention</p>
+<h3 id="32-phase-1-requirements-elicitation">3.2 Phase 1: Requirements Elicitation</h3>
+<p><strong>Goal</strong>: Distill definite stakeholder concerns, goals, and boundaries out of vague slogans.</p>
+<p><strong>Skills and logical relations</strong>: [mutually exclusive pick ×1 + on-demand auxiliary]</p>
+<ul>
+<li><strong><a href="#grill-with-docs"><code>grill-with-docs</code></a></strong> (choose one over wayfinder; fits small, well-bounded requirements)<ul>
+<li><strong>How to use</strong>: throw out an initial idea and invoke the skill to grill you in depth.</li>
+<li><strong>What happens</strong>: multi-round dialogue forces hidden assumptions into the open; the embedded reusable <code>domain-modeling</code> writes terms into <code>CONTEXT.md</code> the moment they are settled, and deposits ADRs with restraint.</li>
+</ul>
+</li>
+<li><strong><a href="#wayfinder"><code>wayfinder</code></a></strong> (choose one over grill; fits large, fuzzy requirements)<ul>
+<li><strong>How to use</strong>: invoke when requirements are large enough to span days of discussion, or when the road ahead is shrouded in fog.</li>
+<li><strong>What happens</strong>: instead of grilling directly, it builds a navigation map (<code>.scratch/&lt;effort&gt;/map.md</code>) and splits the problem into sub-tickets (<code>.scratch/&lt;effort&gt;/tickets/NN-&lt;slug&gt;.md</code>) to be resolved one by one. When working a specific ticket, switch to <code>grill-with-docs</code> or <code>research</code>.</li>
+</ul>
+</li>
+<li><strong><a href="#to-questionnaire"><code>to-questionnaire</code></a></strong> (on-demand auxiliary)<ul>
+<li><strong>How to use</strong>: invoke when key information is not in your hands.</li>
+<li><strong>What happens</strong>: generates a structured questionnaire to send to external stakeholders for requirement gathering.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Phase artifacts</strong>:<br>
+- <code>.scratch/&lt;effort&gt;/map.md</code>: (if using <code>wayfinder</code>) fog-navigation map and resolution index<br>
+- <code>.scratch/&lt;effort&gt;/tickets/NN-&lt;slug&gt;.md</code>: (if using <code>wayfinder</code>) exploration sub-tickets<br>
+- <code>CONTEXT.md</code>: initial domain vocabulary and core entity definitions (terms land as soon as they settle; convergence continues through Phase 2)<br>
+- <code>docs/adr/NNNN-*.md</code>: initial architecture decision records (if key decisions settled during grilling)<br>
+- <code>to-questionnaire-*.md</code>: (if used) outbound stakeholder questionnaire (temporary, not committed)</p>
+<h3 id="33-phase-2-architecture-and-boundary-design">3.3 Phase 2: Architecture and Boundary Design</h3>
+<p><strong>Goal</strong>: Identify quality attributes, unify the domain language, design logical boundaries, synthesize them into a complete architecture description, then convert them into enforced constraints. This is the deep-water work chain from cognition to code.</p>
+<p><strong>Skills and logical relations</strong>: [sequential collaboration, execute in order]</p>
+<ol>
+<li><strong><a href="#domain-modeling"><code>domain-modeling</code></a></strong> (step 1: cognition layer)<ul>
+<li><strong>How to use</strong>: invoke immediately after clarifying requirements.</li>
+<li><strong>What happens</strong>: unifies team vocabulary, identifies core entities, and deposits architecture decision records (ADRs). This is the prerequisite for all subsequent work. If Phase 1 has already produced an initial <code>CONTEXT.md</code> / ADR via <code>grill-with-docs</code>, this step performs incremental challenge and convergence on top of it rather than starting from zero.</li>
+</ul>
+</li>
+<li><strong><a href="#codebase-design"><code>codebase-design</code></a></strong> (step 2: design layer)<ul>
+<li><strong>How to use</strong>: once concepts are unified, use it to plan the code structure.</li>
+<li><strong>What happens</strong>: helps you cut module seams, ensuring high cohesion and testability by construction.</li>
+</ul>
+</li>
+<li><strong><a href="#to-arch"><code>to-arch</code></a></strong> (step 3: synthesis layer)<ul>
+<li><strong>How to use</strong>: invoke once unified language, key decisions, and seam plans are basically ready.</li>
+<li><strong>What happens</strong>: synthesizes the cognition scattered across <code>CONTEXT.md</code>, ADRs, quality attribute scenarios, and map resolutions into one complete architecture description — articulating design intent, stakeholder concerns, module decomposition, and necessary views. Upstream it is the "sink" where decisions converge; downstream it is the "source" for both the enforcement layer and the specification layer: <code>governed-arch</code> translates its boundary definitions into TOML, and <code>to-spec</code> draws its global frame from it.</li>
+<li><strong>Artifacts</strong>: two — the architecture description <code>docs/architecture.md</code> (structure follows <code>docs/templates/ARCHITECTURE-DESCRIPTION-FORMAT.md</code>; views embedded or relatively linked), and the implementation process plan <code>docs/action-plan.md</code> — prescribing the order of governance scaffolding first, module implementations next, integration tests last, marking which parts may run in parallel, which must serialize, and with what rationale.</li>
+<li><strong>Boundary</strong>: the <code>depends_on</code> topology in <code>architecture.toml</code> only constrains runtime "who may import whom"; it does not prescribe construction order — by leaning on seams with test doubles coming first, upper modules can equally be implemented and unit-tested early; what the topology really decides is integration order. Step ordering inside a module/feature belongs to <code>to-spec</code> and <code>to-tickets</code>; <code>action-plan.md</code> only orchestrates across modules.</li>
+</ul>
+</li>
+<li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong> (step 4: constraint layer)<ul>
+<li><strong>How to use</strong>: translate boundary definitions from the architecture description into physically enforced constraints.</li>
+<li><strong>What happens</strong>: generates <code>architecture.toml</code> and <code>module.toml</code>, plus automated tests (such as <code>test_module_boundaries.py</code>), acting as the "enforcer" that keeps the architecture intact.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Phase artifacts</strong>:<br>
+- <code>CONTEXT.md</code>: converged, finalized unified domain language<br>
+- <code>docs/adr/NNNN-*.md</code>: finalized architecture decision records<br>
+- <code>docs/architecture.md</code>: global architecture description (synthesized by <code>to-arch</code>; includes stakeholders, viewpoints/views, quality attributes)<br>
+- <code>docs/action-plan.md</code>: system-wide wave-based construction plan and project recovery point (maintained by <code>to-arch</code>)<br>
+- <code>architecture.toml</code>: project-level architecture boundaries and dependency rules<br>
+- <code>&lt;module&gt;/module.toml</code>: per-module private/public boundary definitions and test constraints</p>
+<h3 id="34-phase-3-specification-and-ticket-decomposition">3.4 Phase 3: Specification and Ticket Decomposition</h3>
+<p><strong>Goal</strong>: Turn abstract designs and requirements into executable specification documents and concrete development tasks.</p>
+<p><strong>Scope boundary</strong>: cross-module system-level construction order has already been fixed by Phase 2's <code>docs/action-plan.md</code> (including the positions of governance scaffolding and integration tests); the <code>to-spec</code> and <code>to-tickets</code> of this phase only own step ordering inside a single feature — neither crosses into the other's scope.</p>
+<p><strong>Skills and logical relations</strong>: [sequential collaboration, execute in order]</p>
+<ol>
+<li><strong><a href="#to-spec"><code>to-spec</code></a></strong><ul>
+<li><strong>How to use</strong>: invoke once architecture and requirements have stabilized.</li>
+<li><strong>What happens</strong>: generates a structured <code>spec.md</code>, clarifying functional requirements, non-functional requirements, and acceptance criteria.</li>
+</ul>
+</li>
+<li><strong><a href="#to-tickets"><code>to-tickets</code></a></strong><ul>
+<li><strong>How to use</strong>: invoke based on <code>spec.md</code>.</li>
+<li><strong>What happens</strong>: following the conventions of <code>docs/agents/issue-tracker.md</code>, decomposes the specification into individual development tickets under <code>.scratch/&lt;feature-slug&gt;/tickets/</code>, declaring blocking relations ticket by ticket.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Phase artifacts</strong>:<br>
+- <code>.scratch/&lt;feature-slug&gt;/spec.md</code>: single-feature specification document<br>
+- <code>.scratch/&lt;feature-slug&gt;/tickets/NN-&lt;slug&gt;.md</code>: vertical-slice development tickets (with a Blocked-by dependency DAG, numbered from 01)</p>
+<h3 id="35-phase-4-implementation-and-the-iterative-loop">3.5 Phase 4: Implementation and the Iterative Loop</h3>
+<p><strong>Goal</strong>: Write code that satisfies the specification, completing review and state handover within tight loops.</p>
+<p><strong>Skills and logical relations</strong>: [high-frequency loop: pick up ticket -&gt; implement -&gt; review -&gt; handoff]</p>
+<ul>
+<li><strong><a href="#implement"><code>implement</code></a> + <a href="#tdd"><code>tdd</code></a></strong> (mandatory trunk)<ul>
+<li><strong>How to use</strong>: invoke after picking up a ticket.</li>
+<li><strong>What happens</strong>: implements the feature in the TDD rhythm (red-green-refactor), ensuring test coverage. If the architecture proves unsound during implementation (no seam can be found, tests keep failing), pause implementation and fall back to <code>codebase-design</code> to re-cut boundaries.</li>
+</ul>
+</li>
+<li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong> (on-demand auxiliary: continuous validation)<ul>
+<li><strong>How to use</strong>: invoke anytime while writing or refactoring cross-module code, or run its test scripts in CI.</li>
+<li><strong>What happens</strong>: runs boundary validation and tells you immediately whether a newly added <code>import</code> violates the architecture rules.</li>
+</ul>
+</li>
+<li><strong><a href="#code-review"><code>code-review</code></a></strong> (triggered before merge)<ul>
+<li><strong>How to use</strong>: invoke when a feature (ticket) is done and about to merge into the main branch.</li>
+<li><strong>What happens</strong>: compares code against <code>spec.md</code>, checking conformance with repository standards and specification requirements.</li>
+</ul>
+</li>
+<li><strong><a href="#handoff"><code>handoff</code></a></strong> (triggered at session end or task switch)<ul>
+<li><strong>How to use</strong>: invoke when the current session ends, or when handing work over to another agent/human.</li>
+<li><strong>What happens</strong>: compresses the current context, leaving the next taker a clear starting point.</li>
+</ul>
+</li>
+<li><strong><a href="#failsafe-loop"><code>failsafe-loop</code></a></strong> (on-demand intervention: for high-risk tasks)<ul>
+<li><strong>How to use</strong>: invoke for changes that are extremely error-prone or destructive, forcing step-by-step verification and snapshot comparison.</li>
+</ul>
+</li>
+<li><strong><a href="#research"><code>research</code></a> / <a href="#prototype"><code>prototype</code></a></strong> (on-demand auxiliary)<ul>
+<li><strong>How to use</strong>: consult first-hand documentation or write throwaway verification code when hitting technical difficulties.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Phase artifacts</strong>:<br>
+- <code>src/</code> and <code>tests/</code>: code passing layered verification plus unit/integration test cases<br>
+- <code>.scratch/handoff-YYYYMMDD-HHMMSS.md</code>: session handoff snapshot (generated at handoff)<br>
+- (after merge and release, clean up the temporary <code>.scratch/&lt;feature-slug&gt;/</code> directory)</p>
+<h3 id="36-phase-5-operation-diagnosis-and-evolution">3.6 Phase 5: Operation, Diagnosis, and Evolution</h3>
+<p><strong>Goal</strong>: After go-live or milestone formation, respond to external feedback, troubleshoot production failures, and update global governance assets.</p>
+<p><strong>Skills and logical relations</strong>: [triggered by external events]</p>
+<ul>
+<li><strong><a href="#to-issues"><code>to-issues</code></a></strong> (external feedback trigger, capture entry point)<ul>
+<li><strong>How to use</strong>: invoke first upon receiving a bug report, small feature request, or standalone task.</li>
+<li><strong>What happens</strong>: writes it into the permanent issue stream under <code>docs/issues/</code> (global numbering, Type / Status / Created lines) and refreshes the <code>_summary.md</code> index; files persist permanently after fix closure.</li>
+</ul>
+</li>
+<li><strong><a href="#triage"><code>triage</code></a></strong> (triggered after items enter the stream)<ul>
+<li><strong>How to use</strong>: classify and route entries across both streams — long-lived issues in <code>docs/issues/</code> as well as temporary tickets in <code>.scratch/</code>.</li>
+<li><strong>What happens</strong>: moves entries among the five triage roles (e.g. <code>needs-triage</code> → <code>ready-for-agent</code>) and sets processing order.</li>
+</ul>
+</li>
+<li><strong><a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a></strong> (production failure or performance bottleneck trigger)<ul>
+<li><strong>How to use</strong>: invoke when a complex bug or performance regression appears and you do not know where to start.</li>
+<li><strong>What happens</strong>: starts a dedicated diagnosis loop, digging deep into code or logs to find the root cause.</li>
+</ul>
+</li>
+<li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong> (milestone trigger)<ul>
+<li><strong>How to use</strong>: invoke before a major release or an operations-team handover.</li>
+<li><strong>What happens</strong>: regenerates/updates the latest module-architecture HTML documentation and dependency graphs in one shot, as outward-facing delivery assets.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Phase artifacts</strong>:<br>
+- <code>docs/issues/NNN-&lt;slug&gt;.md</code>: globally numbered permanent issues (three-digit numbering such as 001-fix-login.md)<br>
+- <code>docs/issues/_summary.md</code>: global issue index table (categorized by status and priority, kept in sync in real time)<br>
+- failure diagnosis analysis reports and root cause analysis records<br>
+- re-exported latest module architecture views and the evolution knowledge base</p>
+<h2 id="4-phase-artifacts-and-template-references">4. Phase Artifacts and Template References</h2>
+<p>To keep engineering quality traceable and consistent, the following table pins down the core artifacts expected from each phase together with their reference templates.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Phase</th>
+<th style="text-align: left;">Core artifacts (standard relative paths)</th>
+<th style="text-align: left;">Recommended skills</th>
+<th style="text-align: left;">Template/convention reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>0. Bootstrap</strong></td>
+<td style="text-align: left;"><code>AGENTS.md</code><br><code>docs/agents/issue-tracker.md</code><br><code>docs/agents/triage-labels.md</code></td>
+<td style="text-align: left;"><code>setup-skills</code></td>
+<td style="text-align: left;">issue-tracker.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1. Requirements elicitation</strong></td>
+<td style="text-align: left;"><code>.scratch/&lt;effort&gt;/map.md</code><br><code>CONTEXT.md</code> (initial)<br><code>docs/adr/NNNN-*.md</code> (initial)</td>
+<td style="text-align: left;"><code>grill-with-docs</code><br><code>wayfinder</code></td>
+<td style="text-align: left;">QAS-FORMAT.md<br>CONTEXT-FORMAT.md<br>ADR-FORMAT.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Architecture design</strong></td>
+<td style="text-align: left;"><code>CONTEXT.md</code> (final)<br><code>docs/adr/NNNN-*.md</code><br><code>docs/architecture.md</code><br><code>docs/action-plan.md</code><br><code>architecture.toml</code> / <code>module.toml</code></td>
+<td style="text-align: left;"><code>domain-modeling</code><br><code>codebase-design</code><br><code>to-arch</code><br><code>governed-arch</code></td>
+<td style="text-align: left;">ARCHITECTURE-DESCRIPTION-FORMAT.md<br>VIEWPOINT-CATALOG.md<br>ADR-FORMAT.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. Spec decomposition</strong></td>
+<td style="text-align: left;"><code>.scratch/&lt;feature-slug&gt;/spec.md</code><br><code>.scratch/&lt;feature-slug&gt;/tickets/NN-*.md</code></td>
+<td style="text-align: left;"><code>to-spec</code><br><code>to-tickets</code></td>
+<td style="text-align: left;">SPEC-FORMAT.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. Iterative implementation</strong></td>
+<td style="text-align: left;"><code>src/</code> + <code>tests/</code><br><code>.scratch/handoff-*.md</code><br>code review records</td>
+<td style="text-align: left;"><code>implement</code><br><code>tdd</code><br><code>code-review</code></td>
+<td style="text-align: left;">per project conventions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. Operation &amp; evolution</strong></td>
+<td style="text-align: left;"><code>docs/issues/NNN-*.md</code><br><code>docs/issues/_summary.md</code><br>diagnosis records / updated architecture diagrams</td>
+<td style="text-align: left;"><code>to-issues</code><br><code>triage</code><br><code>diagnosing-bugs</code><br><code>governed-arch</code></td>
+<td style="text-align: left;">HANDOFF-FORMAT.md</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Living-document note: <code>CONTEXT.md</code> and ADRs are living documents evolving across phases, owned by no single phase — created lazily in Phase 1 by the <code>domain-modeling</code> embedded in <code>grill-with-docs</code> (lazy file creation; terms land the moment they settle), then challenged and converged to final form in Phase 2 by explicitly invoking <code>domain-modeling</code>.</p>
+</blockquote>
+<h2 id="5-auxiliary-skills-and-practical-decision-table">5. Auxiliary Skills and Practical Decision Table</h2>
+<p>Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills". They do not directly advance pipeline state transitions; like a plug-in toolbox, they fire on demand when the trunk is blocked, knowledge gaps exist, or context needs restructuring (invocations should be non-blocking and highly purposeful; return to the trunk promptly once the specific problem is solved).</p>
+<h3 id="51-auxiliary-skills-at-a-glance">5.1 Auxiliary Skills at a Glance</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Skill</th>
+<th style="text-align: left;">Trigger timing and purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="#research"><code>research</code></a></td>
+<td style="text-align: left;">Key facts not in hand (API design, library capabilities, competitor approaches)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#prototype"><code>prototype</code></a></td>
+<td style="text-align: left;">High-uncertainty risk; scout ahead before formal implementation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#improve-codebase-architecture"><code>improve-codebase-architecture</code></a></td>
+<td style="text-align: left;">Design cannot land, or maintenance-period structure blocks new features</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#teach"><code>teach</code></a></td>
+<td style="text-align: left;">Complex domain experience or scaffolding worth distilling, or onboarding new members</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#to-questionnaire"><code>to-questionnaire</code></a></td>
+<td style="text-align: left;">Key information held by external stakeholders</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-practical-decision-table">5.2 Practical Decision Table</h3>
+<table>
+<thead>
+<tr>
+<th>Current blocker / scenario</th>
+<th>Preferred skill</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requirements huge and fuzzy, cannot be covered in one pass</td>
+<td><a href="#wayfinder"><code>wayfinder</code></a></td>
+<td>Build a navigation map and split out exploration sub-tickets</td>
+</tr>
+<tr>
+<td>Single requirement but loose logic, many hidden assumptions</td>
+<td><a href="#grill-with-docs"><code>grill-with-docs</code></a></td>
+<td>Grill deeply to surface hidden assumptions; deposit terms and ADRs on the spot</td>
+</tr>
+<tr>
+<td>Key facts not in hand</td>
+<td><a href="#research"><code>research</code></a> / <a href="#to-questionnaire"><code>to-questionnaire</code></a></td>
+<td>Research first-hand facts or send out stakeholder questionnaires</td>
+</tr>
+<tr>
+<td>Term drift, concept confusion, unclear entity definitions</td>
+<td><a href="#domain-modeling"><code>domain-modeling</code></a></td>
+<td>Unify team vocabulary; maintain <code>CONTEXT.md</code> and ADRs</td>
+</tr>
+<tr>
+<td>Logical boundaries and seams unclear</td>
+<td><a href="#codebase-design"><code>codebase-design</code></a></td>
+<td>Plan deep modules and testable seams</td>
+</tr>
+<tr>
+<td>Need an architecture description articulating design intent and module decomposition</td>
+<td><a href="#to-arch"><code>to-arch</code></a></td>
+<td>Synthesize <code>docs/architecture.md</code> and the construction-wave <code>docs/action-plan.md</code></td>
+</tr>
+<tr>
+<td>Need enforced architecture and directory boundaries</td>
+<td><a href="#governed-arch"><code>governed-arch</code></a></td>
+<td>Generate TOML boundary rules and automated architecture tests</td>
+</tr>
+<tr>
+<td>Logic converged; need execution and acceptance contracts</td>
+<td><a href="#to-spec"><code>to-spec</code></a></td>
+<td>Draft the structured specification <code>spec.md</code></td>
+</tr>
+<tr>
+<td>Requirements and architecture settled; need development slices</td>
+<td><a href="#to-tickets"><code>to-tickets</code></a></td>
+<td>Decompose into vertical-slice temporary tickets with a declared blocking DAG</td>
+</tr>
+<tr>
+<td>Bug reports, small features, or standalone tasks need long-term tracking</td>
+<td><a href="#to-issues"><code>to-issues</code></a></td>
+<td>Record into the globally numbered permanent issue stream and sync the index</td>
+</tr>
+<tr>
+<td>Ready to start coding</td>
+<td><a href="#implement"><code>implement</code></a> / <a href="#tdd"><code>tdd</code></a></td>
+<td>Implement features and unit tests in red-green-refactor rhythm</td>
+</tr>
+<tr>
+<td>During implementation, design will not land, boundaries leak</td>
+<td><a href="#improve-codebase-architecture"><code>improve-codebase-architecture</code></a></td>
+<td>Re-cut seams and update ADRs / architecture description</td>
+</tr>
+<tr>
+<td>Extremely destructive change needing step-wise review</td>
+<td><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
+<td>Introduce staged snapshot comparison and strict risk gates</td>
+</tr>
+<tr>
+<td>Need to verify code against standards and spec</td>
+<td><a href="#code-review"><code>code-review</code></a></td>
+<td>Run dual-axis sub-agent review over standards and spec</td>
+</tr>
+<tr>
+<td>Task handover or session end</td>
+<td><a href="#handoff"><code>handoff</code></a></td>
+<td>Compress session context into a clear handover point</td>
+</tr>
+<tr>
+<td>Production troubleshooting or performance bottleneck localization</td>
+<td><a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a></td>
+<td>Build a red/green reproduction loop and falsifiable hypotheses to find root cause</td>
+</tr>
+</tbody>
+</table>
+<h2 id="skill-appendix">Appendix: Skill Quick Reference</h2>
+<p>Every skill appearing in this panorama is summarized here, ordered by trunk flow; each entry gives "when to use it, what it does, how it works". <code>to-issues</code> is this repository's original skill (mine), complementary to upstream <code>to-tickets</code> rather than a name clash.</p>
+<h3 id="setup-matt-pocock-skills">setup-matt-pocock-skills</h3>
+<ul>
+<li><strong>When to use</strong>: at project start (Phase 0), to establish the agent-human collaboration foundation.</li>
+<li><strong>What it does</strong>: generates <code>AGENTS.md</code> and establishes issue-tracker, triage-label, and domain-doc conventions under <code>docs/agents/</code>.</li>
+<li><strong>How it works</strong>: first surveys the repo state (remote and any existing <code>AGENTS.md</code>), then asks section by section to confirm the three configuration groups, writing docs and <code>AGENTS.md</code> after draft confirmation.</li>
+</ul>
+<h3 id="wayfinder">wayfinder</h3>
+<ul>
+<li><strong>When to use</strong>: requirements huge and fuzzy, spanning multiple days of discussion (Phase 1; choose one over <code>grill-with-docs</code>).</li>
+<li><strong>What it does</strong>: builds navigation map <code>map.md</code>, splits the problem into tickets solved one by one; when working a specific ticket, hands off to <code>grill-with-docs</code> or <code>research</code>.</li>
+<li><strong>How it works</strong>: first fixes destination and scope via grilling, then breadth-first maps the fog zones, creating map and decision tickets; after claiming a frontier ticket, parses and records resolutions until closed — one ticket per session.</li>
+</ul>
+<h3 id="grill-with-docs">grill-with-docs</h3>
+<ul>
+<li><strong>When to use</strong>: small, well-bounded requirements (Phase 1; choose one over <code>wayfinder</code>).</li>
+<li><strong>What it does</strong>: multi-round deep grilling surfaces hidden assumptions while recording terms and decisions along the way.</li>
+<li><strong>How it works</strong>: runs a grilling session pressing on hidden assumptions question by question, maintaining vocabulary and ADRs with <code>domain-modeling</code>, producing a document combining Q&amp;A results.</li>
+</ul>
+<h3 id="domain-modeling">domain-modeling</h3>
+<ul>
+<li><strong>When to use</strong>: invoked both as a standalone skill as step 1 of Phase 2, and embedded by <code>grill-with-docs</code> in Phase 1 (terms written into <code>CONTEXT.md</code> as they settle).</li>
+<li><strong>What it does</strong>: unifies team vocabulary, identifies core entities, deposits ADRs — the prerequisite for all subsequent work.</li>
+<li><strong>How it works</strong>: flags term conflicts against the glossary in real time and proposes canonical terms; probes boundaries by constructing scenarios; updates <code>CONTEXT.md</code> while discussing, writing ADRs when necessary.</li>
+</ul>
+<h3 id="codebase-design">codebase-design</h3>
+<ul>
+<li><strong>When to use</strong>: planning code structure after concepts unify (Phase 2 step 2).</li>
+<li><strong>What it does</strong>: cuts module seams, ensuring high cohesion and testability.</li>
+<li><strong>How it works</strong>: describes modules and interfaces in unified vocabulary; judges module depth with the "delete test"; optimizes via dependency injection, returning results, narrowing interface surface — remembering "one adapter is a fake seam, two make a real one".</li>
+</ul>
+<h3 id="to-arch">to-arch</h3>
+<ul>
+<li><strong>When to use</strong>: once domain language, key decisions, and seam plans are basically ready (Phase 2 step 3), synthesize the first architecture description and implementation plan (init mode); during implementation, write back progress whenever any slice starts/finishes/blocks (update-progress mode); after milestones or major decisions, reconcile then re-converge (reconcile mode). This repository's original skill (mine); template copies bundled, same-named files under project-local <code>docs/templates/</code> take precedence.</li>
+<li><strong>What it does</strong>: synthesizes <code>CONTEXT.md</code>, ADRs, quality attribute scenarios, and map resolutions into a complete architecture description <code>docs/architecture.md</code> — articulating design intent, stakeholder concerns, module decomposition, and necessary views; also produces the implementation process plan <code>docs/action-plan.md</code>, fixing the order of governance scaffolding first, module implementations next, integration tests last, plus parallel groupings (note <code>depends_on</code> does not decide construction order). Upstream it consolidates scattered decisions; downstream it serves as source of truth for <code>governed-arch</code>'s TOML translation and <code>to-spec</code>'s global frame.</li>
+<li><strong>How it works</strong>: inventories existing artifacts first, listing decisions and viewpoint choices; gaps are routed by type to <code>grill-with-docs</code>/<code>wayfinder</code>/<code>research</code>/<code>domain-modeling</code>, insisting on zero fabrication. Then drafts the architecture description and the wave-based action plan (with parallel grouping and serialization rationale) section by section, landing each only after user confirmation per section. The action plan is a semi-finished product's self-narrating file — the header "current position" line and per-slice statuses update as work proceeds, so any fresh session reads just it to know where things stand and where to resume; milestones reconcile the TOML projection against real implementation via reconcile mode.</li>
+</ul>
+<h3 id="governed-arch">governed-arch</h3>
+<ul>
+<li><strong>When to use</strong>: when designs become physical constraints, plus continuous validation during implementation and release (Phases 2/4/5).</li>
+<li><strong>What it does</strong>: generates <code>architecture.toml</code>, <code>module.toml</code>, and automated boundary tests, acting as the "enforcer" keeping architecture intact; generates architecture HTML documentation and dependency graphs at release time.</li>
+<li><strong>How it works</strong>: declares structure and module boundaries in TOML; public APIs lock interface signatures upon exposure; cross-module access goes only through facade gateway imports; governance tests gate everything, and results render into HTML documentation.</li>
+</ul>
+<h3 id="to-spec">to-spec</h3>
+<ul>
+<li><strong>When to use</strong>: after architecture and requirements stabilize (Phase 3 step 1).</li>
+<li><strong>What it does</strong>: generates a structured <code>spec.md</code>, clarifying functional requirements, non-functional requirements, and acceptance criteria.</li>
+<li><strong>How it works</strong>: explores the codebase first, drafts the spec in domain vocabulary, confirms highest-value seams with the user, then writes <code>spec.md</code> from the template, publishes, and marks ready-for-agent.</li>
+</ul>
+<h3 id="to-tickets">to-tickets</h3>
+<ul>
+<li><strong>When to use</strong>: decomposing a ready specification into executable development slices (Phase 3 step 2). Upstream original skill, byte-for-byte restored per locked baseline.</li>
+<li><strong>What it does</strong>: following <code>docs/agents/issue-tracker.md</code> conventions, drafts the spec as vertical-slice temporary dev tickets under <code>.scratch/&lt;feature-slug&gt;/tickets/</code> (<code>NN-&lt;slug&gt;.md</code>), annotating blocking relations per ticket; wide refactorings switch to expand-contract sequences.</li>
+<li><strong>How it works</strong>: confirms granularity and dependencies with the user, then writes into <code>.scratch/&lt;feature-slug&gt;/tickets/</code>; tickets are short-term planning scaffolding discarded when the feature ends — no index, numbers start from <code>01</code> in dependency order, never reused across features.</li>
+</ul>
+<h3 id="to-issues">to-issues</h3>
+<ul>
+<li><strong>When to use</strong>: capturing bug reports, small feature requests, or standalone tasks into the repository-level permanent issue stream; not for splitting specs into slices (that is <code>/to-tickets</code>' job). This repository's original skill (mine).</li>
+<li><strong>What it does</strong>: creates <code>NNN-&lt;slug&gt;.md</code> files under <code>docs/issues/</code> with three-digit globally increasing numbers (never reused), carrying Type / Status / Created metadata and an Evidence section, refreshing the <code>_summary.md</code> global index in sync.</li>
+<li><strong>How it works</strong>: gathers context first; bugs get low-cost reproduction attempts without blocking recording; life cycle needs-triage ⇄ needs-info → ready-for-agent | ready-for-human → fixed, wontfix reachable from any state, duplicates recorded as wontfix with a pointer. Conventions in <code>docs/agents/issue-tracker.md</code>.</li>
+</ul>
+<h3 id="implement">implement</h3>
+<ul>
+<li><strong>When to use</strong>: picking up a ticket to write code (Phase 4 trunk, paired with <code>tdd</code>).</li>
+<li><strong>What it does</strong>: implements features in TDD rhythm; if architecture proves unsound (no seam found, tests failing), pauses and falls back to <code>codebase-design</code>.</li>
+<li><strong>How it works</strong>: implements at the planned seam using <code>tdd</code>, running type checks and unit tests periodically en route and the full suite last; hands to <code>code-review</code> and commits when done.</li>
+</ul>
+<h3 id="tdd">tdd</h3>
+<ul>
+<li><strong>When to use</strong>: the mandatory rhythm accompanying <code>implement</code> (Phase 4).</li>
+<li><strong>What it does</strong>: guarantees test coverage via red-green-refactor loops so every feature is regression-verifiable.</li>
+<li><strong>How it works</strong>: writes a failing test first, then the minimal implementation to green, one slice at a time; tests target public behavior only, avoiding implementation coupling and tautological tests.</li>
+</ul>
+<h3 id="code-review">code-review</h3>
+<ul>
+<li><strong>When to use</strong>: feature complete, before merging into the main branch (Phase 4 pre-merge trigger).</li>
+<li><strong>What it does</strong>: checks conformance against <code>spec.md</code>, repository standards, and specification requirements; outputs review verdicts.</li>
+<li><strong>How it works</strong>: pins the diff base first and confirms non-empty; locates the spec source and coding-standard docs; dispatches parallel sub-agents reviewing along the two axes of "standards" and "spec", finally aggregating reports presented axis by axis.</li>
+</ul>
+<h3 id="handoff">handoff</h3>
+<ul>
+<li><strong>When to use</strong>: session end, or handing work to another agent/human (Phase 4).</li>
+<li><strong>What it does</strong>: compresses current context, leaving the next taker a clear starting point.</li>
+<li><strong>How it works</strong>: compresses the session into a handoff document stored in <code>.scratch</code>, referencing existing artifacts instead of duplicating content, sanitized, with a suggested skill checklist attached.</li>
+</ul>
+<h3 id="failsafe-loop">failsafe-loop</h3>
+<ul>
+<li><strong>When to use</strong>: changes that are extremely error-prone or destructive (Phase 4 on-demand intervention).</li>
+<li><strong>What it does</strong>: forces phased execution, per-step verification, and snapshot comparison; stop on failure, guarding the high-risk gate.</li>
+<li><strong>How it works</strong>: defines boundaries, invariants, and baselines before every step, then passes four gates in turn — tests, workflow, audit, comparison; unexpected drift halts and escalates immediately, and passage ends with a formatted commit and report.</li>
+</ul>
+<h3 id="triage">triage</h3>
+<ul>
+<li><strong>When to use</strong>: classifying and routing items after they enter the streams (Phase 5 trigger); applies both to long-lived issues in <code>docs/issues/</code> and temporary tickets in <code>.scratch/</code>.</li>
+<li><strong>What it does</strong>: moves entries among the five triage roles (e.g. <code>needs-triage</code> → <code>ready-for-agent</code>), setting processing order.</li>
+<li><strong>How it works</strong>: classifies by Type first (bug/enhancement etc.), collects context, deduplicates, and filters out-of-scope; verifies claims by reproduction, supplements info via grilling when needed, finally applies state transitions and writes an agent brief or flips to needs-info.</li>
+</ul>
+<h3 id="diagnosing-bugs">diagnosing-bugs</h3>
+<ul>
+<li><strong>When to use</strong>: complex bugs or performance regressions where you don't know where to start (Phase 5 failure trigger).</li>
+<li><strong>What it does</strong>: starts a dedicated diagnosis loop, digging into code and logs, locating root causes and closing the loop.</li>
+<li><strong>How it works</strong>: builds a tight red/green reproduction loop first, reproducing and minimizing to load-bearing elements; generates 3–5 falsifiable hypotheses tested one by one; writes a regression test before fixing; cleans up and prevents recurrence last.</li>
+</ul>
+<h3 id="research">research</h3>
+<ul>
+<li><strong>When to use</strong>: key facts not in hand — how to design an API, whether a library supports a feature, what competitors do (on-demand auxiliary).</li>
+<li><strong>What it does</strong>: produces a Markdown research report based on high-trust sources; conclusions flow back into the trunk.</li>
+<li><strong>How it works</strong>: dispatches background agents to research in parallel, tracking only first-hand authoritative sources with citations; results written as Markdown into the agreed repo location.</li>
+</ul>
+<h3 id="prototype">prototype</h3>
+<ul>
+<li><strong>When to use</strong>: high-uncertainty risk — interaction flows, tech stack, state machine viability (before formal implementation).</li>
+<li><strong>What it does</strong>: writes and runs throwaway code to validate assumptions; conclusions backfill ADRs or architecture design, code discarded after validation.</li>
+<li><strong>How it works</strong>: first classifies logic vs UI question; uses temporary code, single-command runs, no persistence; shows full state after every action; commits to a temporary branch for traceability once decisions are absorbed.</li>
+</ul>
+<h3 id="improve-codebase-architecture">improve-codebase-architecture</h3>
+<ul>
+<li><strong>When to use</strong>: during implementation, design will not land (no seam found, module coupling), or maintenance-period structure blocks new features.</li>
+<li><strong>What it does</strong>: re-cuts seams or refactors responsibilities, coordinating with <code>governed-arch</code> to update TOML constraints, locking in refactor gains.</li>
+<li><strong>How it works</strong>: defines scan scope first to find hot-spot modules, generating an HTML review report; after picking candidates, digs into design via grilling, updating the domain model while deciding, writing back TOML constraints after refactoring.</li>
+</ul>
+<h3 id="teach">teach</h3>
+<ul>
+<li><strong>When to use</strong>: complex domain problems solved or unique scaffolding distilled, or preparing to onboard new members.</li>
+<li><strong>What it does</strong>: extracts best practices, implicit rules, and domain-specific vocabulary, generating tutorials, glossaries, and other training material, converting them into long-lived organizational assets.</li>
+<li><strong>How it works</strong>: clarifies mission and gathers high-trust resources first; one HTML per lesson, small and quickly completable; builds tight feedback loops with quiz exercises, producing references and learning records.</li>
+</ul>
+<h3 id="to-questionnaire">to-questionnaire</h3>
+<ul>
+<li><strong>When to use</strong>: decisions depend on information held by stakeholders, experts, or third parties that you cannot supply alone.</li>
+<li><strong>What it does</strong>: turns knowledge gaps into a Markdown questionnaire (<code>to-questionnaire-&lt;slug&gt;.md</code>) for the other party to fill; upon return, resume clarification on the trunk.</li>
+<li><strong>How it works</strong>: grills only the sender (whom the questionnaire goes to, what answers are needed), targeting knowledge gaps between user and recipient; writes the Q&amp;A sheet from template, important questions first.</li>
+</ul>
+  </main>
+</body>
+</html>

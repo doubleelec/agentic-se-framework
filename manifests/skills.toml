@@ -1,0 +1,241 @@
+[workspace]
+name = "agentic-se-framework"
+owner = "Elec"
+
+[repos.mattpocock_upstream]
+path = "vendor/mattpocock/upstream"
+kind = "upstream"
+remote = "https://github.com/mattpocock/skills.git"
+default_branch = "main"
+
+[repos.mattpocock_local]
+path = "vendor/mattpocock/local"
+kind = "release_source"
+default_branch = "main"
+
+[repos.core]
+path = "core"
+kind = "release_source"
+default_branch = "main"
+
+[[skill]]
+publish_name = "diagnosing-bugs"
+repo = "mattpocock_local"
+source_path = "skills/engineering/diagnosing-bugs"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/diagnosing-bugs"
+
+[[skill]]
+publish_name = "code-review"
+repo = "mattpocock_local"
+source_path = "skills/engineering/code-review"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/code-review"
+
+[[skill]]
+publish_name = "codebase-design"
+repo = "mattpocock_local"
+source_path = "skills/engineering/codebase-design"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/codebase-design"
+
+[[skill]]
+publish_name = "grill-me"
+repo = "mattpocock_local"
+source_path = "skills/productivity/grill-me"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/productivity/grill-me"
+
+[[skill]]
+publish_name = "grilling"
+repo = "mattpocock_local"
+source_path = "skills/productivity/grilling"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/productivity/grilling"
+
+[[skill]]
+publish_name = "grill-with-docs"
+repo = "mattpocock_local"
+source_path = "skills/engineering/grill-with-docs"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/grill-with-docs"
+
+[[skill]]
+publish_name = "domain-modeling"
+repo = "mattpocock_local"
+source_path = "skills/engineering/domain-modeling"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/domain-modeling"
+
+[[skill]]
+publish_name = "handoff"
+repo = "mattpocock_local"
+source_path = "skills/productivity/handoff"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/productivity/handoff"
+
+[[skill]]
+publish_name = "implement"
+repo = "mattpocock_local"
+source_path = "skills/engineering/implement"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/implement"
+
+[[skill]]
+publish_name = "improve-codebase-architecture"
+repo = "mattpocock_local"
+source_path = "skills/engineering/improve-codebase-architecture"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/improve-codebase-architecture"
+
+[[skill]]
+publish_name = "prototype"
+repo = "mattpocock_local"
+source_path = "skills/engineering/prototype"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/prototype"
+
+[[skill]]
+publish_name = "research"
+repo = "mattpocock_local"
+source_path = "skills/engineering/research"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/research"
+
+[[skill]]
+publish_name = "teach"
+repo = "mattpocock_local"
+source_path = "skills/productivity/teach"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/productivity/teach"
+
+[[skill]]
+publish_name = "setup-matt-pocock-skills"
+repo = "mattpocock_local"
+source_path = "skills/engineering/setup-matt-pocock-skills"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/setup-matt-pocock-skills"
+
+[[skill]]
+publish_name = "tdd"
+repo = "mattpocock_local"
+source_path = "skills/engineering/tdd"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/tdd"
+
+[[skill]]
+publish_name = "to-spec"
+repo = "mattpocock_local"
+source_path = "skills/engineering/to-spec"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/to-spec"
+
+[[skill]]
+publish_name = "to-tickets"
+repo = "mattpocock_local"
+source_path = "skills/engineering/to-tickets"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/to-tickets"
+
+[[skill]]
+publish_name = "to-questionnaire"
+repo = "mattpocock_local"
+source_path = "skills/productivity/to-questionnaire"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/productivity/to-questionnaire"
+
+[[skill]]
+publish_name = "triage"
+repo = "mattpocock_local"
+source_path = "skills/engineering/triage"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/triage"
+
+[[skill]]
+publish_name = "wayfinder"
+repo = "mattpocock_local"
+source_path = "skills/engineering/wayfinder"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/wayfinder"
+
+[[skill]]
+publish_name = "writing-for-agents"
+repo = "mattpocock_local"
+source_path = "skills/productivity/writing-for-agents"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/productivity/writing-for-agents"
+
+[[skill]]
+publish_name = "resolving-merge-conflicts"
+repo = "mattpocock_local"
+source_path = "skills/engineering/resolving-merge-conflicts"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/resolving-merge-conflicts"
+
+[[skill]]
+publish_name = "wizard"
+repo = "mattpocock_local"
+source_path = "skills/engineering/wizard"
+publish = true
+upstream_repo = "mattpocock_upstream"
+upstream_path = "skills/engineering/wizard"
+
+[[skill]]
+publish_name = "failsafe-loop"
+repo = "core"
+source_path = "failsafe-loop"
+publish = true
+
+[[skill]]
+publish_name = "governed-arch"
+repo = "core"
+source_path = "governed-arch"
+publish = true
+
+[[skill]]
+publish_name = "md-diagram"
+repo = "core"
+source_path = "md-diagram"
+publish = true
+
+[[skill]]
+publish_name = "md-to-html"
+repo = "core"
+source_path = "md-to-html"
+publish = true
+
+[[skill]]
+publish_name = "to-arch"
+repo = "core"
+source_path = "to-arch"
+publish = true
+
+[[skill]]
+publish_name = "to-issues"
+repo = "core"
+source_path = "to-issues"
+publish = true
+
+

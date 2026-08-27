@@ -1,0 +1,41 @@
+# ruff + mypy configuration (static check baseline — tooling layer)
+#
+# Copy this block into your project's `pyproject.toml`, then
+# adjust the per-file-ignores to your layout. The targets below are
+# neutral by design — add package/script exclusions that match your repo.
+#
+# Install the tools (use a virtualenv committed/known to the project):
+#   pip install ruff mypy
+#
+# Zero-baseline policy (recommended):
+#   The project should aim for `ruff check .` → All checks passed!
+#   and `mypy <packages>` → Success, no issues in N source files.
+#   Record the achieved baseline in the project rules file so future
+#   changes do not silently grow it.
+#
+# NOTE: The full static-check baseline for a governed project is
+#   ruff + mypy + the `code-review` skill. This file covers the
+#   tooling configuration only. Before declaring the baseline complete,
+#   verify the `code-review` skill is installed (e.g. in your
+#   agent's skills directory).
+
+[tool.ruff]
+target-version = "py312"   # match your oldest supported interpreter
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F"]        # pycodestyle errors + pyflakes
+ignore = ["E501"]          # long lines; enforce line-length separately if desired
+
+[tool.ruff.lint.per-file-ignores]
+# Keep config/entry/experiment files free of import-order noise.
+# Example entries — adapt to your real layout:
+# "experiments/*" = ["E402"]
+# "tests/test_governance.py" = ["E402", "F403"]
+# "scripts/*.py" = ["E402"]
+
+[tool.mypy]
+python_version = "3.12"    # match your runtime
+ignore_missing_imports = true
+exclude = "^(\.venv|\.scratch|\.data|\.data_cache|experiments|results|tests|audit)/"
+warn_unused_ignores = true

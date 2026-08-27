@@ -1,0 +1,25 @@
+# Local machine-specific deployment targets (copy from install-targets.example.toml)
+manifests/install-targets.toml
+
+# Session-local scratch notes (may reference internal remotes and personal paths)
+.scratch/
+
+# Logs and backups
+logs/
+
+# Local upstream intake clone
+vendor/mattpocock/upstream/
+
+# llm-as-a-verifier fork clone (own git repo, ~346MB benchmark data)
+vendor/llm-as-a-verifier/
+
+# Python cache
+**/__pycache__/
+*.pyc
+
+# PowerShell and editor noise
+*.tmp
+*.bak
+*.orig
+Thumbs.db
+desktop.ini

@@ -1,0 +1,72 @@
+# architecture.toml
+# Top-level Architecture-as-Code manifest.
+#
+# This file is the root Single Source of Truth for governed modules.
+# It defines:
+# - which top-level modules are governed
+# - allowed cross-module dependencies
+# - optional global interface locks
+# - optional global invariants
+# - optional path and exception policies
+
+# Register all top-level governed modules here.
+submodules = [
+    # "app",
+    # "core",
+    # "infra",
+]
+
+# Declare each top-level module and the other governed modules it may import.
+#
+# Example:
+# [module.app]
+# description = "Application orchestration layer."
+# depends_on = ["core", "infra"]         # Legacy: simple allowlist
+# external_depends = ["core", "infra"]  # Recommended: Cross-module deps
+# internal_depends = ["utils"]           # Recommended: Same-module siblings
+
+# ── Optional Cross-Module Exceptions ─────────────────────────────────────
+# Use this only for narrow, explicit exceptions that should remain visible.
+#
+# Example:
+# [allowed_crossings]
+# "app/bootstrap.py" = ["infra"]
+
+# ── Optional: Managed Storage Ownership ───────────────────────────────────
+# Declarative data-access rule (optional), the storage twin of GOI.
+# Each zone: `names` = directory-name identities (exact path-component match,
+# no regex); `owners` = governed modules allowed to reference the zone by name.
+# Any other governed module that hard-codes a zone name as a path component
+# violates the rule (obtain paths through the owner's facade instead).
+# Enforced by test_module_boundaries.py::test_storage_zone_references_respect_ownership.
+# Skipped entirely when no [managed_storage.*] is declared.
+#
+# Example (neutral vocabulary):
+# [managed_storage.media_assets]
+# names  = ["media", ".media"]
+# owners = ["assets/provider", "assets/ingest"]
+
+# ── Optional Global Interface Locks ──────────────────────────────────────
+# Use root-level interface locks only when a public contract is governed
+# centrally instead of by an individual module.toml.
+#
+# Example:
+# [interface_lock."app/api.py"]
+# reason = "Public API consumed by external modules."
+# locked_functions = ["run_server"]
+#
+# [interface_lock."app/api.py".specs."run_server"]
+# params = [
+#   { name = "host", type = "str", default = "127.0.0.1", description = "Bind host." }
+# ]
+# returns = { type = "None", description = "Starts the server." }
+
+# ── Optional Global Invariants ───────────────────────────────────────────
+# Use global invariants for rules that apply across multiple modules.
+#
+# Example:
+# [invariant.architecture]
+# rules = [
+#   "All cross-module imports must be declared in depends_on.",
+#   "Every exposed public API must have a matching interface lock.",
+# ]

@@ -1,0 +1,28 @@
+# Local deployment targets for framework skills.
+#
+# This file is a TEMPLATE. Copy it to manifests/install-targets.toml,
+# then replace the placeholder paths with real directories on your machine:
+#
+#   Copy-Item manifests/install-targets.example.toml manifests/install-targets.toml
+#
+# The real install-targets.toml is machine-specific and gitignored;
+# never commit it back to the repository.
+
+[workspace]
+default_target = "trae_work_main"
+
+# Trae IDE workspace-level skills directory
+[targets.trae_work_main]
+type = "trae_work_app"
+enabled = true
+path = "~/.trae/skills"
+backup_root = "logs/install-backups"
+report_root = "logs/reports"
+
+# Antigravity global skills directory
+[targets.antigravity_global]
+type = "antigravity_global"
+enabled = true
+path = "~/.gemini/config/skills"
+backup_root = "logs/antigravity-backups"
+report_root = "logs/reports"
