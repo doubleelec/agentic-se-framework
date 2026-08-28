@@ -36,9 +36,14 @@ Install replaces only the skills listed in `manifests/skills.toml`, one by one (
    baseline fall back to the previous mtime comparison.
 3. If no baseline exists but the target directory does, the target is compared
    against the repo source; an unexplained difference also aborts the install.
-4. To keep IDE-side edits: run `ops/capture_hotfix.ps1 -SkillName <name>` first,
-   commit, then republish. To intentionally discard them: re-run with `-Force`
-   (the pre-overwrite backup is still taken).
+4. The installer never overwrites a diverged target; there is no force flag.
+   Resolving a conflict is always an explicit step:
+   - To keep the installed copy (a deliberate edit): run
+     `ops/capture_hotfix.ps1 -TargetName <target> -SkillName <name>`, commit,
+     then republish.
+   - To discard it and redeploy from source: run
+     `ops/uninstall.ps1 -TargetName <target> -SkillName <name>` (backs up
+     first), then republish.
 
 ## Upstream Sync Workflow
 

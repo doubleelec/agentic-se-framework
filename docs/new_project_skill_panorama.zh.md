@@ -46,18 +46,16 @@
 
 | 时机 | 优先技能 |
 | :--- | :--- |
-| 项目启动 | [`setup-matt-pocock-skills`](#setup-matt-pocock-skills) |
-| 需求获取（二选一） | [`wayfinder`](#wayfinder) / [`grill-with-docs`](#grill-with-docs) |
-| 概念统一、架构合成与约束落地 | [`domain-modeling`](#domain-modeling) → [`codebase-design`](#codebase-design) → [`to-arch`](#to-arch) → [`governed-arch`](#governed-arch) |
-| 规格化 | [`to-spec`](#to-spec) |
-| 工单拆解 | [`to-tickets`](#to-tickets) |
-| Bug 与独立小件追踪 | [`to-issues`](#to-issues) |
-| 高不确定性探路 | [`research`](#research) / [`prototype`](#prototype) |
-| 编码实现 | [`implement`](#implement) + [`tdd`](#tdd) |
-| 高风险改动 | [`failsafe-loop`](#failsafe-loop) |
-| 合入前检查 | [`code-review`](#code-review) |
-| 交接 | [`handoff`](#handoff) |
-| 运维阶段 | [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) |
+| 阶段 0：项目启动 | [`setup-matt-pocock-skills`](#setup-matt-pocock-skills) |
+| 阶段 1：需求获取（二选一） | [`wayfinder`](#wayfinder) / [`grill-with-docs`](#grill-with-docs) |
+| 阶段 2：概念统一、架构合成与约束落地 | [`domain-modeling`](#domain-modeling) → [`codebase-design`](#codebase-design) → [`to-arch`](#to-arch) → [`governed-arch`](#governed-arch) |
+| 阶段 3：规格化与工单拆解 | [`to-spec`](#to-spec) → [`to-tickets`](#to-tickets) |
+| 阶段 4：单切片编码与测试闭环 | [`implement`](#implement)（内含 [`tdd`](#tdd) + [`code-review`](#code-review)） |
+| 阶段 3 & 4：跨阶段交付编排 | [`impl-loop`](#impl-loop)（统一驱动 `to-spec` $\rightarrow$ `to-tickets` $\rightarrow$ `implement` + `tdd` $\rightarrow$ 回写进度） |
+| 阶段 5：运维、诊断与资产演进 | [`to-issues`](#to-issues) → [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) → [`governed-arch`](#governed-arch) |
+| 辅助/横切：高不确定性探路 | [`research`](#research) / [`prototype`](#prototype) |
+| 辅助/横切：高风险改动守门 | [`failsafe-loop`](#failsafe-loop) |
+| 辅助/横切：会话交接 | [`handoff`](#handoff) |
 
 要点不在于“顺序必须一刀切”，而在于每个阶段都必须回答一个明确的工程问题，并留下相应工件。
 
@@ -150,15 +148,19 @@
     <text x="500" y="328" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-arch</text>
     <text x="500" y="347" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
     
+    <!-- impl-loop 编排虚线框 -->
+    <rect x="598" y="246" width="324" height="142" rx="10" fill="#f0fdfa" fill-opacity="0.4" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="5 3"></rect>
+    <rect x="715" y="236" width="90" height="20" rx="6" fill="#0f766e"></rect>
+    <text x="760" y="250" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">impl-loop</text>
+
     <rect x="610" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
     <text x="680" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-spec</text>
     <text x="680" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-tickets</text>
     
     <rect x="780" y="260" width="130" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
-    <text x="845" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement / tdd</text>
-    <text x="845" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review</text>
-    <text x="845" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">handoff</text>
-    <text x="845" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">failsafe-loop</text>
+    <text x="845" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement</text>
+    <text x="845" y="330" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">（含 tdd /</text>
+    <text x="845" y="350" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review）</text>
     
     <rect x="940" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
     <text x="1010" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-issues</text>
@@ -213,13 +215,14 @@
     <!-- 底部辅助横条 -->
     <line x1="20" y1="546" x2="1100" y2="546" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4"></line>
     <rect x="10" y="558" width="1100" height="48" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="5 3"></rect>
-    <text x="40" y="587" font-size="16" font-weight="700" fill="#b45309">辅助/横切技能</text>
-    <text x="275" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">research</text>
-    <text x="425" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">prototype</text>
-    <text x="575" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">to-issues</text>
-    <text x="725" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">improve-arch</text>
-    <text x="875" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">teach</text>
-    <text x="1025" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">handoff</text>
+    <text x="28" y="587" font-size="15" font-weight="700" fill="#b45309">辅助/横切技能</text>
+    <text x="225" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">research</text>
+    <text x="355" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">prototype</text>
+    <text x="500" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">failsafe-loop</text>
+    <text x="640" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">to-issues</text>
+    <text x="775" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">improve-arch</text>
+    <text x="905" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">teach</text>
+    <text x="1025" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">handoff</text>
   </svg>
 </div>
 
@@ -299,15 +302,15 @@
 
 **目标**：将抽象的设计和需求转化为可执行的规格说明书和具体开发任务。
 
-**范围边界**：跨模块的系统级施工顺序已由阶段 2 的 `docs/action-plan.md` 规定（含治理脚手架与集成测试的位次）；本阶段的 `to-spec` 与 `to-tickets` 只负责单个特性内部的步骤顺序，二者互不越界。
+**范围边界**：跨模块的系统级施工顺序已由阶段 2 的 `docs/action-plan.md` 规定（含治理脚手架与集成测试的位次）；本阶段的 `to-spec` 与 `to-tickets` 只负责单个特性内部的步骤顺序，二者互不越界。本阶段既可在 `impl-loop` 的编排下自动化执行，亦可独立调用。
 
 **使用技能与逻辑关系**：【顺序协作，需依次执行】
 
 1. **[`to-spec`](#to-spec)**
-    - **怎么用**：架构和需求稳定后调用。
+    - **怎么用**：架构和需求稳定后调用（亦由 `impl-loop` 自动调用）。
     - **发生什么**：它会生成结构化的 `spec.md`，明确功能需求、非功能需求和验收标准。
 2. **[`to-tickets`](#to-tickets)**
-    - **怎么用**：基于 `spec.md` 调用。
+    - **怎么用**：基于 `spec.md` 调用（亦由 `impl-loop` 自动调用）。
     - **发生什么**：它会按照 `docs/agents/issue-tracker.md` 的约定，将规格拆解为 `.scratch/<feature-slug>/tickets/` 下的一张张开发工单，逐张声明阻塞关系。
 
 **阶段产出清单**：
@@ -316,33 +319,61 @@
 
 ### 3.5 阶段 4：实现与迭代闭环
 
-**目标**：编写代码，满足规格要求，并在不断的小循环中完成审查与状态交接。
+**目标**：编写代码，满足规格要求，并在紧致的小循环中完成审查、测试闸门验证与计划状态回写。
 
-**使用技能与逻辑关系**：【高频循环：领工单 -> 实现 -> 审查 -> 交接】
+**使用技能与逻辑关系**：【高频循环：领工单 -> 实现（TDD + 审查） -> 闸门验证 -> 完工回写】
 
-- **[`implement`](#implement) + [`tdd`](#tdd)**（必选主干）
-    - **怎么用**：领取一个工单后调用。
-    - **发生什么**：按 TDD 节奏（红-绿-重构）实现功能，确保有测试覆盖。如果发现架构设计不合理（找不到缝隙、测试报错），应暂停实现，回退使用 `codebase-design` 重新切分。
+- **[`implement`](#implement)**（单切片执行主干，内含 [`tdd`](#tdd) 与 [`code-review`](#code-review)）
+    - **怎么用**：由 `impl-loop` 逐张认领工单时自动调用，亦可由人类在单切片场景独立调用。
+    - **发生什么**：
+      1. **TDD 红绿循环**：在预定接缝处先写失败测试，再以最小实现变绿，保证回归测试覆盖；
+      2. **类型与单测检查**：持续运行 typecheck 和单元测试；
+      3. **合入前审查**：在提交前调用 `code-review` 进行双轴审查（仓库标准轴与规格契约轴）；
+      4. **提交代码**：将已验证的切片代码与测试一同提交至当前分支。
+      *(注：若实现中发现架构设计不合理、找不到接缝或依赖渗漏，应暂停实现，回退调用 `codebase-design` 重新切分接缝)*
 - **[`governed-arch`](#governed-arch)**（按需辅助：持续校验）
     - **怎么用**：在编写跨模块代码或重构时随时调用，或通过它的测试脚本跑 CI。
     - **发生什么**：运行边界校验，立即告诉你新加的 `import` 是否违反了架构规则。
-- **[`code-review`](#code-review)**（合入前触发）
-    - **怎么用**：一个功能（Ticket）开发完毕、准备合并到主分支时调用。
-    - **发生什么**：对比代码和 `spec.md`，检查是否遵循了仓库标准和规格要求。
-- **[`handoff`](#handoff)**（下班或切换任务时触发）
-    - **怎么用**：当前会话结束、或者要把工作交接给另一个 Agent/人类时调用。
-    - **发生什么**：压缩当前上下文，留给下一位接手者一个清晰的起点。
-- **[`failsafe-loop`](#failsafe-loop)**（按需干预：适用于高风险任务）
-    - **怎么用**：当遇到极易出错或破坏性极大的修改时调用，强行引入步步审查和快照比对。
-- **[`research`](#research) / [`prototype`](#prototype)**（按需辅助）
-    - **怎么用**：遇到技术难点时去查一手文档或写抛弃型验证代码。
 
 **阶段产出清单**：
 - `src/` 与 `tests/`：通过分层验证的代码与单元/集成测试用例
-- `.scratch/handoff-YYYYMMDD-HHMMSS.md`：会话交接快照（交接时生成）
-- （代码合入与特性上线后，清理 `.scratch/<feature-slug>/` 临时目录）
+- `docs/action-plan.md`：更新后的施工波次进度与新恢复点（由 `impl-loop` 自动回写）
+- （代码合入与特性上线后，清理 `.scratch/<feature-slug>/` 临时工单目录）
 
-### 3.6 阶段 5：运行、诊断与演进
+### 3.6 跨阶段交付编排引擎：[`impl-loop`](#impl-loop)
+
+在 SVG 全景图中，**阶段 3（规格与拆解）** 与 **阶段 4（迭代闭环）** 被外层的绿色大虚线框整体包裹，其核心载体正是自研编排技能 **`impl-loop`**。
+
+#### 3.6.1 产生背景与核心价值
+
+在传统或单点 Agent 协作中，开发者往往需要频繁手动执行多条独立命令：先调用 `/to-spec` 起草规格，再手动运行 `/to-tickets` 拆工单，接着逐张票敲 `/implement`，并在每张票完成后手动跑测试命令，最后还要手动打开 `docs/action-plan.md` 标记完成。这种割裂的交互模式极易出现**状态悬挂（State Drift）**或步骤遗漏。
+
+`impl-loop` 的定位是**端到端跨切片交付引擎（End-to-End Delivery Engine）**。它将阶段 3 的规格与拆解产物和阶段 4 的编码、测试与合入审查串联成一个高度自动化、强闸门约束的工业级交付流水线：
+
+```text
+               ┌───────────────────── impl-loop 交付闭环 ─────────────────────┐
+               │                                                              │
+/to-arch ────> │  /to-spec ──> /to-tickets ──> [ 逐票: /implement ──> 闸门 ]    │ ──> 回写 action-plan.md (done)
+(提供施工计划) │  (阶段 3)       (阶段 3)               (阶段 4)      (分层验证)  │     推进波次恢复点
+               └──────────────────────────────────────────────────────────────┘
+```
+
+#### 3.6.2 分工边界与职责矩阵
+
+| 技能 | 角色定位 | 核心职责 |
+| :--- | :--- | :--- |
+| **`impl-loop`** | **交付编排引擎** | 跨阶段全链路驱动、前置工件自主检测与补齐、测试闸门调度与验证、单 Spec 完工原子回写 `docs/action-plan.md`、断点续跑管理 |
+| **`to-spec`** | **规格起草器** | 探索代码库，基于领域词汇（`CONTEXT.md`）起草结构化规格说明书 `spec.md` |
+| **`to-tickets`** | **工单拆解器** | 将 `spec.md` 拆解为垂直切片临时工单 `tickets/NN-*.md`，声明 Blocked by 依赖 DAG |
+| **`implement`** | **单切片执行器** | 单张工单的具体代码实现：以 `tdd` 红绿循环实现、持续跑单测、合入前调用 `code-review`、Git commit |
+| **`to-arch`** | **顶层规划者** | 提供全系统波次施工计划 `docs/action-plan.md` 与分层测试策略（`docs/architecture.md`） |
+
+#### 3.6.3 完工原子回写与断点恢复
+
+- **单 Spec 完工原子回写**：当前 Spec 的所有工单解决且集成测试通过后，`impl-loop` 自动在 `docs/action-plan.md` 中将该 Slice 标记为 `done (<final_commit_sha>)`、记录测试通过命令，并将头部恢复点推进到下一波次，确保施工进度 100% 真实。
+- **断点恢复（Resume Semantics）**：`impl-loop` 天生支持长链路与跨会话接续，任何新会话输入 `/impl-loop` 即可直接读取 `action-plan.md` 恢复点继续执行。
+
+### 3.7 阶段 5：运行、诊断与演进
 
 **目标**：系统上线或形成里程碑后，应对外部反馈、排查线上故障，并更新全局治理资产。
 
@@ -376,15 +407,15 @@
 | **0. 启动** | `AGENTS.md`<br>`docs/agents/issue-tracker.md`<br>`docs/agents/triage-labels.md` | `setup-skills` | issue-tracker.md |
 | **1. 需求获取** | `.scratch/<effort>/map.md`<br>`CONTEXT.md` (初版)<br>`docs/adr/NNNN-*.md` (初版) | `grill-with-docs`<br>`wayfinder` | QAS-FORMAT.md<br>CONTEXT-FORMAT.md<br>ADR-FORMAT.md |
 | **2. 架构设计** | `CONTEXT.md` (定稿)<br>`docs/adr/NNNN-*.md`<br>`docs/architecture.md`<br>`docs/action-plan.md`<br>`architecture.toml` / `module.toml` | `domain-modeling`<br>`codebase-design`<br>`to-arch`<br>`governed-arch` | ARCHITECTURE-DESCRIPTION-FORMAT.md<br>VIEWPOINT-CATALOG.md<br>ADR-FORMAT.md |
-| **3. 规格拆解** | `.scratch/<feature-slug>/spec.md`<br>`.scratch/<feature-slug>/tickets/NN-*.md` | `to-spec`<br>`to-tickets` | SPEC-FORMAT.md |
-| **4. 迭代实现** | `src/` + `tests/`<br>`.scratch/handoff-*.md`<br>代码评审记录 | `implement`<br>`tdd`<br>`code-review` | 视项目规范而定 |
+| **3. 规格拆解** | `.scratch/<feature-slug>/spec.md`<br>`.scratch/<feature-slug>/tickets/NN-*.md` | `to-spec`<br>`to-tickets`<br>（由 `impl-loop` 驱动） | SPEC-FORMAT.md |
+| **4. 迭代实现** | `src/` + `tests/`<br>`docs/action-plan.md` (进度回写) | `impl-loop`<br>`implement` (含 `tdd`/`review`)<br>`governed-arch` | 视项目规范而定 |
 | **5. 运行演进** | `docs/issues/NNN-*.md`<br>`docs/issues/_summary.md`<br>诊断记录 / 更新后的架构图 | `to-issues`<br>`triage`<br>`diagnosing-bugs`<br>`governed-arch` | HANDOFF-FORMAT.md |
 
 > 活文档标注：`CONTEXT.md` 与 ADR 是跨阶段演进的活文档，不专属于单一阶段——在阶段 1 由 `grill-with-docs` 内嵌的 `domain-modeling` 即时创建（惰性建文件、术语敲定即落盘），在阶段 2 由显式调用 `domain-modeling` 做统一挑战与收敛定稿。
 
 ## 5. 辅助技能与实用判断表
 
-在主干路径之外，存在一组“辅助/横切技能”。它们不直接推进流水线的状态流转，而是像“外挂工具箱”一样，在主干受阻、存在知识盲区或需要重构上下文时按需触发（调用应当是非阻塞式和高度目的性的，解决完具体问题后迅速回到主干）。
+在主干路径之外，存在一组“辅助/横切技能”（对应 SVG 底部横条）。它们不直接推进流水线的状态流转，而是像“外挂工具箱”一样，在主干受阻、存在知识盲区、需要重构上下文或遇到高风险时按需触发（调用应当是非阻塞式和高度目的性的，解决完具体问题后迅速回到主干）。
 
 ### 5.1 辅助技能速览
 
@@ -392,8 +423,11 @@
 | :--- | :--- |
 | [`research`](#research) | 关键事实不在手里（API 设计、库能力、竞品做法） |
 | [`prototype`](#prototype) | 存在高不确定性风险，正式实现前先探路验证 |
+| [`failsafe-loop`](#failsafe-loop) | 遇到极易出错或破坏性极大的修改，强行引入分阶段验证与快照比对 |
+| [`to-issues`](#to-issues) | 捕获 bug 报告、小型功能请求或独立任务，写入永久问题流 |
 | [`improve-codebase-architecture`](#improve-codebase-architecture) | 设计无法落地，或维护期结构阻碍新特性 |
 | [`teach`](#teach) | 有复杂领域经验或脚手架要沉淀，或准备引入新成员 |
+| [`handoff`](#handoff) | 会话结束或交接时压缩上下文，留存清晰起点 |
 | [`to-questionnaire`](#to-questionnaire) | 关键信息掌握在外部干系人手里 |
 
 ### 5.2 实用判断表
@@ -409,6 +443,7 @@
 | 需要强制执行架构和目录边界 | [`governed-arch`](#governed-arch) | 生成 TOML 边界规则与自动化架构测试 |
 | 逻辑已收敛，需要形成执行与验收契约 | [`to-spec`](#to-spec) | 起草结构化规格说明书 `spec.md` |
 | 需求和架构都定了，需要拆成开发切片 | [`to-tickets`](#to-tickets) | 拆解为垂直切片临时工单并声明阻塞 DAG |
+| 规格与工单已就绪，需全流程驱动实现并推进项目计划 | [`impl-loop`](#impl-loop) | 串联逐票实现、测试闸门与 action-plan 进度回写 |
 | Bug 报告、小功能或独立任务要长期追踪 | [`to-issues`](#to-issues) | 录入全局编号永久问题流并同步索引 |
 | 可以开始写代码了 | [`implement`](#implement) / [`tdd`](#tdd) | 红-绿-重构节奏实现功能与单测 |
 | 实现期发现设计无法落地、边界渗漏 | [`improve-codebase-architecture`](#improve-codebase-architecture) | 重划接缝并更新 ADR / 架构描述 |
@@ -465,6 +500,11 @@
 - **何时使用**：规格就绪后拆解为可执行开发切片（阶段 3 第二步）。上游原版技能，按锁定基线逐字节还原。
 - **做了什么**：按 `docs/agents/issue-tracker.md` 约定，将规格按垂直切片起草为 `.scratch/<feature-slug>/tickets/` 下的一张张临时开发票（`NN-<slug>.md`），逐张标注阻塞关系，宽重构改用 expand-contract 序列。
 - **怎么做的**：与用户确认粒度与依赖后写入 `.scratch/<feature-slug>/tickets/`；工单是短期规划脚手架，随特性结束即弃——不建索引、编号按依赖顺序从 `01` 起、不跨特性复用。
+
+### impl-loop
+- **何时使用**：规格与工单拆解就绪后，需要推进端到端交付循环，或接续在途中特性时（阶段 3/4 编排器）。本仓库自研技能（mine）。
+- **做了什么**：串联 `/to-spec` -> `/to-tickets` -> `/implement` -> 测试闸门，逐票闭环并实时更新恢复点；单 Spec 完工且集成闸门通过后，自动回写 `docs/action-plan.md` 标记 Slice 完成并推进波次。
+- **怎么做的**：按 DAG 认领工单并派发给 `implement`，单票以 unit test 验收并打点，最后过 spec 级 integration test；完工时执行原子回写：更新 Slice 状态行、更新 Notes 闸门记录、推进 Resume Point 头部、归档临时脚手架。
 
 ### to-issues
 - **何时使用**：捕获 bug 报告、小型功能请求或独立任务，写入仓库级永久问题流；不用于把规格拆解成切片（那是 `/to-tickets` 的职责）。本仓库自研技能（mine）。

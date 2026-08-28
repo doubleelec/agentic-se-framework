@@ -48,17 +48,16 @@ Mapped onto the current skills, the trunk path typically is:
 
 | Timing | Preferred skill(s) |
 | :--- | :--- |
-| Project bootstrap | [`setup-matt-pocock-skills`](#setup-matt-pocock-skills) |
-| Requirements elicitation (choose one) | [`wayfinder`](#wayfinder) / [`grill-with-docs`](#grill-with-docs) |
-| Concept unification, architecture synthesis & constraint enforcement | [`domain-modeling`](#domain-modeling) → [`codebase-design`](#codebase-design) → [`to-arch`](#to-arch) → [`governed-arch`](#governed-arch) |
-| Specification | [`to-spec`](#to-spec) |
-| Ticket decomposition | [`to-tickets`](#to-tickets) |
-| Bug & standalone-item tracking | [`to-issues`](#to-issues) |
-| High-uncertainty exploration | [`research`](#research) / [`prototype`](#prototype) |
-| Coding | [`implement`](#implement) + [`tdd`](#tdd) |
-| High-risk change | [`failsafe-loop`](#failsafe-loop) |
-| Pre-merge check | [`code-review`](#code-review) |
-| Handover | [`handoff`](#handoff) |
+| Phase 0: Project bootstrap | [`setup-matt-pocock-skills`](#setup-matt-pocock-skills) |
+| Phase 1: Requirements elicitation (choose one) | [`wayfinder`](#wayfinder) / [`grill-with-docs`](#grill-with-docs) |
+| Phase 2: Concept unification, architecture synthesis & constraint enforcement | [`domain-modeling`](#domain-modeling) → [`codebase-design`](#codebase-design) → [`to-arch`](#to-arch) → [`governed-arch`](#governed-arch) |
+| Phase 3 & 4: Cross-phase delivery loop | [`impl-loop`](#impl-loop) (driving `to-spec` $\rightarrow$ `to-tickets` $\rightarrow$ `implement` + `tdd` $\rightarrow$ progress write-back) |
+| Phase 3: Specification & ticket decomposition | [`to-spec`](#to-spec) → [`to-tickets`](#to-tickets) |
+| Phase 4: Single-slice coding & test loop | [`implement`](#implement) (incl. [`tdd`](#tdd) + [`code-review`](#code-review)) |
+| Phase 5: Operation, diagnosis & asset evolution | [`to-issues`](#to-issues) → [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) → [`governed-arch`](#governed-arch) |
+| Auxiliary: High-uncertainty exploration | [`research`](#research) / [`prototype`](#prototype) |
+| Auxiliary: High-risk change guarding | [`failsafe-loop`](#failsafe-loop) |
+| Auxiliary: Handover | [`handoff`](#handoff) |
 | Operation phase | [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) |
 
 The point is not that "the order must be one-size-fits-all", but that every phase must answer one clear engineering question and leave behind the corresponding artifacts.
@@ -154,15 +153,19 @@ The point is not that "the order must be one-size-fits-all", but that every phas
     <text x="500" y="328" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-arch</text>
     <text x="500" y="347" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
 
+    <!-- impl-loop orchestration dashed frame -->
+    <rect x="598" y="246" width="324" height="142" rx="10" fill="#f0fdfa" fill-opacity="0.4" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="5 3"></rect>
+    <rect x="715" y="236" width="90" height="20" rx="6" fill="#0f766e"></rect>
+    <text x="760" y="250" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">impl-loop</text>
+
     <rect x="610" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
     <text x="680" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-spec</text>
     <text x="680" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-tickets</text>
 
     <rect x="780" y="260" width="130" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
-    <text x="845" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement / tdd</text>
-    <text x="845" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review</text>
-    <text x="845" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">handoff</text>
-    <text x="845" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">failsafe-loop</text>
+    <text x="845" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement</text>
+    <text x="845" y="330" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">(incl. tdd /</text>
+    <text x="845" y="350" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review)</text>
 
     <rect x="940" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
     <text x="1010" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-issues</text>
@@ -217,13 +220,14 @@ The point is not that "the order must be one-size-fits-all", but that every phas
     <!-- Bottom auxiliary band -->
     <line x1="20" y1="546" x2="1100" y2="546" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4"></line>
     <rect x="10" y="558" width="1100" height="48" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="5 3"></rect>
-    <text x="40" y="587" font-size="16" font-weight="700" fill="#b45309">Auxiliary Skills</text>
-    <text x="275" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">research</text>
-    <text x="425" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">prototype</text>
-    <text x="575" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">to-issues</text>
-    <text x="725" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">improve-arch</text>
-    <text x="875" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">teach</text>
-    <text x="1025" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">handoff</text>
+    <text x="28" y="587" font-size="15" font-weight="700" fill="#b45309">Auxiliary Skills</text>
+    <text x="225" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">research</text>
+    <text x="355" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">prototype</text>
+    <text x="500" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">failsafe-loop</text>
+    <text x="640" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">to-issues</text>
+    <text x="775" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">improve-arch</text>
+    <text x="905" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">teach</text>
+    <text x="1025" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">handoff</text>
   </svg>
 </div>
 
@@ -303,15 +307,15 @@ The following is detailed operational guidance for each phase of the software en
 
 **Goal**: Turn abstract designs and requirements into executable specification documents and concrete development tasks.
 
-**Scope boundary**: cross-module system-level construction order has already been fixed by Phase 2's `docs/action-plan.md` (including the positions of governance scaffolding and integration tests); the `to-spec` and `to-tickets` of this phase only own step ordering inside a single feature — neither crosses into the other's scope.
+**Scope boundary**: cross-module system-level construction order has already been fixed by Phase 2's `docs/action-plan.md` (including the positions of governance scaffolding and integration tests); the `to-spec` and `to-tickets` of this phase only own step ordering inside a single feature — neither crosses into the other's scope. This phase runs automated under `impl-loop` or standalone on demand.
 
 **Skills and logical relations**: [sequential collaboration, execute in order]
 
 1. **[`to-spec`](#to-spec)**
-    - **How to use**: invoke once architecture and requirements have stabilized.
+    - **How to use**: invoke once architecture and requirements have stabilized (or invoked automatically by `impl-loop`).
     - **What happens**: generates a structured `spec.md`, clarifying functional requirements, non-functional requirements, and acceptance criteria.
 2. **[`to-tickets`](#to-tickets)**
-    - **How to use**: invoke based on `spec.md`.
+    - **How to use**: invoke based on `spec.md` (or invoked automatically by `impl-loop`).
     - **What happens**: following the conventions of `docs/agents/issue-tracker.md`, decomposes the specification into individual development tickets under `.scratch/<feature-slug>/tickets/`, declaring blocking relations ticket by ticket.
 
 **Phase artifacts**:
@@ -320,33 +324,61 @@ The following is detailed operational guidance for each phase of the software en
 
 ### 3.5 Phase 4: Implementation and the Iterative Loop
 
-**Goal**: Write code that satisfies the specification, completing review and state handover within tight loops.
+**Goal**: Write code that satisfies the specification, completing review, test-gate validation, and plan progress write-back within tight loops.
 
-**Skills and logical relations**: [high-frequency loop: pick up ticket -> implement -> review -> handoff]
+**Skills and logical relations**: [high-frequency loop: pick up ticket -> implement (TDD + review) -> gate validation -> on-completion write-back]
 
-- **[`implement`](#implement) + [`tdd`](#tdd)** (mandatory trunk)
-    - **How to use**: invoke after picking up a ticket.
-    - **What happens**: implements the feature in the TDD rhythm (red-green-refactor), ensuring test coverage. If the architecture proves unsound during implementation (no seam can be found, tests keep failing), pause implementation and fall back to `codebase-design` to re-cut boundaries.
+- **[`implement`](#implement)** (single-slice execution trunk, internalizing [`tdd`](#tdd) and [`code-review`](#code-review))
+    - **How to use**: invoked internally by `impl-loop` per ticket, or called directly by human for single-ticket work.
+    - **What happens**:
+      1. **TDD red-green loop**: writes a failing test first at the planned seam, then the minimal implementation to green, guaranteeing regression coverage;
+      2. **Type checks and unit testing**: runs typecheck and unit tests continuously;
+      3. **Pre-merge review**: calls `code-review` before commit for dual-axis inspection (standards axis and spec axis);
+      4. **Commit**: commits verified code and tests together to the current branch.
+      *(Note: if architecture proves unsound, no seam can be found, or dependencies leak, pause implementation and fall back to `codebase-design` to re-cut seams)*
 - **[`governed-arch`](#governed-arch)** (on-demand auxiliary: continuous validation)
     - **How to use**: invoke anytime while writing or refactoring cross-module code, or run its test scripts in CI.
     - **What happens**: runs boundary validation and tells you immediately whether a newly added `import` violates the architecture rules.
-- **[`code-review`](#code-review)** (triggered before merge)
-    - **How to use**: invoke when a feature (ticket) is done and about to merge into the main branch.
-    - **What happens**: compares code against `spec.md`, checking conformance with repository standards and specification requirements.
-- **[`handoff`](#handoff)** (triggered at session end or task switch)
-    - **How to use**: invoke when the current session ends, or when handing work over to another agent/human.
-    - **What happens**: compresses the current context, leaving the next taker a clear starting point.
-- **[`failsafe-loop`](#failsafe-loop)** (on-demand intervention: for high-risk tasks)
-    - **How to use**: invoke for changes that are extremely error-prone or destructive, forcing step-by-step verification and snapshot comparison.
-- **[`research`](#research) / [`prototype`](#prototype)** (on-demand auxiliary)
-    - **How to use**: consult first-hand documentation or write throwaway verification code when hitting technical difficulties.
 
 **Phase artifacts**:
 - `src/` and `tests/`: code passing layered verification plus unit/integration test cases
-- `.scratch/handoff-YYYYMMDD-HHMMSS.md`: session handoff snapshot (generated at handoff)
+- `docs/action-plan.md`: updated wave progress and new resume point (written back automatically by `impl-loop`)
 - (after merge and release, clean up the temporary `.scratch/<feature-slug>/` directory)
 
-### 3.6 Phase 5: Operation, Diagnosis, and Evolution
+### 3.6 Cross-Phase Delivery Orchestrator: [`impl-loop`](#impl-loop)
+
+In the SVG panorama diagram, **Phase 3 (Specification & Decomposition)** and **Phase 4 (Iterative Loop)** are encompassed by the outer green dashed box, powered by the core orchestration skill **`impl-loop`**.
+
+#### 3.6.1 Background and Core Value
+
+In traditional or single-slice agent workflows, developers frequently switch between multiple isolated commands: invoking `/to-spec` to draft specs, `/to-tickets` to decompose tickets, typing `/implement` per ticket, running manual test gate commands, and manually updating `docs/action-plan.md`. This fragmented interaction pattern is highly prone to **state drift** and skipped verification gates.
+
+`impl-loop` acts as the **end-to-end delivery engine**. It links Phase 3 specification artifacts with Phase 4 coding, testing, and review into a unified, gated delivery pipeline:
+
+```text
+               ┌───────────────────── impl-loop Delivery Loop ─────────────────────┐
+               │                                                                   │
+/to-arch ────> │  /to-spec ──> /to-tickets ──> [ per ticket: /implement ──> Gate ] │ ──> write back action-plan.md (done)
+(construction  │  (Phase 3)      (Phase 3)                   (Phase 4)      (tests)│     advance wave resume point
+ plan provider)└───────────────────────────────────────────────────────────────────┘
+```
+
+#### 3.6.2 Division of Labor & Responsibility Matrix
+
+| Skill | Role | Core Responsibility |
+| :--- | :--- | :--- |
+| **`impl-loop`** | **Delivery Orchestrator** | Chains the entire workflow, detects and actively fulfills missing prerequisites, drives ticket implementations, enforces test gates, manages resume points, and atomically writes back to `action-plan.md` on completion |
+| **`to-spec`** | **Spec Drafter** | Explores the codebase and drafts structured specification documents `spec.md` using domain vocabulary |
+| **`to-tickets`** | **Ticket Decomposer** | Breaks `spec.md` into vertical-slice temporary tickets `tickets/NN-*.md`, declaring a Blocked-by dependency DAG |
+| **`implement`** | **Single-Slice Executor** | Implements single tickets using `tdd` red-green cycles, runs unit tests, calls `code-review` before commit, and commits code |
+| **`to-arch`** | **Top-Level Planner** | Provides the whole-system wave construction plan `docs/action-plan.md` and layered test strategy (`docs/architecture.md`) |
+
+#### 3.6.3 Atomic Write-Back and Resume Semantics
+
+- **Spec Completion Atomic Write-Back**: Once all tickets for a spec are resolved and the integration gate passes, `impl-loop` automatically marks the slice `done (<final_commit_sha>)` in `docs/action-plan.md`, records the test gate command, and advances the header resume point to the next wave, keeping construction progress 100% true.
+- **Resume Semantics**: `impl-loop` is idempotent and resumable by design. Any new session can run `/impl-loop` to resume seamlessly from `docs/action-plan.md`.
+
+### 3.7 Phase 5: Operation, Diagnosis, and Evolution
 
 **Goal**: After go-live or milestone formation, respond to external feedback, troubleshoot production failures, and update global governance assets.
 
@@ -380,15 +412,15 @@ To keep engineering quality traceable and consistent, the following table pins d
 | **0. Bootstrap** | `AGENTS.md`<br>`docs/agents/issue-tracker.md`<br>`docs/agents/triage-labels.md` | `setup-skills` | issue-tracker.md |
 | **1. Requirements elicitation** | `.scratch/<effort>/map.md`<br>`CONTEXT.md` (initial)<br>`docs/adr/NNNN-*.md` (initial) | `grill-with-docs`<br>`wayfinder` | QAS-FORMAT.md<br>CONTEXT-FORMAT.md<br>ADR-FORMAT.md |
 | **2. Architecture design** | `CONTEXT.md` (final)<br>`docs/adr/NNNN-*.md`<br>`docs/architecture.md`<br>`docs/action-plan.md`<br>`architecture.toml` / `module.toml` | `domain-modeling`<br>`codebase-design`<br>`to-arch`<br>`governed-arch` | ARCHITECTURE-DESCRIPTION-FORMAT.md<br>VIEWPOINT-CATALOG.md<br>ADR-FORMAT.md |
-| **3. Spec decomposition** | `.scratch/<feature-slug>/spec.md`<br>`.scratch/<feature-slug>/tickets/NN-*.md` | `to-spec`<br>`to-tickets` | SPEC-FORMAT.md |
-| **4. Iterative implementation** | `src/` + `tests/`<br>`.scratch/handoff-*.md`<br>code review records | `implement`<br>`tdd`<br>`code-review` | per project conventions |
+| **3. Spec decomposition** | `.scratch/<feature-slug>/spec.md`<br>`.scratch/<feature-slug>/tickets/NN-*.md` | `to-spec`<br>`to-tickets`<br>(orchestrated by `impl-loop`) | SPEC-FORMAT.md |
+| **4. Iterative implementation** | `src/` + `tests/`<br>`docs/action-plan.md` (progress write-back) | `impl-loop`<br>`implement` (incl. `tdd`/`review`)<br>`governed-arch` | per project conventions |
 | **5. Operation & evolution** | `docs/issues/NNN-*.md`<br>`docs/issues/_summary.md`<br>diagnosis records / updated architecture diagrams | `to-issues`<br>`triage`<br>`diagnosing-bugs`<br>`governed-arch` | HANDOFF-FORMAT.md |
 
 > Living-document note: `CONTEXT.md` and ADRs are living documents evolving across phases, owned by no single phase — created lazily in Phase 1 by the `domain-modeling` embedded in `grill-with-docs` (lazy file creation; terms land the moment they settle), then challenged and converged to final form in Phase 2 by explicitly invoking `domain-modeling`.
 
 ## 5. Auxiliary Skills and Practical Decision Table
 
-Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills". They do not directly advance pipeline state transitions; like a plug-in toolbox, they fire on demand when the trunk is blocked, knowledge gaps exist, or context needs restructuring (invocations should be non-blocking and highly purposeful; return to the trunk promptly once the specific problem is solved).
+Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills" (corresponding to the bottom band in the SVG). They do not directly advance pipeline state transitions; like a plug-in toolbox, they fire on demand when the trunk is blocked, knowledge gaps exist, context needs restructuring, or high-risk operations occur (invocations should be non-blocking and highly purposeful; return to the trunk promptly once the specific problem is solved).
 
 ### 5.1 Auxiliary Skills at a Glance
 
@@ -396,8 +428,11 @@ Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills". Th
 | :--- | :--- |
 | [`research`](#research) | Key facts not in hand (API design, library capabilities, competitor approaches) |
 | [`prototype`](#prototype) | High-uncertainty risk; scout ahead before formal implementation |
+| [`failsafe-loop`](#failsafe-loop) | Extremely error-prone or destructive changes; force step-by-step verification and snapshots |
+| [`to-issues`](#to-issues) | Capture bug reports, small feature requests, or standalone tasks into the permanent stream |
 | [`improve-codebase-architecture`](#improve-codebase-architecture) | Design cannot land, or maintenance-period structure blocks new features |
 | [`teach`](#teach) | Complex domain experience or scaffolding worth distilling, or onboarding new members |
+| [`handoff`](#handoff) | Session end or task switch; compress context and leave a clean resume point |
 | [`to-questionnaire`](#to-questionnaire) | Key information held by external stakeholders |
 
 ### 5.2 Practical Decision Table
@@ -413,6 +448,7 @@ Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills". Th
 | Need enforced architecture and directory boundaries | [`governed-arch`](#governed-arch) | Generate TOML boundary rules and automated architecture tests |
 | Logic converged; need execution and acceptance contracts | [`to-spec`](#to-spec) | Draft the structured specification `spec.md` |
 | Requirements and architecture settled; need development slices | [`to-tickets`](#to-tickets) | Decompose into vertical-slice temporary tickets with a declared blocking DAG |
+| Spec and tickets are ready, need end-to-end delivery and plan progress | [`impl-loop`](#impl-loop) | Chain ticket implementations, test gates, and action-plan progress write-back |
 | Bug reports, small features, or standalone tasks need long-term tracking | [`to-issues`](#to-issues) | Record into the globally numbered permanent issue stream and sync the index |
 | Ready to start coding | [`implement`](#implement) / [`tdd`](#tdd) | Implement features and unit tests in red-green-refactor rhythm |
 | During implementation, design will not land, boundaries leak | [`improve-codebase-architecture`](#improve-codebase-architecture) | Re-cut seams and update ADRs / architecture description |
@@ -469,6 +505,11 @@ Every skill appearing in this panorama is summarized here, ordered by trunk flow
 - **When to use**: decomposing a ready specification into executable development slices (Phase 3 step 2). Upstream original skill, byte-for-byte restored per locked baseline.
 - **What it does**: following `docs/agents/issue-tracker.md` conventions, drafts the spec as vertical-slice temporary dev tickets under `.scratch/<feature-slug>/tickets/` (`NN-<slug>.md`), annotating blocking relations per ticket; wide refactorings switch to expand-contract sequences.
 - **How it works**: confirms granularity and dependencies with the user, then writes into `.scratch/<feature-slug>/tickets/`; tickets are short-term planning scaffolding discarded when the feature ends — no index, numbers start from `01` in dependency order, never reused across features.
+
+### impl-loop
+- **When to use**: when spec and tickets are ready and you need to drive the end-to-end delivery cycle, or continue an in-flight effort (Phase 3/4 orchestrator). This repository's original skill (mine).
+- **What it does**: chains `/to-spec` -> `/to-tickets` -> `/implement` -> test gates, closing ticket by ticket and keeping the resume point true; when the spec completes and integration gate passes, automatically writes back to `docs/action-plan.md` to mark the slice done and advance the wave.
+- **How it works**: claims tickets along the DAG and hands to `implement`, gating single tickets on unit tests, and closing the spec on integration tests; on completion performs atomic write-back: update slice status row, update Notes gate record, advance Resume Point header, and retire temporary scaffolding.
 
 ### to-issues
 - **When to use**: capturing bug reports, small feature requests, or standalone tasks into the repository-level permanent issue stream; not for splitting specs into slices (that is `/to-tickets`' job). This repository's original skill (mine).

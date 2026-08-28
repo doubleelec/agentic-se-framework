@@ -54,3 +54,12 @@ List or link to the key Architecture Decision Records (ADRs) that shape this arc
 - **Technical Constraints**: e.g., Must run on existing on-premise hardware.
 - **Business Constraints**: e.g., Must launch by Q3.
 - **Identified Risks**: Architectural risks and mitigation strategies.
+
+## 7. Test Architecture
+The scope rule for each test layer lives here; the matching "when each runs" lives in `action-plan.md`'s Progress table.
+
+- **Vocabulary**: unit test scopes to a *ticket*, integration test to a *spec*, system test to *two or more specs / the whole effort* (see `CONTEXT.md`).
+- **Tools**: per-layer test frameworks and commands.
+- **Directory layout**: where each layer's tests live.
+- **Layer-scope overrides**: any spec whose shape warrants testing outside its default layer, stated explicitly (never silent).
+  - e.g., `spec <id>` spans many modules -> its gate treats integration as unit-grade, or promotes one slice to a system-test unit.

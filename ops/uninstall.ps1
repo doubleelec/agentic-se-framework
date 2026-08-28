@@ -31,7 +31,7 @@ else {
     $targets = @(Get-EnabledTargets -TargetConfig $targetsConfig)
 }
 
-$skills = Get-PublishedSkills -SkillsConfig $skillsConfig -SkillName $SkillName
+$skills = @(Get-PublishedSkills -SkillsConfig $skillsConfig -SkillName $SkillName)
 if ($skills.Count -eq 0) {
     throw "No published skills matched the requested filter."
 }

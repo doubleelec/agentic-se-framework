@@ -1,8 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$TargetName,
-    [string[]]$SkillName,
-    [switch]$Force
+    [string[]]$SkillName
 )
 
 Set-StrictMode -Version Latest
@@ -83,25 +82,10 @@ foreach ($target in $targets) {
             Write-Warning "CONFLICT: $($conflict.Reason)"
         }
 
-        if (-not $Force) {
-            throw "Install aborted before any change: $($conflicts.Count) skill(s) on '$targetNameResolved' were modified after install and are not covered by the repo source. To keep those edits run ops/capture_hotfix.ps1 first, or re-run with -Force to overwrite them (a backup is still taken)."
-        }
-
-        Write-Warning "-Force specified: overwriting $($conflicts.Count) conflicted skill(s) on '$targetNameResolved' (backups will be kept)."
-        foreach ($conflict in $conflicts) {
-            $skillEntry = @($skills | Where-Object { (Get-SkillPublishName -Skill $_) -eq $conflict.PublishName })[0]
-            $sourcePathRelative = Get-SkillSourcePath -Skill $skillEntry
-            $repoRoot = Get-RepoPath -SkillsConfig $skillsConfig -RepoName $skillEntry["repo"]
-            $sourcePath = Join-Path $repoRoot $sourcePathRelative
-            $targetPath = Join-Path $installRoot $conflict.PublishName
-            $plan += @{
-                Skill = $skillEntry
-                PublishName = $conflict.PublishName
-                SourcePath = $sourcePath
-                TargetPath = $targetPath
-                SourceMap = (Get-FileHashMap -RootPath $sourcePath)
-            }
-        }
+        throw "Install aborted before any change: $($conflicts.Count) skill(s) on '$targetNameResolved' are not in a clean (repo-matching) state, so nothing was written. `n" +
+              "The installer never overwrites a diverged target - choose how to resolve the divergence: `n" +
+              "  - To KEEP the installed copy (it is a deliberate edit): first run 'ops/capture_hotfix.ps1 -TargetName <target> -SkillName <name>' to fold it back into source, then re-run this install. `n" +
+              "  - To DISCARD it and redeploy from source: run 'ops/uninstall.ps1 -TargetName <target> -SkillName <name>' (backs up first), then re-run this install."
     }
 
     foreach ($entry in $plan) {

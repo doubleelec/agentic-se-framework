@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>to-arch 与 impl-loop 技能深化建议与演进指南</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --surface: #fbfbfd;
+      --text: #1f2328;
+      --muted: #5b6472;
+      --border: #d8dee8;
+      --brand: #6f42ff;
+      --code-bg: #f3f5f8;
+      --quote: #eef2ff;
+      --max-width: 1280px;
+      --shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 20px 64px;
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+    }
+    .meta {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    h1, h2, h3, h4 {
+      line-height: 1.3;
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+    }
+    h1 { margin-top: 0; font-size: 2rem; }
+    h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.2em; }
+    h3 { font-size: 1.2rem; }
+    p, ul, ol, blockquote, table, pre { margin: 0 0 1em; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+      background: var(--code-bg);
+      padding: 0.12em 0.35em;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
+    blockquote {
+      border-left: 4px solid var(--brand);
+      margin-left: 0;
+      padding: 12px 16px;
+      background: var(--quote);
+      border-radius: 0 10px 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { background: var(--code-bg); }
+    img { max-width: 100%; height: auto; }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2em 0;
+    }
+    .index-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .index-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    ul, ol {
+      padding-left: 28px;
+      margin: 14px 0;
+    }
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .mermaid {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      margin: 20px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      overflow-x: auto;
+      text-align: center;
+    }
+    .mermaid svg {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      margin: 0 auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 35,
+        rankSpacing: 40,
+        padding: 12
+      },
+      gantt: {
+        useMaxWidth: false,
+        leftPadding: 220,
+        rightPadding: 30,
+        barHeight: 26,
+        barGap: 8,
+        fontSize: 12.5,
+        sectionFontSize: 13.5,
+        axisFormat: '%m-%d'
+      },
+      themeVariables: {
+        fontSize: '13px',
+        lineHeight: '1.4'
+      }
+    });
+  </script>
+</head>
+<body>
+  <main>
+    <div class="meta">Source: <code>docs/to_arch_and_impl_loop_recommendations.zh.md</code></div>
+    <h1 id="to-arch-impl-loop">to-arch 与 impl-loop 技能深化建议与演进指南</h1>
+<p>本文档记录了针对 <code>to-arch</code>（架构合成与施工计划制定）与 <code>impl-loop</code>（端到端规格-工单-实现交付循环）两个核心自研/编排技能的完整分析、优化建议与演进策略。</p>
+<hr>
+<h2 id="1">1. 当前机制与核心优势评估</h2>
+<p>在当前的软件工程技能全景图中，<code>to-arch</code> 与 <code>impl-loop</code> 形成了清晰的<strong>“战略制图”与“战术巡航”</strong>分工：</p>
+<ul>
+<li><strong><code>to-arch</code>（战略制图）</strong>：</li>
+<li>严格遵循 ISO/IEC/IEEE 42010 架构描述标准；</li>
+<li>坚持“零发明”原则（Zero-invention），对决策缺口、事实缺口、术语缺口精准分流；</li>
+<li>产出全局架构描述 <code>docs/architecture.md</code> 与施工波次计划 <code>docs/action-plan.md</code>；</li>
+<li>固化粒度绑定的测试分层体系（Unit $\leftrightarrow$ Ticket，Integration $\leftrightarrow$ Spec，System $\leftrightarrow$ Multi-spec / Whole effort）；</li>
+<li>
+<p>彻底解耦运行时拓扑依赖（<code>architecture.toml</code> 的 <code>depends_on</code>）与施工构建波次（<code>action-plan.md</code> 的 Waves）。</p>
+</li>
+<li>
+<p><strong><code>impl-loop</code>（战术巡航）</strong>：</p>
+</li>
+<li>纯编排器设计，不重复造轮子，内嵌调用 <code>/implement</code>、<code>/tdd</code> 与 <code>/code-review</code>；</li>
+<li>测试闸门严格从上游（<code>action-plan.md</code> 与 <code>docs/architecture.md</code>）继承，禁止执行层私自升降测试强度；</li>
+<li>状态以 <code>docs/action-plan.md</code> 头部恢复点（Resume point）为准，天生支持断点续传与跨会话接续；</li>
+<li>单票推进机制（One ticket in flight at a time），保障每个垂直切片的高质量交付。</li>
+</ul>
+<hr>
+<h2 id="2-to-arch">2. 关于 <code>to-arch</code> 的深化建议</h2>
+<h3 id="21-qastest-gate">2.1 建立质量属性场景（QAS）到测试闸门（Test Gate）的显式追踪链</h3>
+<ul>
+<li><strong>背景</strong>：<code>to-arch</code> 在 Step 1 收集 QAS，在 Section 7 规定 Test Architecture。</li>
+<li><strong>优化点</strong>：对于性能、并发、吞吐量、幂等性等非功能性 QAS，在 <code>docs/architecture.md</code> 中不仅记录文字描述，更应显式绑定到对应的测试命令与波次。</li>
+<li><strong>示例</strong>：<blockquote>
+<p><code>QAS-02 (订单查询时延 &lt; 200ms)</code> $\rightarrow$ 绑定到 Wave 2 的 S3 集成测试闸门 <code>pytest tests/e2e/test_latency.py</code>。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="22-reconcile">2.2 强化 Reconcile 模式中的“架构漂移快速自检清单”</h3>
+<ul>
+<li><strong>背景</strong>：<code>to-arch</code> 在里程碑或发现漂移时通过 <code>reconcile</code> 模式对账。</li>
+<li><strong>优化点</strong>：在 Step 1 盘点中，固化 3 条零漂移规则：<br>
+  1. <strong>ADR 漂移检查</strong>：是否存在新落盘的 <code>docs/adr/*.md</code> 尚未在 <code>docs/architecture.md</code> 第 5 节中索引？<br>
+  2. <strong>模块边界漂移检查</strong>：是否存在 <code>architecture.toml</code> 或 <code>module.toml</code> 中新增的模块/子模块尚未在逻辑分解视图中呈现？<br>
+  3. <strong>接缝漂移检查</strong>：是否存在 <code>[public_api].exposed</code> 新增了突破原定 Seam 的接口？若有，需确认是否补充 ADR 或更新架构描述。</li>
+</ul>
+<h3 id="23-parallel-groups">2.3 波次并行组（Parallel Groups）的显式标注</h3>
+<ul>
+<li><strong>优化点</strong>：在 <code>action-plan.md</code> 的 Waves 章节中，针对同波次内可并行的切片明确标注 <code>Parallel group: [S1, S2]</code>，便于未来多 Subagent 或多人并发认领与推进。</li>
+</ul>
+<hr>
+<h2 id="3-impl-loop">3. 关于 <code>impl-loop</code> 的深化与鲁棒性建议</h2>
+<h3 id="31-action-planmd">3.1 结尾处显式闭合 <code>action-plan.md</code> 进度（核心必选动作）</h3>
+<ul>
+<li><strong>优化点</strong>：在单 Spec 下所有 Tickets 交付完毕且 Spec 级 Integration Gate 通过后，<code>impl-loop</code> <strong>必须在退出前执行完工回写</strong>：<br>
+  1. <strong>更新 Slice 状态</strong>：将该 Slice 的 <code>Status</code> 置为 <code>done (&lt;commit_sha&gt;)</code>；<br>
+  2. <strong>更新 Notes 记录</strong>：记录 <code>all N tickets resolved, integration gate passed (&lt;gate_cmd&gt;)</code>；<br>
+  3. <strong>推进 Resume Point 头部</strong>：<ul>
+<li>若当前 Wave 还有在途/待办 Slice $\rightarrow$ 更新 in-flight / pending 状态；</li>
+<li>若当前 Wave 全部 Slice 已 Done $\rightarrow$ 将 Resume Point 推进至 <code>Wave &lt;k+1&gt;</code>；</li>
+<li>若已通过最终波次的 System Test $\rightarrow$ 标记 <code>Effort complete</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-bounded-retry">3.2 失败熔断（Bounded Retry 耗尽）后的归因与技能分流</h3>
+<ul>
+<li><strong>优化点</strong>：当单票闸门经过 1 次重试仍未通过时，<code>impl-loop</code> 停止循环并将 Ticket 保持 <code>claimed</code>，同时输出针对性的下一步技能建议：</li>
+<li><strong>因接缝模糊或依赖渗漏导致的失败</strong> $\rightarrow$ 建议调用 <code>/improve-codebase-architecture</code> 或 <code>/codebase-design</code> 重构接缝；</li>
+<li><strong>因需求假设冲突导致的失败</strong> $\rightarrow$ 建议调用 <code>/grill-with-docs</code> 澄清该 Ticket 的边界；</li>
+<li><strong>因第三方库或环境事实不明确</strong> $\rightarrow$ 建议调用 <code>/research</code>。</li>
+</ul>
+<h3 id="33-context">3.3 长切片链条下的 Context 预算与主动断点机制</h3>
+<ul>
+<li><strong>优化点</strong>：当一个 Spec 拆解出较多工单（如 $&gt;4$ 张票）或产生大量代码修改时，模型上下文会迅速膨胀。</li>
+<li><strong>机制</strong>：每完成一张票，<code>impl-loop</code> 自动保证 <code>action-plan.md</code> 和 ticket 状态已即时持久化，并可在单票完成时提示用户：<em>“当前 Ticket 已闭环且状态已落盘，可选择继续下一张票，或开启新会话输入 <code>/impl-loop</code> 无缝续跑”</em>。</li>
+</ul>
+<h3 id="34-notes">3.4 规范在途工单在 Notes 列的微观计数</h3>
+<ul>
+<li><strong>格式建议</strong>：</li>
+<li>在途中：<code>Status: in-progress | Notes: ticket 02/05 (01 resolved)</code></li>
+<li>完工时：<code>Status: done (a1b2c3d) | Notes: 05/05 tickets resolved, integration gate passed</code></li>
+</ul>
+<h3 id="35-model-invocation">3.5 技能自主发现与调用（Model Invocation）机制保障</h3>
+<ul>
+<li><strong>排查出的阻塞点</strong>：上游 <code>to-spec</code>、<code>to-tickets</code>、<code>implement</code> 最初携带 <code>disable-model-invocation: true</code>，导致 Agent 在会话内无法感知到这些技能并报错“不在可用目录中”；且 <code>impl-loop</code> 指令中使用了“run /to-spec”等斜杠命令写法，使 Agent 误以为需等待人类输入。</li>
+<li><strong>已实施修复</strong>：<br>
+  1. 移除 <code>to-spec</code>、<code>to-tickets</code>、<code>implement</code> 的 <code>disable-model-invocation: true</code>，使其对 Agent 恢复可见与可调用；<br>
+  2. 重构 <code>impl-loop/SKILL.md</code> 指令，明确交代“Agent 为主动执行者”，当缺失工件时主动加载执行对应技能，不再停顿或提示人类输入命令。</li>
+</ul>
+<hr>
+<h2 id="4">4. 总结与落地路线</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">优化项目</th>
+<th style="text-align: left;">涉及技能/工件</th>
+<th style="text-align: center;">优先级</th>
+<th style="text-align: left;">预期效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>完工回写 <code>action-plan.md</code></strong></td>
+<td style="text-align: left;"><code>impl-loop</code> / <code>docs/action-plan.md</code></td>
+<td style="text-align: center;"><strong>P0（已采纳）</strong></td>
+<td style="text-align: left;">确保每个 Spec 交付完成后施工总账和恢复点 100% 准确推进。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>解除前置技能的模型调用限制</strong></td>
+<td style="text-align: left;"><code>to-spec</code> / <code>to-tickets</code> / <code>implement</code></td>
+<td style="text-align: center;"><strong>P0（已采纳）</strong></td>
+<td style="text-align: left;">修复 Agent 误报“技能不在目录中”的阻断问题，实现全自主编排。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>QAS 到测试闸门的追踪</strong></td>
+<td style="text-align: left;"><code>to-arch</code> / <code>docs/architecture.md</code></td>
+<td style="text-align: center;">P1</td>
+<td style="text-align: left;">保证非功能性架构需求有明确的自动化测试闸门兜底。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>失败熔断分流指引</strong></td>
+<td style="text-align: left;"><code>impl-loop</code></td>
+<td style="text-align: center;">P1</td>
+<td style="text-align: left;">避免 Agent 在测试不通时死循环，精准引导回退重构。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reconcile 漂移自检规则</strong></td>
+<td style="text-align: left;"><code>to-arch</code></td>
+<td style="text-align: center;">P2</td>
+<td style="text-align: left;">增强架构对账的自动化与标准化。</td>
+</tr>
+</tbody>
+</table>
+  </main>
+</body>
+</html>

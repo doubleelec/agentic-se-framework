@@ -13,6 +13,18 @@ Turn scattered upstream decisions into the two artifacts the execution layer con
 
 Upstream inputs: `CONTEXT.md`, `docs/adr/*.md`, quality-attribute scenarios, a wayfinder map (if any). Downstream consumers: `governed-arch` translates boundaries into TOML enforcement; `/to-spec` reads the description for its global frame; every slice of work lives on the plan.
 
+## Test scope vocabulary (binding)
+
+The test layers that `to-arch` assigns are **grain-scoped, not arbitrary grades**. Affirm these terms from `CONTEXT.md` (they bind all downstream skills):
+
+| Layer | Scope (one instance of which) | Gate it closes |
+| ----- | ----------------------------- | -------------- |
+| **unit test** | a ticket | intra-ticket quality |
+| **integration test** | a spec | single-spec completion |
+| **system test** | two or more specs / whole effort | final wave |
+
+The grains nest (`ticket ⊂ spec ⊂ effort`), so the layers nest too. `to-arch` **may override** a layer's default scope where a spec's shape warrants (e.g. a spec spanning many modules may deserve integration/early-system testing) - record the override in the Architecture Description, never silently.
+
 ## Mode
 
 Pick exactly one, state it to the user, then run only that path:
@@ -40,6 +52,8 @@ Handle gaps by kind - **zero-invention**: every sentence in both artifacts must 
 
 Completion criterion: every module that exists or is planned appears in exactly one inventory row, and every selected viewpoint cites the concern it covers.
 
+> **Module boundaries decide test seams.** As you record modules, note the public seam (interface) each module exposes - later down the chain, `/tdd` and `/implement` test only at these seams. If the right seam is still in question, recommend `/codebase-design` for the deep-module vocabulary before finalising.
+
 ## Step 2 - Draft the Architecture Description (init; incremental edits in reconcile)
 
 Follow the section structure in `templates/architecture-description-format.md`. If the project carries its own `docs/templates/ARCHITECTURE-DESCRIPTION-FORMAT.md`, the project-local copy wins.
@@ -49,6 +63,8 @@ Follow the section structure in `templates/architecture-description-format.md`. 
 - Every architectural decision line links its ADR; open questions land in "Constraints and Risks" as explicit unknowns.
 
 Completion criterion: every template section is either filled or marked intentionally blank with a one-line reason - there is no third state.
+
+**"How to test" lives in the Architecture Description.** Fill a **Test Architecture** section (add it to the template) that states, per test layer, the scope rule (from the vocabulary above), the tools, the directory layout for tests, and any per-spec overrides of a layer's scope. This section is the *how*; the matching *when* lives in the Action Plan below. Leave it intentionally blank only with a stated reason, never absent.
 
 ## Step 3 - Draft the Action Plan (init; refresh in reconcile)
 
@@ -67,10 +83,10 @@ Use this shape:
 Directory skeleton, `architecture.toml` + `module.toml` skeletons, thin-wrapper governance tests, static-check baseline. This is `governed-arch`'s new-project workflow.
 
 ### Wave <n> - <name>
-The slices in this wave, one line each saying what "done" means.
+The slices in this wave, one line each saying what "done" means, including the test gate that marks a slice done.
 
 ### Final wave - Integration testing
-Cross-module integration happens here; within it, order follows `depends_on`: providers integrate before the consumers that import them.
+Cross-module integration happens here; within it, order follows `depends_on`: providers integrate before the consumers that import them. Where the effort spans two or more specs, add a **system test** gate at the end of this wave (cross-spec / whole-effort), per the vocabulary. Keep the gate command in the Progress table below.
 
 ## Serial constraints
 
@@ -80,10 +96,12 @@ Every must-be-serial pair states its reason: shared module - shared interface lo
 
 The chapters above are the stable plan definition; this final table is the only progress record.
 
-| ID  | Slice                  | Kind    | Wave | Status              | Notes                                     |
-| --- | ---------------------- | ------- | ---- | ------------------- | ----------------------------------------- |
-| S0  | governance scaffolding | scaffold| 0    | pending             | folders + TOML kit + thin-wrapper tests   |
-| S1  | <module A>             | module  | 1    | pending             | spec: TBD                                 |
+**"When to test" lives here.** Every slice row carries its test gate: the scope of the spec it closes (spec `<id>`) and the test layer + verify command that marks it done. The `Test gate` cell stays stable (part of plan definition); `Status` and `Notes` move.
+
+| ID  | Slice                  | Kind    | Wave | Spec | Test gate                          | Status              | Notes                                    |
+| --- | ---------------------- | ------- | ---- | ---- | ---------------------------------- | ------------------- | ---------------------------------------- |
+| S0  | governance scaffolding | scaffold| 0    | -    | thin-wrapper tests                 | pending             | folders + TOML kit + thin-wrapper tests   |
+| S1  | <module A>             | module  | 1    | <id> | integration: <cmd per architecture>| pending             | spec: <id>                               |
 
 Status is one of `pending | in-progress | done (<ref>) | blocked (<reason>)`.
 

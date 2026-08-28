@@ -233,6 +233,12 @@ source_path = "to-arch"
 publish = true
 
 [[skill]]
+publish_name = "impl-loop"
+repo = "core"
+source_path = "impl-loop"
+publish = true
+
+[[skill]]
 publish_name = "to-issues"
 repo = "core"
 source_path = "to-issues"

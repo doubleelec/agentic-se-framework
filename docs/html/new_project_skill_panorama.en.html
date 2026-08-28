@@ -215,47 +215,43 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Project bootstrap</td>
+<td style="text-align: left;">Phase 0: Project bootstrap</td>
 <td style="text-align: left;"><a href="#setup-matt-pocock-skills"><code>setup-matt-pocock-skills</code></a></td>
 </tr>
 <tr>
-<td style="text-align: left;">Requirements elicitation (choose one)</td>
+<td style="text-align: left;">Phase 1: Requirements elicitation (choose one)</td>
 <td style="text-align: left;"><a href="#wayfinder"><code>wayfinder</code></a> / <a href="#grill-with-docs"><code>grill-with-docs</code></a></td>
 </tr>
 <tr>
-<td style="text-align: left;">Concept unification, architecture synthesis &amp; constraint enforcement</td>
+<td style="text-align: left;">Phase 2: Concept unification, architecture synthesis &amp; constraint enforcement</td>
 <td style="text-align: left;"><a href="#domain-modeling"><code>domain-modeling</code></a> → <a href="#codebase-design"><code>codebase-design</code></a> → <a href="#to-arch"><code>to-arch</code></a> → <a href="#governed-arch"><code>governed-arch</code></a></td>
 </tr>
 <tr>
-<td style="text-align: left;">Specification</td>
-<td style="text-align: left;"><a href="#to-spec"><code>to-spec</code></a></td>
+<td style="text-align: left;">Phase 3 &amp; 4: Cross-phase delivery loop</td>
+<td style="text-align: left;"><a href="#impl-loop"><code>impl-loop</code></a> (driving <code>to-spec</code> $\rightarrow$ <code>to-tickets</code> $\rightarrow$ <code>implement</code> + <code>tdd</code> $\rightarrow$ progress write-back)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Ticket decomposition</td>
-<td style="text-align: left;"><a href="#to-tickets"><code>to-tickets</code></a></td>
+<td style="text-align: left;">Phase 3: Specification &amp; ticket decomposition</td>
+<td style="text-align: left;"><a href="#to-spec"><code>to-spec</code></a> → <a href="#to-tickets"><code>to-tickets</code></a></td>
 </tr>
 <tr>
-<td style="text-align: left;">Bug &amp; standalone-item tracking</td>
-<td style="text-align: left;"><a href="#to-issues"><code>to-issues</code></a></td>
+<td style="text-align: left;">Phase 4: Single-slice coding &amp; test loop</td>
+<td style="text-align: left;"><a href="#implement"><code>implement</code></a> (incl. <a href="#tdd"><code>tdd</code></a> + <a href="#code-review"><code>code-review</code></a>)</td>
 </tr>
 <tr>
-<td style="text-align: left;">High-uncertainty exploration</td>
+<td style="text-align: left;">Phase 5: Operation, diagnosis &amp; asset evolution</td>
+<td style="text-align: left;"><a href="#to-issues"><code>to-issues</code></a> → <a href="#triage"><code>triage</code></a> / <a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a> → <a href="#governed-arch"><code>governed-arch</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Auxiliary: High-uncertainty exploration</td>
 <td style="text-align: left;"><a href="#research"><code>research</code></a> / <a href="#prototype"><code>prototype</code></a></td>
 </tr>
 <tr>
-<td style="text-align: left;">Coding</td>
-<td style="text-align: left;"><a href="#implement"><code>implement</code></a> + <a href="#tdd"><code>tdd</code></a></td>
-</tr>
-<tr>
-<td style="text-align: left;">High-risk change</td>
+<td style="text-align: left;">Auxiliary: High-risk change guarding</td>
 <td style="text-align: left;"><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
 </tr>
 <tr>
-<td style="text-align: left;">Pre-merge check</td>
-<td style="text-align: left;"><a href="#code-review"><code>code-review</code></a></td>
-</tr>
-<tr>
-<td style="text-align: left;">Handover</td>
+<td style="text-align: left;">Auxiliary: Handover</td>
 <td style="text-align: left;"><a href="#handoff"><code>handoff</code></a></td>
 </tr>
 <tr>
@@ -356,15 +352,19 @@
     <text x="500" y="328" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-arch</text>
     <text x="500" y="347" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
 
+    <!-- impl-loop orchestration dashed frame -->
+    <rect x="598" y="246" width="324" height="142" rx="10" fill="#f0fdfa" fill-opacity="0.4" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="5 3"></rect>
+    <rect x="715" y="236" width="90" height="20" rx="6" fill="#0f766e"></rect>
+    <text x="760" y="250" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">impl-loop</text>
+
     <rect x="610" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
     <text x="680" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-spec</text>
     <text x="680" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-tickets</text>
 
     <rect x="780" y="260" width="130" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
-    <text x="845" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement / tdd</text>
-    <text x="845" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review</text>
-    <text x="845" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">handoff</text>
-    <text x="845" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">failsafe-loop</text>
+    <text x="845" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement</text>
+    <text x="845" y="330" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">(incl. tdd /</text>
+    <text x="845" y="350" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review)</text>
 
     <rect x="940" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
     <text x="1010" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-issues</text>
@@ -419,13 +419,14 @@
     <!-- Bottom auxiliary band -->
     <line x1="20" y1="546" x2="1100" y2="546" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4"></line>
     <rect x="10" y="558" width="1100" height="48" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="5 3"></rect>
-    <text x="40" y="587" font-size="16" font-weight="700" fill="#b45309">Auxiliary Skills</text>
-    <text x="275" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">research</text>
-    <text x="425" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">prototype</text>
-    <text x="575" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">to-issues</text>
-    <text x="725" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">improve-arch</text>
-    <text x="875" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">teach</text>
-    <text x="1025" y="587" text-anchor="middle" font-size="15" font-weight="600" fill="#d97706">handoff</text>
+    <text x="28" y="587" font-size="15" font-weight="700" fill="#b45309">Auxiliary Skills</text>
+    <text x="225" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">research</text>
+    <text x="355" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">prototype</text>
+    <text x="500" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">failsafe-loop</text>
+    <text x="640" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">to-issues</text>
+    <text x="775" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">improve-arch</text>
+    <text x="905" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">teach</text>
+    <text x="1025" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">handoff</text>
   </svg>
 </div>
 
@@ -508,16 +509,16 @@
 - <code>&lt;module&gt;/module.toml</code>: per-module private/public boundary definitions and test constraints</p>
 <h3 id="34-phase-3-specification-and-ticket-decomposition">3.4 Phase 3: Specification and Ticket Decomposition</h3>
 <p><strong>Goal</strong>: Turn abstract designs and requirements into executable specification documents and concrete development tasks.</p>
-<p><strong>Scope boundary</strong>: cross-module system-level construction order has already been fixed by Phase 2's <code>docs/action-plan.md</code> (including the positions of governance scaffolding and integration tests); the <code>to-spec</code> and <code>to-tickets</code> of this phase only own step ordering inside a single feature — neither crosses into the other's scope.</p>
+<p><strong>Scope boundary</strong>: cross-module system-level construction order has already been fixed by Phase 2's <code>docs/action-plan.md</code> (including the positions of governance scaffolding and integration tests); the <code>to-spec</code> and <code>to-tickets</code> of this phase only own step ordering inside a single feature — neither crosses into the other's scope. This phase runs automated under <code>impl-loop</code> or standalone on demand.</p>
 <p><strong>Skills and logical relations</strong>: [sequential collaboration, execute in order]</p>
 <ol>
 <li><strong><a href="#to-spec"><code>to-spec</code></a></strong><ul>
-<li><strong>How to use</strong>: invoke once architecture and requirements have stabilized.</li>
+<li><strong>How to use</strong>: invoke once architecture and requirements have stabilized (or invoked automatically by <code>impl-loop</code>).</li>
 <li><strong>What happens</strong>: generates a structured <code>spec.md</code>, clarifying functional requirements, non-functional requirements, and acceptance criteria.</li>
 </ul>
 </li>
 <li><strong><a href="#to-tickets"><code>to-tickets</code></a></strong><ul>
-<li><strong>How to use</strong>: invoke based on <code>spec.md</code>.</li>
+<li><strong>How to use</strong>: invoke based on <code>spec.md</code> (or invoked automatically by <code>impl-loop</code>).</li>
 <li><strong>What happens</strong>: following the conventions of <code>docs/agents/issue-tracker.md</code>, decomposes the specification into individual development tickets under <code>.scratch/&lt;feature-slug&gt;/tickets/</code>, declaring blocking relations ticket by ticket.</li>
 </ul>
 </li>
@@ -526,12 +527,17 @@
 - <code>.scratch/&lt;feature-slug&gt;/spec.md</code>: single-feature specification document<br>
 - <code>.scratch/&lt;feature-slug&gt;/tickets/NN-&lt;slug&gt;.md</code>: vertical-slice development tickets (with a Blocked-by dependency DAG, numbered from 01)</p>
 <h3 id="35-phase-4-implementation-and-the-iterative-loop">3.5 Phase 4: Implementation and the Iterative Loop</h3>
-<p><strong>Goal</strong>: Write code that satisfies the specification, completing review and state handover within tight loops.</p>
-<p><strong>Skills and logical relations</strong>: [high-frequency loop: pick up ticket -&gt; implement -&gt; review -&gt; handoff]</p>
+<p><strong>Goal</strong>: Write code that satisfies the specification, completing review, test-gate validation, and plan progress write-back within tight loops.</p>
+<p><strong>Skills and logical relations</strong>: [high-frequency loop: pick up ticket -&gt; implement (TDD + review) -&gt; gate validation -&gt; on-completion write-back]</p>
 <ul>
-<li><strong><a href="#implement"><code>implement</code></a> + <a href="#tdd"><code>tdd</code></a></strong> (mandatory trunk)<ul>
-<li><strong>How to use</strong>: invoke after picking up a ticket.</li>
-<li><strong>What happens</strong>: implements the feature in the TDD rhythm (red-green-refactor), ensuring test coverage. If the architecture proves unsound during implementation (no seam can be found, tests keep failing), pause implementation and fall back to <code>codebase-design</code> to re-cut boundaries.</li>
+<li><strong><a href="#implement"><code>implement</code></a></strong> (single-slice execution trunk, internalizing <a href="#tdd"><code>tdd</code></a> and <a href="#code-review"><code>code-review</code></a>)<ul>
+<li><strong>How to use</strong>: invoked internally by <code>impl-loop</code> per ticket, or called directly by human for single-ticket work.</li>
+<li><strong>What happens</strong>:<br>
+  1. <strong>TDD red-green loop</strong>: writes a failing test first at the planned seam, then the minimal implementation to green, guaranteeing regression coverage;<br>
+  2. <strong>Type checks and unit testing</strong>: runs typecheck and unit tests continuously;<br>
+  3. <strong>Pre-merge review</strong>: calls <code>code-review</code> before commit for dual-axis inspection (standards axis and spec axis);<br>
+  4. <strong>Commit</strong>: commits verified code and tests together to the current branch.<br>
+<em>(Note: if architecture proves unsound, no seam can be found, or dependencies leak, pause implementation and fall back to <code>codebase-design</code> to re-cut seams)</em></li>
 </ul>
 </li>
 <li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong> (on-demand auxiliary: continuous validation)<ul>
@@ -539,30 +545,65 @@
 <li><strong>What happens</strong>: runs boundary validation and tells you immediately whether a newly added <code>import</code> violates the architecture rules.</li>
 </ul>
 </li>
-<li><strong><a href="#code-review"><code>code-review</code></a></strong> (triggered before merge)<ul>
-<li><strong>How to use</strong>: invoke when a feature (ticket) is done and about to merge into the main branch.</li>
-<li><strong>What happens</strong>: compares code against <code>spec.md</code>, checking conformance with repository standards and specification requirements.</li>
-</ul>
-</li>
-<li><strong><a href="#handoff"><code>handoff</code></a></strong> (triggered at session end or task switch)<ul>
-<li><strong>How to use</strong>: invoke when the current session ends, or when handing work over to another agent/human.</li>
-<li><strong>What happens</strong>: compresses the current context, leaving the next taker a clear starting point.</li>
-</ul>
-</li>
-<li><strong><a href="#failsafe-loop"><code>failsafe-loop</code></a></strong> (on-demand intervention: for high-risk tasks)<ul>
-<li><strong>How to use</strong>: invoke for changes that are extremely error-prone or destructive, forcing step-by-step verification and snapshot comparison.</li>
-</ul>
-</li>
-<li><strong><a href="#research"><code>research</code></a> / <a href="#prototype"><code>prototype</code></a></strong> (on-demand auxiliary)<ul>
-<li><strong>How to use</strong>: consult first-hand documentation or write throwaway verification code when hitting technical difficulties.</li>
-</ul>
-</li>
 </ul>
 <p><strong>Phase artifacts</strong>:<br>
 - <code>src/</code> and <code>tests/</code>: code passing layered verification plus unit/integration test cases<br>
-- <code>.scratch/handoff-YYYYMMDD-HHMMSS.md</code>: session handoff snapshot (generated at handoff)<br>
+- <code>docs/action-plan.md</code>: updated wave progress and new resume point (written back automatically by <code>impl-loop</code>)<br>
 - (after merge and release, clean up the temporary <code>.scratch/&lt;feature-slug&gt;/</code> directory)</p>
-<h3 id="36-phase-5-operation-diagnosis-and-evolution">3.6 Phase 5: Operation, Diagnosis, and Evolution</h3>
+<h3 id="36-cross-phase-delivery-orchestrator-impl-loop">3.6 Cross-Phase Delivery Orchestrator: <a href="#impl-loop"><code>impl-loop</code></a></h3>
+<p>In the SVG panorama diagram, <strong>Phase 3 (Specification &amp; Decomposition)</strong> and <strong>Phase 4 (Iterative Loop)</strong> are encompassed by the outer green dashed box, powered by the core orchestration skill <strong><code>impl-loop</code></strong>.</p>
+<h4 id="361-background-and-core-value">3.6.1 Background and Core Value</h4>
+<p>In traditional or single-slice agent workflows, developers frequently switch between multiple isolated commands: invoking <code>/to-spec</code> to draft specs, <code>/to-tickets</code> to decompose tickets, typing <code>/implement</code> per ticket, running manual test gate commands, and manually updating <code>docs/action-plan.md</code>. This fragmented interaction pattern is highly prone to <strong>state drift</strong> and skipped verification gates.</p>
+<p><code>impl-loop</code> acts as the <strong>end-to-end delivery engine</strong>. It links Phase 3 specification artifacts with Phase 4 coding, testing, and review into a unified, gated delivery pipeline:</p>
+<pre><code class="language-text">               ┌───────────────────── impl-loop Delivery Loop ─────────────────────┐
+               │                                                                   │
+/to-arch ────&gt; │  /to-spec ──&gt; /to-tickets ──&gt; [ per ticket: /implement ──&gt; Gate ] │ ──&gt; write back action-plan.md (done)
+(construction  │  (Phase 3)      (Phase 3)                   (Phase 4)      (tests)│     advance wave resume point
+ plan provider)└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h4 id="362-division-of-labor-responsibility-matrix">3.6.2 Division of Labor &amp; Responsibility Matrix</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Skill</th>
+<th style="text-align: left;">Role</th>
+<th style="text-align: left;">Core Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>impl-loop</code></strong></td>
+<td style="text-align: left;"><strong>Delivery Orchestrator</strong></td>
+<td style="text-align: left;">Chains the entire workflow, detects and actively fulfills missing prerequisites, drives ticket implementations, enforces test gates, manages resume points, and atomically writes back to <code>action-plan.md</code> on completion</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>to-spec</code></strong></td>
+<td style="text-align: left;"><strong>Spec Drafter</strong></td>
+<td style="text-align: left;">Explores the codebase and drafts structured specification documents <code>spec.md</code> using domain vocabulary</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>to-tickets</code></strong></td>
+<td style="text-align: left;"><strong>Ticket Decomposer</strong></td>
+<td style="text-align: left;">Breaks <code>spec.md</code> into vertical-slice temporary tickets <code>tickets/NN-*.md</code>, declaring a Blocked-by dependency DAG</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>implement</code></strong></td>
+<td style="text-align: left;"><strong>Single-Slice Executor</strong></td>
+<td style="text-align: left;">Implements single tickets using <code>tdd</code> red-green cycles, runs unit tests, calls <code>code-review</code> before commit, and commits code</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>to-arch</code></strong></td>
+<td style="text-align: left;"><strong>Top-Level Planner</strong></td>
+<td style="text-align: left;">Provides the whole-system wave construction plan <code>docs/action-plan.md</code> and layered test strategy (<code>docs/architecture.md</code>)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="363-atomic-write-back-and-resume-semantics">3.6.3 Atomic Write-Back and Resume Semantics</h4>
+<ul>
+<li><strong>Spec Completion Atomic Write-Back</strong>: Once all tickets for a spec are resolved and the integration gate passes, <code>impl-loop</code> automatically marks the slice <code>done (&lt;final_commit_sha&gt;)</code> in <code>docs/action-plan.md</code>, records the test gate command, and advances the header resume point to the next wave, keeping construction progress 100% true.</li>
+<li><strong>Resume Semantics</strong>: <code>impl-loop</code> is idempotent and resumable by design. Any new session can run <code>/impl-loop</code> to resume seamlessly from <code>docs/action-plan.md</code>.</li>
+</ul>
+<h3 id="37-phase-5-operation-diagnosis-and-evolution">3.7 Phase 5: Operation, Diagnosis, and Evolution</h3>
 <p><strong>Goal</strong>: After go-live or milestone formation, respond to external feedback, troubleshoot production failures, and update global governance assets.</p>
 <p><strong>Skills and logical relations</strong>: [triggered by external events]</p>
 <ul>
@@ -625,13 +666,13 @@
 <tr>
 <td style="text-align: left;"><strong>3. Spec decomposition</strong></td>
 <td style="text-align: left;"><code>.scratch/&lt;feature-slug&gt;/spec.md</code><br><code>.scratch/&lt;feature-slug&gt;/tickets/NN-*.md</code></td>
-<td style="text-align: left;"><code>to-spec</code><br><code>to-tickets</code></td>
+<td style="text-align: left;"><code>to-spec</code><br><code>to-tickets</code><br>(orchestrated by <code>impl-loop</code>)</td>
 <td style="text-align: left;">SPEC-FORMAT.md</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>4. Iterative implementation</strong></td>
-<td style="text-align: left;"><code>src/</code> + <code>tests/</code><br><code>.scratch/handoff-*.md</code><br>code review records</td>
-<td style="text-align: left;"><code>implement</code><br><code>tdd</code><br><code>code-review</code></td>
+<td style="text-align: left;"><code>src/</code> + <code>tests/</code><br><code>docs/action-plan.md</code> (progress write-back)</td>
+<td style="text-align: left;"><code>impl-loop</code><br><code>implement</code> (incl. <code>tdd</code>/<code>review</code>)<br><code>governed-arch</code></td>
 <td style="text-align: left;">per project conventions</td>
 </tr>
 <tr>
@@ -646,7 +687,7 @@
 <p>Living-document note: <code>CONTEXT.md</code> and ADRs are living documents evolving across phases, owned by no single phase — created lazily in Phase 1 by the <code>domain-modeling</code> embedded in <code>grill-with-docs</code> (lazy file creation; terms land the moment they settle), then challenged and converged to final form in Phase 2 by explicitly invoking <code>domain-modeling</code>.</p>
 </blockquote>
 <h2 id="5-auxiliary-skills-and-practical-decision-table">5. Auxiliary Skills and Practical Decision Table</h2>
-<p>Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills". They do not directly advance pipeline state transitions; like a plug-in toolbox, they fire on demand when the trunk is blocked, knowledge gaps exist, or context needs restructuring (invocations should be non-blocking and highly purposeful; return to the trunk promptly once the specific problem is solved).</p>
+<p>Beyond the trunk path there exists a set of "auxiliary/cross-cutting skills" (corresponding to the bottom band in the SVG). They do not directly advance pipeline state transitions; like a plug-in toolbox, they fire on demand when the trunk is blocked, knowledge gaps exist, context needs restructuring, or high-risk operations occur (invocations should be non-blocking and highly purposeful; return to the trunk promptly once the specific problem is solved).</p>
 <h3 id="51-auxiliary-skills-at-a-glance">5.1 Auxiliary Skills at a Glance</h3>
 <table>
 <thead>
@@ -665,12 +706,24 @@
 <td style="text-align: left;">High-uncertainty risk; scout ahead before formal implementation</td>
 </tr>
 <tr>
+<td style="text-align: left;"><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
+<td style="text-align: left;">Extremely error-prone or destructive changes; force step-by-step verification and snapshots</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#to-issues"><code>to-issues</code></a></td>
+<td style="text-align: left;">Capture bug reports, small feature requests, or standalone tasks into the permanent stream</td>
+</tr>
+<tr>
 <td style="text-align: left;"><a href="#improve-codebase-architecture"><code>improve-codebase-architecture</code></a></td>
 <td style="text-align: left;">Design cannot land, or maintenance-period structure blocks new features</td>
 </tr>
 <tr>
 <td style="text-align: left;"><a href="#teach"><code>teach</code></a></td>
 <td style="text-align: left;">Complex domain experience or scaffolding worth distilling, or onboarding new members</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#handoff"><code>handoff</code></a></td>
+<td style="text-align: left;">Session end or task switch; compress context and leave a clean resume point</td>
 </tr>
 <tr>
 <td style="text-align: left;"><a href="#to-questionnaire"><code>to-questionnaire</code></a></td>
@@ -732,6 +785,11 @@
 <td>Requirements and architecture settled; need development slices</td>
 <td><a href="#to-tickets"><code>to-tickets</code></a></td>
 <td>Decompose into vertical-slice temporary tickets with a declared blocking DAG</td>
+</tr>
+<tr>
+<td>Spec and tickets are ready, need end-to-end delivery and plan progress</td>
+<td><a href="#impl-loop"><code>impl-loop</code></a></td>
+<td>Chain ticket implementations, test gates, and action-plan progress write-back</td>
 </tr>
 <tr>
 <td>Bug reports, small features, or standalone tasks need long-term tracking</td>
@@ -825,6 +883,12 @@
 <li><strong>When to use</strong>: decomposing a ready specification into executable development slices (Phase 3 step 2). Upstream original skill, byte-for-byte restored per locked baseline.</li>
 <li><strong>What it does</strong>: following <code>docs/agents/issue-tracker.md</code> conventions, drafts the spec as vertical-slice temporary dev tickets under <code>.scratch/&lt;feature-slug&gt;/tickets/</code> (<code>NN-&lt;slug&gt;.md</code>), annotating blocking relations per ticket; wide refactorings switch to expand-contract sequences.</li>
 <li><strong>How it works</strong>: confirms granularity and dependencies with the user, then writes into <code>.scratch/&lt;feature-slug&gt;/tickets/</code>; tickets are short-term planning scaffolding discarded when the feature ends — no index, numbers start from <code>01</code> in dependency order, never reused across features.</li>
+</ul>
+<h3 id="impl-loop">impl-loop</h3>
+<ul>
+<li><strong>When to use</strong>: when spec and tickets are ready and you need to drive the end-to-end delivery cycle, or continue an in-flight effort (Phase 3/4 orchestrator). This repository's original skill (mine).</li>
+<li><strong>What it does</strong>: chains <code>/to-spec</code> -&gt; <code>/to-tickets</code> -&gt; <code>/implement</code> -&gt; test gates, closing ticket by ticket and keeping the resume point true; when the spec completes and integration gate passes, automatically writes back to <code>docs/action-plan.md</code> to mark the slice done and advance the wave.</li>
+<li><strong>How it works</strong>: claims tickets along the DAG and hands to <code>implement</code>, gating single tickets on unit tests, and closing the spec on integration tests; on completion performs atomic write-back: update slice status row, update Notes gate record, advance Resume Point header, and retire temporary scaffolding.</li>
 </ul>
 <h3 id="to-issues">to-issues</h3>
 <ul>
