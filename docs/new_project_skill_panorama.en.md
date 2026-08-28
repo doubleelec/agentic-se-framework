@@ -51,14 +51,12 @@ Mapped onto the current skills, the trunk path typically is:
 | Phase 0: Project bootstrap | [`setup-matt-pocock-skills`](#setup-matt-pocock-skills) |
 | Phase 1: Requirements elicitation (choose one) | [`wayfinder`](#wayfinder) / [`grill-with-docs`](#grill-with-docs) |
 | Phase 2: Concept unification, architecture synthesis & constraint enforcement | [`domain-modeling`](#domain-modeling) → [`codebase-design`](#codebase-design) → [`to-arch`](#to-arch) → [`governed-arch`](#governed-arch) |
-| Phase 3 & 4: Cross-phase delivery loop | [`impl-loop`](#impl-loop) (driving `to-spec` $\rightarrow$ `to-tickets` $\rightarrow$ `implement` + `tdd` $\rightarrow$ progress write-back) |
 | Phase 3: Specification & ticket decomposition | [`to-spec`](#to-spec) → [`to-tickets`](#to-tickets) |
 | Phase 4: Single-slice coding & test loop | [`implement`](#implement) (incl. [`tdd`](#tdd) + [`code-review`](#code-review)) |
 | Phase 5: Operation, diagnosis & asset evolution | [`to-issues`](#to-issues) → [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) → [`governed-arch`](#governed-arch) |
 | Auxiliary: High-uncertainty exploration | [`research`](#research) / [`prototype`](#prototype) |
 | Auxiliary: High-risk change guarding | [`failsafe-loop`](#failsafe-loop) |
 | Auxiliary: Handover | [`handoff`](#handoff) |
-| Operation phase | [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) |
 
 The point is not that "the order must be one-size-fits-all", but that every phase must answer one clear engineering question and leave behind the corresponding artifacts.
 

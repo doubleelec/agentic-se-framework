@@ -51,7 +51,6 @@
 | 阶段 2：概念统一、架构合成与约束落地 | [`domain-modeling`](#domain-modeling) → [`codebase-design`](#codebase-design) → [`to-arch`](#to-arch) → [`governed-arch`](#governed-arch) |
 | 阶段 3：规格化与工单拆解 | [`to-spec`](#to-spec) → [`to-tickets`](#to-tickets) |
 | 阶段 4：单切片编码与测试闭环 | [`implement`](#implement)（内含 [`tdd`](#tdd) + [`code-review`](#code-review)） |
-| 阶段 3 & 4：跨阶段交付编排 | [`impl-loop`](#impl-loop)（统一驱动 `to-spec` $\rightarrow$ `to-tickets` $\rightarrow$ `implement` + `tdd` $\rightarrow$ 回写进度） |
 | 阶段 5：运维、诊断与资产演进 | [`to-issues`](#to-issues) → [`triage`](#triage) / [`diagnosing-bugs`](#diagnosing-bugs) → [`governed-arch`](#governed-arch) |
 | 辅助/横切：高不确定性探路 | [`research`](#research) / [`prototype`](#prototype) |
 | 辅助/横切：高风险改动守门 | [`failsafe-loop`](#failsafe-loop) |
