@@ -12,7 +12,9 @@ Use the default canonical triage labels for this repo. See `docs/agents/triage-l
 
 ### Domain docs
 
-This repo uses a single-context layout. See `docs/agents/domain.md`.
+This repo uses a single-context layout. See `docs/agents/domain.md` for the discovery flow.
+
+**Vocabulary and term-sync rule.** When producing any output that names a domain concept (issue title, ticket, spec section, refactor proposal, hypothesis, test name, code identifier, commit message), use the term defined in `CONTEXT.md` and avoid the synonyms it lists under `_Avoid_`. If a concept you need is not in the glossary, do not invent a new label silently — either reuse a near-match already in the glossary, or surface the gap and route to `/domain-modeling` to add the term (with its `_Avoid_` list) before shipping the output. `CONTEXT.md` is the source of truth; treat any drift between it and your wording as a bug in your wording, not in the glossary.
 
 ### Embedded upstream snapshots (the `core/` pattern)
 
@@ -109,6 +111,66 @@ Rules:
    KEX; SSH to `github.com` fails host-key negotiation).
 5. **Push only at milestones/tags** — the public side is a release outlet, not a
    development mirror. Tags may be pushed alongside the snapshot for versioning.
+
+### Windows sandbox SSH note
+
+On Windows under the DSH sandbox, `git push origin` fails with
+`fatal error - couldn't create signal pipe, Win32 error 5`.  The cause is
+that Git for Windows routes SSH through its own MSYS-built `sh.exe` →
+`ssh.exe` chain, and `sh.exe` cannot create signal pipes under the sandbox's
+restricted process API.
+
+**Workaround — use the system OpenSSH directly:**
+
+```powershell
+# Set GIT_SSH to the native Windows OpenSSH (runs without the MSYS sh.exe wrapper)
+$env:GIT_SSH = 'C:\Windows\System32\OpenSSH\ssh.exe'
+
+# Then push as normal — no need to set GIT_SSH_COMMAND (that still routes through sh)
+git push origin master
+```
+
+Key differences between the two variables:
+
+| Variable | Behaviour |
+| :--- | :--- |
+| `GIT_SSH_COMMAND` | Value is executed **via a shell** (`sh -c <value>`). The MSYS `sh.exe` still starts, so signal-pipe creation fails. |
+| `GIT_SSH` | Value is used as a **direct executable path** (`<value> <arguments>`). No shell wrapper; the native `ssh.exe` runs directly. |
+
+`$env:GIT_SSH` is session-scoped and does not persist — set it in the same
+`pwsh` command block as the push, not globally.
+
+**SSH identity setup** (`~/.ssh/config` for the private development forge):
+
+```
+Host <private-forge-host>
+    HostName <private-forge-host>
+    User git
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    IdentityFile <path-to-private-key>
+    IdentitiesOnly yes
+```
+
+The `+ssh-rsa` lines are required when the private forge's host key is
+RSA (not ed25519), as newer OpenSSH versions disable `ssh-rsa` by default.
+Substitute `<private-forge-host>` and `<path-to-private-key>` with the actual
+host alias and key path used on this machine.
+
+**Divergence handling after a long-running session:**
+
+When local `master` and `origin/master` have diverged (e.g. an earlier session
+pushed commits that were never pulled locally), rebase before pushing:
+
+```powershell
+$env:GIT_SSH = 'C:\Windows\System32\OpenSSH\ssh.exe'
+git fetch origin
+git rebase origin/master        # replays local commits on top of remote
+git push --force-with-lease origin master   # safe force-push (aborts if remote advanced again)
+```
+
+Use `--force-with-lease` (not bare `--force`) so the push aborts if someone
+else pushed to the remote between the fetch and the push.
 
 Detailed operations guide, including privacy red lines (what a release snapshot
 must never contain) and the mandatory commit-identity override for public

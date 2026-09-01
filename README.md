@@ -43,18 +43,18 @@
 - Foundational engineering skills inspiration & derivatives: [mattpocock/skills](https://github.com/mattpocock/skills)
 - Original methodology, Architecture-as-Code governance (`governed-arch`), dual issue stream tracking (`to-issues`/`to-tickets`), failsafe engineering loops (`failsafe-loop`), and multi-target deployment automation are developed and maintained as part of this framework.
 
-## Panorama
+## Main Methodology Document
 
-Interactive bilingual skill panorama (rendered on GitHub Pages from `docs/html/`):
+The core methodology document of this framework — *Agentic Software Engineering Framework* (ZH: 基于 AI Agent 的软件工程实施方案) — rendered on GitHub Pages from `docs/html/`:
 
-- English: <https://doubleelec.github.io/agentic-se-framework/html/new_project_skill_panorama.en.html>
-- Chinese: <https://doubleelec.github.io/agentic-se-framework/html/new_project_skill_panorama.zh.html>
+- English: <https://doubleelec.github.io/agentic-se-framework/html/agentic_se_framework.en.html>
+- Chinese: <https://doubleelec.github.io/agentic-se-framework/html/agentic_se_framework.zh.html>
 
 Static snapshot (English):
 
-<img src="docs/html/panorama.en.svg" width="100%" alt="agentic-se-framework skill panorama (English)">
+<img src="docs/html/panorama.en.svg" width="100%" alt="Agentic Software Engineering Framework (English)">
 
-Sources: [docs/new_project_skill_panorama.en.md](docs/new_project_skill_panorama.en.md) · [docs/new_project_skill_panorama.zh.md](docs/new_project_skill_panorama.zh.md)
+Sources: [docs/agentic_se_framework.en.md](docs/agentic_se_framework.en.md) · [docs/agentic_se_framework.zh.md](docs/agentic_se_framework.zh.md)
 
 ## Community
 

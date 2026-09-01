@@ -181,7 +181,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
   <main>
-    <div class="meta">Source: <code>{source}</code></div>
     {body}
   </main>
 </body>
@@ -271,13 +270,8 @@ def extract_title(source: Path, text: str) -> str:
 
 def write_html(source: Path, output_path: Path, body_html: str, title: str) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        rel_source = source.relative_to(workspace_root()).as_posix()
-    except ValueError:
-        rel_source = source.as_posix()
     full_html = HTML_TEMPLATE.format(
         title=html.escape(title),
-        source=html.escape(rel_source),
         body=body_html,
     )
     output_path.write_text(full_html, encoding="utf-8")

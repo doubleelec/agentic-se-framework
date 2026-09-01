@@ -92,8 +92,8 @@ preview images.
 
 **English edition is single-sourced**: edit only the standalone
 `docs/html/panorama.en.svg`, then re-inject the `<svg>` block into its two
-inline copies (`docs/new_project_skill_panorama.en.md` and
-`docs/html/new_project_skill_panorama.en.html`):
+inline copies (`docs/agentic_se_framework.en.md` and
+`docs/html/agentic_se_framework.en.html`):
 
 ```powershell
 ops/refresh_panorama.ps1          # re-inject md + html from the SVG
@@ -105,7 +105,7 @@ standalone file is loaded through an `<img>` tag, where browsers parse SVG as
 XML and reject a missing namespace (broken image on the GitHub project page).
 
 **Chinese edition** keeps its inline SVG in
-`docs/new_project_skill_panorama.zh.md` as the source; `panorama.zh.svg` is an
+`docs/agentic_se_framework.zh.md` as the source; `panorama.zh.svg` is an
 extracted snapshot — re-extract by hand if the zh diagram changes, or extend
 `refresh_panorama.ps1` with a `-Lang zh` mode.
 
@@ -165,7 +165,7 @@ git checkout master
 - [ ] Author/committer metadata show the public identity, not the machine's
 - [ ] `ops/refresh_panorama.ps1 -Check` passes (English md/html match
       `docs/html/panorama.en.svg`); zh `panorama.zh.svg` present and in sync
-      with `docs/new_project_skill_panorama.zh.md` (see refresh procedure above)
+      with `docs/agentic_se_framework.zh.md` (see refresh procedure above)
 - [ ] No orphan-snapshot leftovers staged (e.g. temporary branch files)
 - [ ] Public remote URL is HTTPS (local SSH client is too old for GitHub's
       post-quantum KEX handshake)
@@ -176,6 +176,22 @@ git checkout master
 
 - `choose_kex: unsupported KEX method sntrup761x25519-sha512@openssh.com`
   → local OpenSSH predates GitHub's post-quantum KEX; use HTTPS for `public`.
+- HTTPS push to `public` fails with
+  `schannel: AcquireCredentialsHandle failed: SEC_E_NO_CREDENTIALS (0x8009030e)`
+  → Windows schannel has no GitHub credential. The release commit is already
+  on `public-main` locally; the push is a one-line operation. Run it from a
+  PowerShell that has GitHub credentials cached (the one you normally use to
+  `git push` to GitHub), do NOT recreate the snapshot:
+  ```powershell
+  cd <repo>
+  git checkout public-main
+  git push public public-main:main
+  git checkout master
+  ```
+  The release identity was set at commit time and travels with the commit, so
+  the push only needs network auth, not a re-commit. To pre-cache the
+  credential, run `git credential-manager github login` once, or use a
+  Personal Access Token via `git -c credential.helper= -c credential.helper='!gh auth git-credential' push ...`.
 - Push rejected at `public` → confirm `public-main` is at the latest
   `public/main` and you're pushing `public-main:main` as a fast-forward, never
   a mirror of `origin/master`.

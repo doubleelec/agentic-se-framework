@@ -18,7 +18,7 @@ Thanks for your interest in contributing. This guide keeps onboarding short by p
 
 - Core methodology skills live under `core/`; third-party derivatives stay under `vendor/mattpocock/local/`, mirroring upstream paths.
 - Keep new skills consistent with the existing structure: `SKILL.md` plus optional `templates/`, `resources/`, and (for embedded tooling) a thin-wrapper-friendly `core/`.
-- Documentation pairs with code: if a change alters behavior described in `docs/new_project_skill_panorama.zh.md`, update its English counterpart `docs/new_project_skill_panorama.en.md` too; `ops/check_bilingual.ps1` verifies heading parity.
+- Documentation pairs with code: if a change alters behavior described in `docs/agentic_se_framework.zh.md`, update its English counterpart `docs/agentic_se_framework.en.md` too; `ops/check_bilingual.ps1` verifies heading parity.
 
 ## Before opening a PR
 

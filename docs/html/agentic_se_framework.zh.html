@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>基于 AI Agent 的软件工程实施方案</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --surface: #fbfbfd;
+      --text: #1f2328;
+      --muted: #5b6472;
+      --border: #d8dee8;
+      --brand: #6f42ff;
+      --code-bg: #f3f5f8;
+      --quote: #eef2ff;
+      --max-width: 1280px;
+      --shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 20px 64px;
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+    }
+    .meta {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    h1, h2, h3, h4 {
+      line-height: 1.3;
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+    }
+    h1 { margin-top: 0; font-size: 2rem; }
+    h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.2em; }
+    h3 { font-size: 1.2rem; }
+    p, ul, ol, blockquote, table, pre { margin: 0 0 1em; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+      background: var(--code-bg);
+      padding: 0.12em 0.35em;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
+    blockquote {
+      border-left: 4px solid var(--brand);
+      margin-left: 0;
+      padding: 12px 16px;
+      background: var(--quote);
+      border-radius: 0 10px 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { background: var(--code-bg); }
+    img { max-width: 100%; height: auto; }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2em 0;
+    }
+    .index-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .index-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    ul, ol {
+      padding-left: 28px;
+      margin: 14px 0;
+    }
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .mermaid {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      margin: 20px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      overflow-x: auto;
+      text-align: center;
+    }
+    .mermaid svg {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      margin: 0 auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 35,
+        rankSpacing: 40,
+        padding: 12
+      },
+      gantt: {
+        useMaxWidth: false,
+        leftPadding: 220,
+        rightPadding: 30,
+        barHeight: 26,
+        barGap: 8,
+        fontSize: 12.5,
+        sectionFontSize: 13.5,
+        axisFormat: '%m-%d'
+      },
+      themeVariables: {
+        fontSize: '13px',
+        lineHeight: '1.4'
+      }
+    });
+  </script>
+</head>
+<body>
+  <main>
+    <h1 id="ai-agent">基于 AI Agent 的软件工程实施方案</h1>
+<p><small><strong>最后修改时间</strong>：2026-08-31</small></p>
+<details>
+<summary><small>维护信息</small></summary>
+
+<ul>
+  <li>Source：<code>docs/agentic_se_framework.zh.md</code></li>
+  <li>英文版：<a href="agentic_se_framework.en.md"><code>agentic_se_framework.en.md</code></a>（本地副本）。两份文档章节编号、表格结构、图的几何保持一致；中文版为内容修订的源真理。</li>
+  <li>任何对内容、标题编号或 SVG 几何的修改，请同步更新英文版；<code>ops/check_bilingual.ps1</code> 会校验 heading 对齐，<code>ops/refresh_panorama.ps1 -Check</code> 会校验 SVG 同步。</li>
+</ul>
+</details>
+
+<h2 id="0-ai-agent">0. 缘起：在 AI Agent 替代编程的两极之间</h2>
+<p>过去一年，AI Agent 接管部分软件工程活动的趋势成为业界最热也最具争议的话题之一，两种截然相反的论调同时流行：</p>
+<ul>
+<li><strong>乐观派</strong>：大模型让"写代码"的边际成本趋近于零，软件开发速度可以提升数十倍；个人或小团队就能撬动过去需要整支团队才能完成的产品。</li>
+<li><strong>悲观派</strong>：大模型受训于公共代码的统计学规律，对小项目可以快速堆出"看起来能跑"的原型，但一旦进入真实业务的复杂工程——多模块、长期演进、团队协作——它就会迅速产出"屎山代码"：风格漂移、接缝缺失、边界渗漏、可测试性归零，最终既不能维护也无法演进。</li>
+</ul>
+<p>两种说法都有真实的工程证据支撑，也都有可证伪的反例。它们并非互斥，而是揭示了同一种范式的两个剖面：<strong>大模型是前所未有的"代码生成器"，但它不是一个天生的"软件工程师"。</strong> 当需求被合理地拆解、边界被预先设计、每一步产出都被显式工件约束时，它确实可以十倍量级交付；当这些前提缺失时，它就会以人类程序员相同的速度、甚至更快的速度制造技术债。</p>
+<p>本方案的核心命题是：<strong>用经典软件工程思想给大模型套上受控的缰绳，让它在严格的工件、边界、审查与验证体系内生产代码，并使整条流水线对人类完全可视化、可审计、可回滚。</strong></p>
+<p>由此出发，本方案主张三条总原则：</p>
+<ol>
+<li><strong>以工程思想为骨，以大模型为肌肉</strong>。领域语言、架构决策、质量属性场景、ADR、TDD 闸门、架构边界 TOML 约束——SWEBOK / ISO 12207 / 42010 体系内的成熟实践不是"老旧包袱"，而是让 AI 输出可维护、可演进、可验证产品的必要骨架。</li>
+<li><strong>可视化优先</strong>。每一阶段的产出（<code>CONTEXT.md</code>、<code>ADR</code>、<code>docs/architecture.md</code>、<code>docs/action-plan.md</code>、<code>spec.md</code>、工单 DAG、<code>failsafe</code> 快照）都是人类可读、可 diff、可审阅的活文档，而不是隐藏在 prompt 里的隐式状态。</li>
+<li><strong>可检查与可回滚</strong>。测试闸门、架构边界校验、双轴 <code>code-review</code>、分阶段快照比对共同构成可证伪的验收闭环——任何一步不通过都可被立刻定位、立刻回退，而不是等到"屎山堆完才发现"。</li>
+</ol>
+<p>本方案采用工程受控路线：把乐观派的"加速"目标与悲观派指出的"失控"风险放进同一份可执行方案，分别用流程提速与闸门熔断来同时应对。</p>
+<h2 id="1">1. 目的与理论定位</h2>
+<p>本文不是一份“技能目录”，而是一套面向新软件项目的工程方法论说明书。它回答的核心问题是：</p>
+<ul>
+<li>当需求仍然模糊时，项目应如何启动而不仓促落入编码；</li>
+<li>如何让流程与主流、基础的软件工程理论兼容，便于理解、推广与裁剪；</li>
+<li>如何把软件体系结构设计从“凭经验画图”提升为“有干系人、有关注点、有质量属性、有评估闭环”的严谨活动；</li>
+<li>当前 <code>agentic-se-framework</code> 工作区中的技能，应该如何映射到这套方法论中。</li>
+</ul>
+<h3 id="11">1.1 理论定位与核心原则</h3>
+<p>这套方法论在软件工程主线上与 <code>SWEBOK</code>、<code>ISO/IEC/IEEE 12207</code>、<code>29148</code>、<code>15289</code> 的精神保持一致；在软件体系结构上，以 <code>ISO/IEC/IEEE 42010</code>、质量属性场景、<code>QAW</code>、<code>ATAM</code>、<code>ADR</code> 为核心，建立完整、细致、审慎的架构工作流：</p>
+<ul>
+<li><strong>生命周期并发、迭代、递归</strong>：生命周期过程并非僵硬单线，需求、架构、设计、实现、验证、确认、运维和维护是同一条工程主线上的连续活动；</li>
+<li><strong>架构以描述与决策为中心</strong>：架构不是几张孤立的草图，而是“干系人、关注点、视点、视图、对应关系、决策（ADR）及其依据”的组织化描述；</li>
+<li><strong>质量属性场景化</strong>：质量属性不能只写口号（如“高性能”），必须转化为具体可测量的场景；</li>
+<li><strong>验证左移与真实场景确认</strong>：验证贯穿需求、设计、原型、代码评审与测试全过程；</li>
+<li><strong>流程可裁剪，但关键问题不可省略</strong>：小项目可压缩工件形式，但仍需回答“解决什么问题、哪些质量属性驱动结构、为何这样设计、如何证明有效”。</li>
+</ul>
+<h3 id="12">1.2 适用范围与技能源</h3>
+<p>本文基于当前已发布的技能集合：<br>
+- <code>vendor/mattpocock/local/*</code>：本地维护与增强的软件工程衍生技能；<br>
+- <code>core/*</code>：本仓库自研的架构治理、工单追踪与交付演进技能。</p>
+<p>本文希望建立的是一条“可推广的主线 + 可裁剪的分支 + 可审计的工件体系”，而不是一条僵硬流水线。</p>
+<h2 id="2">2. 全局方法论总览</h2>
+<p>从经典软件工程视角看，一个新项目的稳妥主线不是“先写代码”，而是：</p>
+<ol>
+<li>建立协作和治理底座；</li>
+<li>澄清问题、干系人、目标与约束；</li>
+<li>建立领域语言、边界和架构驱动因素，并合成为完整的架构描述与实现流程计划；</li>
+<li>形成可评审、可验证、可追踪的规格；</li>
+<li>拆解为可执行工作包并建立状态流；</li>
+<li>提前验证未知项、风险项和关键假设；</li>
+<li>进入实现、集成与分层验证；</li>
+<li>对高风险变更设置审慎闸门；</li>
+<li>在交付前做规范一致性、规格一致性和架构一致性检查；</li>
+<li>发布、交接、运维观察，并把后续输入重新送回维护闭环。</li>
+</ol>
+<p>如果映射到当前技能，主干路径通常是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">时机</th>
+<th style="text-align: left;">优先技能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">阶段 0：项目启动</td>
+<td style="text-align: left;"><a href="#setup-matt-pocock-skills"><code>setup-matt-pocock-skills</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">阶段 1：需求获取（二选一）</td>
+<td style="text-align: left;"><a href="#wayfinder"><code>wayfinder</code></a> / <a href="#grill-with-docs"><code>grill-with-docs</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">阶段 2：概念统一、架构合成与约束落地</td>
+<td style="text-align: left;"><a href="#domain-modeling"><code>domain-modeling</code></a> → <a href="#codebase-design"><code>codebase-design</code></a> → <a href="#to-arch"><code>to-arch</code></a> → <a href="#governed-arch"><code>governed-arch</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">阶段 3：规格化与工单拆解</td>
+<td style="text-align: left;"><a href="#to-spec"><code>to-spec</code></a> → <a href="#to-tickets"><code>to-tickets</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">阶段 4：单切片编码与测试闭环</td>
+<td style="text-align: left;"><a href="#implement"><code>implement</code></a>（内含 <a href="#tdd"><code>tdd</code></a> + <a href="#code-review"><code>code-review</code></a>）</td>
+</tr>
+<tr>
+<td style="text-align: left;">阶段 5：运维、诊断与资产演进</td>
+<td style="text-align: left;"><a href="#to-issues"><code>to-issues</code></a> → <a href="#triage"><code>triage</code></a> / <a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a> → <a href="#governed-arch"><code>governed-arch</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">辅助/横切：高不确定性探路</td>
+<td style="text-align: left;"><a href="#research"><code>research</code></a> / <a href="#prototype"><code>prototype</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">辅助/横切：高风险改动守门</td>
+<td style="text-align: left;"><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;">辅助/横切：会话交接</td>
+<td style="text-align: left;"><a href="#handoff"><code>handoff</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>要点不在于“顺序必须一刀切”，而在于每个阶段都必须回答一个明确的工程问题，并留下相应工件。下图把核心工程目标、工程主阶段、执行技能线、产物线、辅助/横切技能五条横带叠在同一画布上：</p>
+<ul>
+<li><strong>核心工程目标</strong>（深灰行）：每个主阶段必须回答的工程问题。</li>
+<li><strong>工程主阶段</strong>（紫色行）：从启动到运行演进的六个连续活动。</li>
+<li><strong>执行技能线</strong>（青色行）：每个阶段对应的具体 Agent 技能。</li>
+<li><strong>产物线</strong>（蓝色行）：每个技能产出的可审计工件。</li>
+<li><strong>辅助/横切技能</strong>（底部横条）：按需外挂的工具箱技能。</li>
+</ul>
+<p>阶段 3（规格与拆解）与阶段 4（迭代闭环）外层的绿色大虚线框整体包裹着 <code>impl-loop</code>，强调它不是任一阶段的子技能，而是阶段 3→4 的端到端交付编排引擎——这一点在 3.6 节独立展开。</p>
+<div style="margin: 20px 0 28px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="100%" height="auto" role="img" aria-label="软件工程生命周期与技能映射图">
+    <defs>
+      <marker id="arrow-main" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M1 1 L7 4 L1 7 Z" fill="#6f42ff"></path>
+      </marker>
+      <marker id="arrow-dashed" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+        <path d="M1 1 L7 4 L1 7 Z" fill="#cbd5e1"></path>
+      </marker>
+    </defs>
+    <!-- 背景底色 -->
+    <rect x="0" y="0" width="1120" height="620" rx="12" fill="#ffffff"></rect>
+
+    <!-- 行 1: 核心工程目标 (与主阶段对齐) -->
+    <rect x="8" y="14" width="168" height="32" rx="16" fill="#475569"></rect>
+    <text x="92" y="35" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">核心工程目标</text>
+
+    <rect x="260" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="320" y="40" text-anchor="middle" font-size="14" fill="#334155">澄清问题</text>
+    <text x="320" y="58" text-anchor="middle" font-size="14" fill="#334155">与关注点</text>
+
+    <rect x="440" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="500" y="40" text-anchor="middle" font-size="14" fill="#334155">统一概念</text>
+    <text x="500" y="58" text-anchor="middle" font-size="14" fill="#334155">与架构约束</text>
+
+    <rect x="620" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="680" y="40" text-anchor="middle" font-size="14" fill="#334155">形成契约</text>
+    <text x="680" y="58" text-anchor="middle" font-size="14" fill="#334155">与执行工单</text>
+
+    <rect x="780" y="20" width="120" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 2"></rect>
+    <text x="840" y="40" text-anchor="middle" font-size="14" fill="#334155">满足基线</text>
+    <text x="840" y="58" text-anchor="middle" font-size="14" fill="#334155">与真实场景</text>
+
+    <!-- 垂直连接线 (对齐核心) -->
+    <line x1="320" y1="68" x2="320" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="500" y1="68" x2="500" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="680" y1="68" x2="680" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="840" y1="68" x2="840" y2="150" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+
+    <!-- 行 2: 工程主阶段 -->
+    <rect x="8" y="96" width="168" height="32" rx="16" fill="#6f42ff"></rect>
+    <text x="92" y="117" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">工程主阶段</text>
+
+    <line x1="158" y1="180" x2="1050" y2="180" stroke="#6f42ff" stroke-width="3" marker-end="url(#arrow-main)"></line>
+
+    <rect x="95" y="150" width="125" height="60" rx="14" fill="#f5f3ff" stroke="#c4b5fd"></rect>
+    <text x="158" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">启动</text>
+
+    <rect x="250" y="150" width="140" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="320" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">需求获取</text>
+
+    <rect x="420" y="150" width="160" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="500" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">架构与边界设计</text>
+
+    <rect x="610" y="150" width="140" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="680" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">规格与拆解</text>
+
+    <rect x="780" y="150" width="130" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="845" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">迭代闭环</text>
+
+    <rect x="940" y="150" width="140" height="60" rx="14" fill="#ede9fe" stroke="#8b5cf6"></rect>
+    <text x="1010" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">运行与演进</text>
+
+    <!-- 阶段 -> 技能 连接线 -->
+    <line x1="158" y1="210" x2="158" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="320" y1="210" x2="320" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="500" y1="210" x2="500" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="680" y1="210" x2="680" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="845" y1="210" x2="845" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="1010" y1="210" x2="1010" y2="260" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+
+    <!-- 行 3: 执行技能线 -->
+    <rect x="8" y="220" width="168" height="32" rx="16" fill="#0f766e"></rect>
+    <text x="92" y="241" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">执行技能线</text>
+
+    <rect x="95" y="260" width="125" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="158" y="325" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">setup</text>
+
+    <rect x="250" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="320" y="305" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">wayfinder</text>
+    <text x="320" y="325" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">grill-with-docs</text>
+    <text x="320" y="345" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-questionnaire</text>
+
+    <rect x="420" y="260" width="160" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="500" y="290" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">domain-modeling</text>
+    <text x="500" y="309" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">codebase-design</text>
+    <text x="500" y="328" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-arch</text>
+    <text x="500" y="347" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
+
+    <!-- impl-loop 编排虚线框 -->
+    <rect x="598" y="246" width="324" height="142" rx="10" fill="#f0fdfa" fill-opacity="0.4" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="5 3"></rect>
+    <rect x="715" y="236" width="90" height="20" rx="6" fill="#0f766e"></rect>
+    <text x="760" y="250" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">impl-loop</text>
+
+    <rect x="610" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="680" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-spec</text>
+    <text x="680" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-tickets</text>
+
+    <rect x="780" y="260" width="130" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="845" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">implement</text>
+    <text x="845" y="330" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">（含 tdd /</text>
+    <text x="845" y="350" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">code-review）</text>
+
+    <rect x="940" y="260" width="140" height="120" rx="8" fill="#ecfeff" stroke="#2dd4bf"></rect>
+    <text x="1010" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">to-issues</text>
+    <text x="1010" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">triage</text>
+    <text x="1010" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">diagnosing-bugs</text>
+    <text x="1010" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#0f766e">governed-arch</text>
+
+    <!-- 技能 -> 产物 连接线 -->
+    <line x1="158" y1="380" x2="158" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="320" y1="380" x2="320" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="500" y1="380" x2="500" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="680" y1="380" x2="680" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="845" y1="380" x2="845" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+    <line x1="1010" y1="380" x2="1010" y2="430" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow-dashed)"></line>
+
+    <!-- 行 4: 产物线 (简明名称) -->
+    <rect x="8" y="390" width="168" height="32" rx="16" fill="#1d4ed8"></rect>
+    <text x="92" y="411" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">产物线</text>
+
+    <rect x="95" y="430" width="125" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="158" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">AGENTS.md</text>
+    <text x="158" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">issue-tracker.md</text>
+    <text x="158" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">triage-labels.md</text>
+
+    <rect x="250" y="430" width="140" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="320" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">map.md</text>
+    <text x="320" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">CONTEXT.md</text>
+    <text x="320" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">to-questionnaire-*.md</text>
+
+    <rect x="400" y="430" width="200" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="500" y="452" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">CONTEXT.md / ADR</text>
+    <text x="500" y="472" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/architecture.md</text>
+    <text x="500" y="492" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/action-plan.md</text>
+    <text x="500" y="510" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">architecture.toml / module.toml</text>
+
+    <rect x="610" y="430" width="140" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="680" y="450" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">.scratch/&lt;slug&gt;/</text>
+    <text x="680" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">spec.md</text>
+    <text x="680" y="488" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">.scratch/&lt;slug&gt;/</text>
+    <text x="680" y="506" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1e40af">tickets/NN-*.md</text>
+
+    <rect x="780" y="430" width="130" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="845" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">src/ + tests/</text>
+    <text x="845" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">review 报告</text>
+    <text x="845" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">failsafe 快照</text>
+
+    <rect x="940" y="430" width="140" height="88" rx="8" fill="#eff6ff" stroke="#60a5fa"></rect>
+    <text x="1010" y="458" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/issues/*.md</text>
+    <text x="1010" y="478" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">docs/issues/_summary.md</text>
+    <text x="1010" y="498" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1e40af">诊断记录</text>
+
+    <!-- 底部辅助横条 -->
+    <line x1="20" y1="546" x2="1100" y2="546" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4"></line>
+    <rect x="10" y="558" width="1100" height="48" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="5 3"></rect>
+    <text x="28" y="587" font-size="15" font-weight="700" fill="#b45309">辅助/横切技能</text>
+    <text x="225" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">research</text>
+    <text x="355" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">prototype</text>
+    <text x="500" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">failsafe-loop</text>
+    <text x="640" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">to-issues</text>
+    <text x="775" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">improve-arch</text>
+    <text x="905" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">teach</text>
+    <text x="1025" y="587" text-anchor="middle" font-size="14" font-weight="600" fill="#d97706">handoff</text>
+  </svg>
+</div>
+
+<p>上图把核心工程目标、工程主阶段、执行技能线、产物线、辅助/横切技能五条横带叠在同一画布上；阶段 0–5 的主线—技能对应关系在表格形式里重复给出（见第 2 章开头的"主线阶段—技能映射"），便于在阅读后续章节时按阶段反查。</p>
+<h2 id="3">3. 操作手册：按阶段详细指导</h2>
+<p>以下是软件工程生命周期各个阶段的详细操作指南，包括每个阶段应该使用什么技能、如何使用以及预期产出的工件。</p>
+<h3 id="31-0">3.1 阶段 0：启动（协作底座）</h3>
+<p><strong>目标</strong>：建立团队（Agent 与人类）的协作底座。</p>
+<p><strong>使用技能与逻辑关系</strong>：【必选单技能】</p>
+<ul>
+<li><strong><a href="#setup-matt-pocock-skills"><code>setup-matt-pocock-skills</code></a></strong><ul>
+<li><strong>怎么用</strong>：项目伊始，人类直接调用该技能。</li>
+<li><strong>发生什么</strong>：它会在项目根目录生成 <code>AGENTS.md</code>，并在 <code>docs/agents/</code> 下建立工单跟踪器（Issue tracker）、分诊标签（Triage labels）和领域文档（Domain docs）的约定。</li>
+</ul>
+</li>
+</ul>
+<p><strong>阶段产出清单</strong>：<br>
+- <code>AGENTS.md</code>：项目根目录协作底座与 Agent 行为指引<br>
+- <code>docs/agents/issue-tracker.md</code>：双流工单（Tickets / Issues）跟踪器约定<br>
+- <code>docs/agents/triage-labels.md</code>：分诊角色与状态标签定义<br>
+- <code>docs/agents/domain.md</code>：单上下文领域文档约定</p>
+<h3 id="32-1">3.2 阶段 1：需求获取</h3>
+<p><strong>目标</strong>：从模糊的口号中提炼出确定的干系人关注点、目标和边界。</p>
+<p><strong>使用技能与逻辑关系</strong>：【互斥选择 1 + 按需辅助】</p>
+<ul>
+<li><strong><a href="#grill-with-docs"><code>grill-with-docs</code></a></strong>（与 wayfinder 二选一，适用于小型、边界清晰的需求）<ul>
+<li><strong>怎么用</strong>：抛出一个初始想法，调用该技能让它深度盘问你。</li>
+<li><strong>发生什么</strong>：通过多轮对话逼出隐藏假设；内嵌复用的 <code>domain-modeling</code> 会在术语敲定的当下即时写入 <code>CONTEXT.md</code>，并克制地沉淀 ADR。</li>
+</ul>
+</li>
+<li><strong><a href="#wayfinder"><code>wayfinder</code></a></strong>（与 grill 二选一，适用于大型、模糊的需求）<ul>
+<li><strong>怎么用</strong>：当需求大到需要跨多天讨论、或者前路迷雾重重时调用。</li>
+<li><strong>发生什么</strong>：它不直接盘问，而是建立一个导航地图（<code>.scratch/&lt;effort&gt;/map.md</code>），把问题拆成子工单（<code>.scratch/&lt;effort&gt;/tickets/NN-&lt;slug&gt;.md</code>）逐个解决。具体解决某个 ticket 时，再使用 <code>grill-with-docs</code> 或 <code>research</code>。</li>
+</ul>
+</li>
+<li><strong><a href="#to-questionnaire"><code>to-questionnaire</code></a></strong>（按需辅助）<ul>
+<li><strong>怎么用</strong>：当关键信息不在手里时调用。</li>
+<li><strong>发生什么</strong>：生成结构化问卷，以便发给外部干系人采集需求。</li>
+</ul>
+</li>
+</ul>
+<p><strong>阶段产出清单</strong>：<br>
+- <code>.scratch/&lt;effort&gt;/map.md</code>：（若使用 <code>wayfinder</code>）迷雾导航地图与决议索引<br>
+- <code>.scratch/&lt;effort&gt;/tickets/NN-&lt;slug&gt;.md</code>：（若使用 <code>wayfinder</code>）探索子工单<br>
+- <code>CONTEXT.md</code>：初版领域词汇与核心实体定义（术语敲定即落盘，阶段 2 持续收敛）<br>
+- <code>docs/adr/NNNN-*.md</code>：初版架构决策记录（若在盘问中敲定关键决策）<br>
+- <code>to-questionnaire-*.md</code>：（若使用）外发干系人问卷（临时外发，不入库）</p>
+<h3 id="33-2">3.3 阶段 2：架构与边界设计</h3>
+<p><strong>目标</strong>：识别质量属性，统一领域语言，设计逻辑边界，把它们合成为一份完整的架构描述，再转化为强制约束。这是一条从认知到代码的深水工作链。</p>
+<p><strong>使用技能与逻辑关系</strong>：【顺序协作，需依次执行】</p>
+<ol>
+<li><strong><a href="#domain-modeling"><code>domain-modeling</code></a></strong>（第一步：认知层）<ul>
+<li><strong>怎么用</strong>：在理清需求后立即调用。</li>
+<li><strong>发生什么</strong>：统一团队词汇，识别核心实体，沉淀架构决策记录（ADR）。这是后续所有工作的前提。若阶段 1 已随 <code>grill-with-docs</code> 建立了初版 <code>CONTEXT.md</code> / ADR，本步在其上做增量挑战与收敛，而非从零新建。</li>
+</ul>
+</li>
+<li><strong><a href="#codebase-design"><code>codebase-design</code></a></strong>（第二步：设计层）<ul>
+<li><strong>怎么用</strong>：在概念统一后，用它来规划代码结构。</li>
+<li><strong>发生什么</strong>：它会帮你切分模块接缝（seams），在逻辑上保证高内聚和可测试性。</li>
+</ul>
+</li>
+<li><strong><a href="#to-arch"><code>to-arch</code></a></strong>（第三步：合成层）<ul>
+<li><strong>怎么用</strong>：当统一语言、关键决策与接缝方案基本就绪后调用。</li>
+<li><strong>发生什么</strong>：把散落在 <code>CONTEXT.md</code>、ADR、质量属性场景与地图决议中的认知，合成为一份完整的架构描述——讲清设计思想、干系人关注点、模块划分与必要视图。它向上游是决策的“汇”，向下游是执法层与规格层的“源”：<code>governed-arch</code> 依据其中的边界定义做 TOML 翻译，<code>to-spec</code> 从中获得全局框架。</li>
+<li><strong>产物</strong>：两份——架构描述 <code>docs/architecture.md</code>（结构遵循 <code>docs/templates/ARCHITECTURE-DESCRIPTION-FORMAT.md</code>，视图内嵌或相对链接），以及实现流程计划 <code>docs/action-plan.md</code>——规定治理脚手架先行、各模块实现、集成测试收尾的先后顺序，并标注哪些部分可并行、哪些必须串行及依据。</li>
+<li><strong>边界</strong>：<code>architecture.toml</code> 的 <code>depends_on</code> 拓扑只约束运行时"谁能 import 谁"，不规定施工顺序——依托接缝以测试替身先行，上层模块也能先实现、先单测；拓扑真正决定的是集成次序。模块/特性内部的步骤顺序归 <code>to-spec</code> 与 <code>to-tickets</code>，<code>action-plan.md</code> 只管跨模块编排。</li>
+</ul>
+</li>
+<li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong>（第四步：约束层）<ul>
+<li><strong>怎么用</strong>：把架构描述中的边界定义翻译为强制执行的物理约束。</li>
+<li><strong>发生什么</strong>：生成 <code>architecture.toml</code> 和 <code>module.toml</code>，并配以自动化测试（如 <code>test_module_boundaries.py</code>），充当架构不被破坏的“执法者”。</li>
+</ul>
+</li>
+</ol>
+<p><strong>阶段产出清单</strong>：<br>
+- <code>CONTEXT.md</code>：收敛定稿的统一领域语言<br>
+- <code>docs/adr/NNNN-*.md</code>：定稿的架构决策记录<br>
+- <code>docs/architecture.md</code>：全局架构描述（由 <code>to-arch</code> 合成，含干系人、视点/视图、质量属性）<br>
+- <code>docs/action-plan.md</code>：全系统波次施工计划与项目恢复点（由 <code>to-arch</code> 维护）<br>
+- <code>architecture.toml</code>：项目级架构边界与依赖规则<br>
+- <code>&lt;module&gt;/module.toml</code>：各模块私有/公开边界定义与测试约束</p>
+<h3 id="34-3">3.4 阶段 3：规格化与工单拆解</h3>
+<p><strong>目标</strong>：将抽象的设计和需求转化为可执行的规格说明书和具体开发任务。</p>
+<p><strong>范围边界</strong>：跨模块的系统级施工顺序已由阶段 2 的 <code>docs/action-plan.md</code> 规定（含治理脚手架与集成测试的位次）；本阶段的 <code>to-spec</code> 与 <code>to-tickets</code> 只负责单个特性内部的步骤顺序，二者互不越界。本阶段既可在 <code>impl-loop</code> 的编排下自动化执行，亦可独立调用。</p>
+<p><strong>使用技能与逻辑关系</strong>：【顺序协作，需依次执行】</p>
+<ol>
+<li><strong><a href="#to-spec"><code>to-spec</code></a></strong><ul>
+<li><strong>怎么用</strong>：架构和需求稳定后调用（亦由 <code>impl-loop</code> 自动调用）。</li>
+<li><strong>发生什么</strong>：它会生成结构化的 <code>spec.md</code>，明确功能需求、非功能需求和验收标准。</li>
+</ul>
+</li>
+<li><strong><a href="#to-tickets"><code>to-tickets</code></a></strong><ul>
+<li><strong>怎么用</strong>：基于 <code>spec.md</code> 调用（亦由 <code>impl-loop</code> 自动调用）。</li>
+<li><strong>发生什么</strong>：它会按照 <code>docs/agents/issue-tracker.md</code> 的约定，将规格拆解为 <code>.scratch/&lt;feature-slug&gt;/tickets/</code> 下的一张张开发工单，逐张声明阻塞关系。</li>
+</ul>
+</li>
+</ol>
+<p><strong>阶段产出清单</strong>：<br>
+- <code>.scratch/&lt;feature-slug&gt;/spec.md</code>：单特性规格说明书<br>
+- <code>.scratch/&lt;feature-slug&gt;/tickets/NN-&lt;slug&gt;.md</code>：垂直切片开发工单（带 Blocked by 依赖 DAG，编号从 01 开始）</p>
+<h3 id="35-4">3.5 阶段 4：实现与迭代闭环</h3>
+<p><strong>目标</strong>：编写代码，满足规格要求，并在紧致的小循环中完成审查、测试闸门验证与计划状态回写。</p>
+<p><strong>使用技能与逻辑关系</strong>：【高频循环：领工单 -&gt; 实现（TDD + 审查） -&gt; 闸门验证 -&gt; 完工回写】</p>
+<ul>
+<li><strong><a href="#implement"><code>implement</code></a></strong>（单切片执行主干，内含 <a href="#tdd"><code>tdd</code></a> 与 <a href="#code-review"><code>code-review</code></a>）<ul>
+<li><strong>怎么用</strong>：由 <code>impl-loop</code> 逐张认领工单时自动调用，亦可由人类在单切片场景独立调用。</li>
+<li><strong>发生什么</strong>：<br>
+  1. <strong>TDD 红绿循环</strong>：在预定接缝处先写失败测试，再以最小实现变绿，保证回归测试覆盖；<br>
+  2. <strong>类型与单测检查</strong>：持续运行 typecheck 和单元测试；<br>
+  3. <strong>合入前审查</strong>：在提交前调用 <code>code-review</code> 进行双轴审查（仓库标准轴与规格契约轴）；<br>
+  4. <strong>提交代码</strong>：将已验证的切片代码与测试一同提交至当前分支。<br>
+<em>(注：若实现中发现架构设计不合理、找不到接缝或依赖渗漏，应暂停实现，回退调用 <code>codebase-design</code> 重新切分接缝)</em></li>
+</ul>
+</li>
+<li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong>（按需辅助：持续校验）<ul>
+<li><strong>怎么用</strong>：在编写跨模块代码或重构时随时调用，或通过它的测试脚本跑 CI。</li>
+<li><strong>发生什么</strong>：运行边界校验，立即告诉你新加的 <code>import</code> 是否违反了架构规则。</li>
+</ul>
+</li>
+</ul>
+<p><strong>阶段产出清单</strong>：<br>
+- <code>src/</code> 与 <code>tests/</code>：通过分层验证的代码与单元/集成测试用例<br>
+- <code>docs/action-plan.md</code>：更新后的施工波次进度与新恢复点（由 <code>impl-loop</code> 自动回写）<br>
+- （代码合入与特性上线后，清理 <code>.scratch/&lt;feature-slug&gt;/</code> 临时工单目录）</p>
+<h3 id="36-impl-loop">3.6 跨阶段交付编排引擎：<a href="#impl-loop"><code>impl-loop</code></a></h3>
+<p>在 SVG 全景图中，<strong>阶段 3（规格与拆解）</strong> 与 <strong>阶段 4（迭代闭环）</strong> 被外层的绿色大虚线框整体包裹，其核心载体正是自研编排技能 <strong><code>impl-loop</code></strong>。</p>
+<h4 id="361">3.6.1 产生背景与核心价值</h4>
+<p>在传统或单点 Agent 协作中，开发者往往需要频繁手动执行多条独立命令：先调用 <code>/to-spec</code> 起草规格，再手动运行 <code>/to-tickets</code> 拆工单，接着逐张票敲 <code>/implement</code>，并在每张票完成后手动跑测试命令，最后还要手动打开 <code>docs/action-plan.md</code> 标记完成。这种割裂的交互模式极易出现<strong>状态悬挂（State Drift）</strong>或步骤遗漏。</p>
+<p><code>impl-loop</code> 的定位是<strong>端到端跨切片交付引擎（End-to-End Delivery Engine）</strong>。它将阶段 3 的规格与拆解产物和阶段 4 的编码、测试与合入审查串联成一个高度自动化、强闸门约束的工业级交付流水线：</p>
+<pre><code class="language-text">               ┌───────────────────── impl-loop 交付闭环 ─────────────────────┐
+               │                                                              │
+/to-arch ────&gt; │  /to-spec ──&gt; /to-tickets ──&gt; [ 逐票: /implement ──&gt; 闸门 ]    │ ──&gt; 回写 action-plan.md (done)
+(提供施工计划) │  (阶段 3)       (阶段 3)               (阶段 4)      (分层验证)  │     推进波次恢复点
+               └──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h4 id="362">3.6.2 分工边界与职责矩阵</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">技能</th>
+<th style="text-align: left;">角色定位</th>
+<th style="text-align: left;">核心职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>impl-loop</code></strong></td>
+<td style="text-align: left;"><strong>交付编排引擎</strong></td>
+<td style="text-align: left;">跨阶段全链路驱动、前置工件自主检测与补齐、测试闸门调度与验证、单 Spec 完工原子回写 <code>docs/action-plan.md</code>、断点续跑管理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>to-spec</code></strong></td>
+<td style="text-align: left;"><strong>规格起草器</strong></td>
+<td style="text-align: left;">探索代码库，基于领域词汇（<code>CONTEXT.md</code>）起草结构化规格说明书 <code>spec.md</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>to-tickets</code></strong></td>
+<td style="text-align: left;"><strong>工单拆解器</strong></td>
+<td style="text-align: left;">将 <code>spec.md</code> 拆解为垂直切片临时工单 <code>tickets/NN-*.md</code>，声明 Blocked by 依赖 DAG</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>implement</code></strong></td>
+<td style="text-align: left;"><strong>单切片执行器</strong></td>
+<td style="text-align: left;">单张工单的具体代码实现：以 <code>tdd</code> 红绿循环实现、持续跑单测、合入前调用 <code>code-review</code>、Git commit</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>to-arch</code></strong></td>
+<td style="text-align: left;"><strong>顶层规划者</strong></td>
+<td style="text-align: left;">提供全系统波次施工计划 <code>docs/action-plan.md</code> 与分层测试策略（<code>docs/architecture.md</code>）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="363">3.6.3 完工原子回写与断点恢复</h4>
+<ul>
+<li><strong>单 Spec 完工原子回写</strong>：当前 Spec 的所有工单解决且集成测试通过后，<code>impl-loop</code> 自动在 <code>docs/action-plan.md</code> 中将该 Slice 标记为 <code>done (&lt;final_commit_sha&gt;)</code>、记录测试通过命令，并将头部恢复点推进到下一波次，确保施工进度 100% 真实。</li>
+<li><strong>断点恢复（Resume Semantics）</strong>：<code>impl-loop</code> 天生支持长链路与跨会话接续，任何新会话输入 <code>/impl-loop</code> 即可直接读取 <code>action-plan.md</code> 恢复点继续执行。</li>
+</ul>
+<h3 id="37-5">3.7 阶段 5：运行、诊断与演进</h3>
+<p><strong>目标</strong>：系统上线或形成里程碑后，应对外部反馈、排查线上故障，并更新全局治理资产。</p>
+<p><strong>使用技能与逻辑关系</strong>：【按外部事件触发】</p>
+<ul>
+<li><strong><a href="#to-issues"><code>to-issues</code></a></strong>（外部反馈触发，捕获入口）<ul>
+<li><strong>怎么用</strong>：收到 Bug 报告、小功能请求或独立任务时首先调用。</li>
+<li><strong>发生什么</strong>：将其写入 <code>docs/issues/</code> 永久问题流（全局编号，Type / Status / Created 行），并同步刷新 <code>_summary.md</code> 索引；修复关闭后文件永久保留。</li>
+</ul>
+</li>
+<li><strong><a href="#triage"><code>triage</code></a></strong>（问题入流后触发）<ul>
+<li><strong>怎么用</strong>：对两股流中的条目做分类流转——<code>docs/issues/</code> 的长期问题与 <code>.scratch/</code> 的临时工单都适用。</li>
+<li><strong>发生什么</strong>：把条目在五个 triage 角色间移动（如 <code>needs-triage</code> → <code>ready-for-agent</code>），排定处理顺序。</li>
+</ul>
+</li>
+<li><strong><a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a></strong>（线上故障或性能瓶颈触发）<ul>
+<li><strong>怎么用</strong>：出现复杂 Bug 或性能退化，不知从何下手时调用。</li>
+<li><strong>发生什么</strong>：启动专门的诊断循环，深入排查代码或日志，寻找根本原因。</li>
+</ul>
+</li>
+<li><strong><a href="#governed-arch"><code>governed-arch</code></a></strong>（里程碑触发）<ul>
+<li><strong>怎么用</strong>：大版本发布或交接给运维团队前调用。</li>
+<li><strong>发生什么</strong>：一键生成/更新最新的模块架构 HTML 文档和依赖图，作为对外交付的资产。</li>
+</ul>
+</li>
+</ul>
+<p><strong>阶段产出清单</strong>：<br>
+- <code>docs/issues/NNN-&lt;slug&gt;.md</code>：全局永久问题工单（三位数字编号如 001-fix-login.md）<br>
+- <code>docs/issues/_summary.md</code>：全局问题索引表（按状态与优先级分类并实时同步）<br>
+- 故障诊断分析报告与根因分析记录<br>
+- 重新导出的最新模块架构视图与演进知识库</p>
+<h2 id="4">4. 各阶段工件明细与模板规范</h2>
+<p>为了确保工程质量的可追踪性和一致性，下表明确了每个阶段应产生的核心工件及其对应的参考模板。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">工程阶段</th>
+<th style="text-align: left;">核心工件（标准相对路径）</th>
+<th style="text-align: left;">推荐技能</th>
+<th style="text-align: left;">模板/规范参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>0. 启动</strong></td>
+<td style="text-align: left;"><code>AGENTS.md</code><br><code>docs/agents/issue-tracker.md</code><br><code>docs/agents/triage-labels.md</code></td>
+<td style="text-align: left;"><code>setup-skills</code></td>
+<td style="text-align: left;">issue-tracker.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1. 需求获取</strong></td>
+<td style="text-align: left;"><code>.scratch/&lt;effort&gt;/map.md</code><br><code>CONTEXT.md</code> (初版)<br><code>docs/adr/NNNN-*.md</code> (初版)</td>
+<td style="text-align: left;"><code>grill-with-docs</code><br><code>wayfinder</code></td>
+<td style="text-align: left;">QAS-FORMAT.md<br>CONTEXT-FORMAT.md<br>ADR-FORMAT.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. 架构设计</strong></td>
+<td style="text-align: left;"><code>CONTEXT.md</code> (定稿)<br><code>docs/adr/NNNN-*.md</code><br><code>docs/architecture.md</code><br><code>docs/action-plan.md</code><br><code>architecture.toml</code> / <code>module.toml</code></td>
+<td style="text-align: left;"><code>domain-modeling</code><br><code>codebase-design</code><br><code>to-arch</code><br><code>governed-arch</code></td>
+<td style="text-align: left;">ARCHITECTURE-DESCRIPTION-FORMAT.md<br>VIEWPOINT-CATALOG.md<br>ADR-FORMAT.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. 规格拆解</strong></td>
+<td style="text-align: left;"><code>.scratch/&lt;feature-slug&gt;/spec.md</code><br><code>.scratch/&lt;feature-slug&gt;/tickets/NN-*.md</code></td>
+<td style="text-align: left;"><code>to-spec</code><br><code>to-tickets</code><br>（由 <code>impl-loop</code> 驱动）</td>
+<td style="text-align: left;">SPEC-FORMAT.md</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. 迭代实现</strong></td>
+<td style="text-align: left;"><code>src/</code> + <code>tests/</code><br><code>docs/action-plan.md</code> (进度回写)</td>
+<td style="text-align: left;"><code>impl-loop</code><br><code>implement</code> (含 <code>tdd</code>/<code>review</code>)<br><code>governed-arch</code></td>
+<td style="text-align: left;">视项目规范而定</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. 运行演进</strong></td>
+<td style="text-align: left;"><code>docs/issues/NNN-*.md</code><br><code>docs/issues/_summary.md</code><br>诊断记录 / 更新后的架构图</td>
+<td style="text-align: left;"><code>to-issues</code><br><code>triage</code><br><code>diagnosing-bugs</code><br><code>governed-arch</code></td>
+<td style="text-align: left;">HANDOFF-FORMAT.md</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>活文档标注：<code>CONTEXT.md</code> 与 ADR 是跨阶段演进的活文档，不专属于单一阶段——在阶段 1 由 <code>grill-with-docs</code> 内嵌的 <code>domain-modeling</code> 即时创建（惰性建文件、术语敲定即落盘），在阶段 2 由显式调用 <code>domain-modeling</code> 做统一挑战与收敛定稿。</p>
+</blockquote>
+<h2 id="5">5. 辅助技能与实用判断表</h2>
+<p>在主干路径之外，存在一组“辅助/横切技能”（对应 SVG 底部横条）。它们不直接推进流水线的状态流转，而是像“外挂工具箱”一样，在主干受阻、存在知识盲区、需要重构上下文或遇到高风险时按需触发（调用应当是非阻塞式和高度目的性的，解决完具体问题后迅速回到主干）。</p>
+<h3 id="51">5.1 辅助技能速览</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">技能</th>
+<th style="text-align: left;">触发时机与用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="#research"><code>research</code></a></td>
+<td style="text-align: left;">关键事实不在手里（API 设计、库能力、竞品做法）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#prototype"><code>prototype</code></a></td>
+<td style="text-align: left;">存在高不确定性风险，正式实现前先探路验证</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
+<td style="text-align: left;">遇到极易出错或破坏性极大的修改，强行引入分阶段验证与快照比对</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#to-issues"><code>to-issues</code></a></td>
+<td style="text-align: left;">捕获 bug 报告、小型功能请求或独立任务，写入永久问题流</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#improve-codebase-architecture"><code>improve-codebase-architecture</code></a></td>
+<td style="text-align: left;">设计无法落地，或维护期结构阻碍新特性</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#teach"><code>teach</code></a></td>
+<td style="text-align: left;">有复杂领域经验或脚手架要沉淀，或准备引入新成员</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#handoff"><code>handoff</code></a></td>
+<td style="text-align: left;">会话结束或交接时压缩上下文，留存清晰起点</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#to-questionnaire"><code>to-questionnaire</code></a></td>
+<td style="text-align: left;">关键信息掌握在外部干系人手里</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52">5.2 实用判断表</h3>
+<table>
+<thead>
+<tr>
+<th>当前卡点 / 场景</th>
+<th>优先技能</th>
+<th>应对动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求极大且极模糊，一次说不完</td>
+<td><a href="#wayfinder"><code>wayfinder</code></a></td>
+<td>建立导航地图并拆出探索子工单</td>
+</tr>
+<tr>
+<td>需求单一但逻辑不严密、隐藏假设多</td>
+<td><a href="#grill-with-docs"><code>grill-with-docs</code></a></td>
+<td>深度盘问逼出隐藏假设，即时沉淀术语与 ADR</td>
+</tr>
+<tr>
+<td>关键信息不在手里</td>
+<td><a href="#research"><code>research</code></a> / <a href="#to-questionnaire"><code>to-questionnaire</code></a></td>
+<td>调研一手事实或外发干系人问卷</td>
+</tr>
+<tr>
+<td>术语漂移、概念混乱、实体定义不清</td>
+<td><a href="#domain-modeling"><code>domain-modeling</code></a></td>
+<td>统一团队词汇，维护 <code>CONTEXT.md</code> 与 ADR</td>
+</tr>
+<tr>
+<td>逻辑边界和接缝（seams）切分不清</td>
+<td><a href="#codebase-design"><code>codebase-design</code></a></td>
+<td>规划深模块与可测试接缝</td>
+</tr>
+<tr>
+<td>需要一份讲清设计思想与模块划分的架构描述</td>
+<td><a href="#to-arch"><code>to-arch</code></a></td>
+<td>合成 <code>docs/architecture.md</code> 与施工波次 <code>docs/action-plan.md</code></td>
+</tr>
+<tr>
+<td>需要强制执行架构和目录边界</td>
+<td><a href="#governed-arch"><code>governed-arch</code></a></td>
+<td>生成 TOML 边界规则与自动化架构测试</td>
+</tr>
+<tr>
+<td>逻辑已收敛，需要形成执行与验收契约</td>
+<td><a href="#to-spec"><code>to-spec</code></a></td>
+<td>起草结构化规格说明书 <code>spec.md</code></td>
+</tr>
+<tr>
+<td>需求和架构都定了，需要拆成开发切片</td>
+<td><a href="#to-tickets"><code>to-tickets</code></a></td>
+<td>拆解为垂直切片临时工单并声明阻塞 DAG</td>
+</tr>
+<tr>
+<td>规格与工单已就绪，需全流程驱动实现并推进项目计划</td>
+<td><a href="#impl-loop"><code>impl-loop</code></a></td>
+<td>串联逐票实现、测试闸门与 action-plan 进度回写</td>
+</tr>
+<tr>
+<td>Bug 报告、小功能或独立任务要长期追踪</td>
+<td><a href="#to-issues"><code>to-issues</code></a></td>
+<td>录入全局编号永久问题流并同步索引</td>
+</tr>
+<tr>
+<td>可以开始写代码了</td>
+<td><a href="#implement"><code>implement</code></a> / <a href="#tdd"><code>tdd</code></a></td>
+<td>红-绿-重构节奏实现功能与单测</td>
+</tr>
+<tr>
+<td>实现期发现设计无法落地、边界渗漏</td>
+<td><a href="#improve-codebase-architecture"><code>improve-codebase-architecture</code></a></td>
+<td>重划接缝并更新 ADR / 架构描述</td>
+</tr>
+<tr>
+<td>这次改动破坏性极大，需要步步审查</td>
+<td><a href="#failsafe-loop"><code>failsafe-loop</code></a></td>
+<td>引入分阶段快照比对与严格风险闸门</td>
+</tr>
+<tr>
+<td>要检验代码是否符合规范和规格</td>
+<td><a href="#code-review"><code>code-review</code></a></td>
+<td>启动双轴子代理审查标准与规格</td>
+</tr>
+<tr>
+<td>任务交接或会话结束</td>
+<td><a href="#handoff"><code>handoff</code></a></td>
+<td>压缩会话上下文留存清晰交接点</td>
+</tr>
+<tr>
+<td>线上故障排查或性能瓶颈定位</td>
+<td><a href="#diagnosing-bugs"><code>diagnosing-bugs</code></a></td>
+<td>建立红绿复现循环与可证伪假设排查根因</td>
+</tr>
+</tbody>
+</table>
+<h2 id="skill-appendix">附录：技能速查</h2>
+<p>全景图中出现的全部技能在此逐一速查。按主线流程顺序排列；每条给出"何时使用、做了什么、怎么做的"的概括。<code>to-issues</code> 为本仓库自研技能（mine），与上游 <code>to-tickets</code> 分工互补而非重名关系。</p>
+<h3 id="setup-matt-pocock-skills">setup-matt-pocock-skills</h3>
+<ul>
+<li><strong>何时使用</strong>：项目伊始（阶段 0），建立 Agent 与人类协作底座。</li>
+<li><strong>做了什么</strong>：生成 <code>AGENTS.md</code>，并在 <code>docs/agents/</code> 下建立工单跟踪器、分诊标签和领域文档约定。</li>
+<li><strong>怎么做的</strong>：先探索仓库现状（远程与已有 <code>AGENTS.md</code>），再逐节提问确认三类配置，草稿确认后写入文档与 <code>AGENTS.md</code>。</li>
+</ul>
+<h3 id="wayfinder">wayfinder</h3>
+<ul>
+<li><strong>何时使用</strong>：需求极大且模糊、需要跨多天讨论时（阶段 1，与 <code>grill-with-docs</code> 二选一）。</li>
+<li><strong>做了什么</strong>：建立导航地图 <code>map.md</code>，把问题拆成工单逐个解决；具体解决某张工单时，再交给 <code>grill-with-docs</code> 或 <code>research</code>。</li>
+<li><strong>怎么做的</strong>：先以 grilling 方式定目的地与范围，再广度优先梳理迷雾区、建立地图与决策票；认领前沿票后解析并记录决议闭合，每会话只解析一张票。</li>
+</ul>
+<h3 id="grill-with-docs">grill-with-docs</h3>
+<ul>
+<li><strong>何时使用</strong>：小型、边界清晰的需求（阶段 1，与 <code>wayfinder</code> 二选一）。</li>
+<li><strong>做了什么</strong>：多轮深度盘问逼出隐藏假设，顺手记录术语与决策。</li>
+<li><strong>怎么做的</strong>：运行 grilling 会话逐问逼问隐藏假设，同时用 <code>domain-modeling</code> 维护词汇与 ADR，产出一份结合问答结果的文档。</li>
+</ul>
+<h3 id="domain-modeling">domain-modeling</h3>
+<ul>
+<li><strong>何时使用</strong>：既作为独立技能在阶段 2 第一步调用，也在阶段 1 被 <code>grill-with-docs</code> 内嵌复用（术语敲定即写入 <code>CONTEXT.md</code>）。</li>
+<li><strong>做了什么</strong>：统一团队词汇、识别核心实体、沉淀 ADR，是后续所有工作的前提。</li>
+<li><strong>怎么做的</strong>：对照词汇表即时指出术语冲突并给出规范术语，通过构造场景检验边界，边讨论边更新 <code>CONTEXT.md</code>，必要时写成 ADR。</li>
+</ul>
+<h3 id="codebase-design">codebase-design</h3>
+<ul>
+<li><strong>何时使用</strong>：概念统一后规划代码结构（阶段 2 第二步）。</li>
+<li><strong>做了什么</strong>：切分模块接缝（seams），保证高内聚、可测试。</li>
+<li><strong>怎么做的</strong>：用统一词汇描述模块与接口，用"删除测试"判断模块深浅；通过依赖注入、返回结果、缩小接口面来优化，并牢记"一个适配器是假接缝，两个才是真"。</li>
+</ul>
+<h3 id="to-arch">to-arch</h3>
+<ul>
+<li><strong>何时使用</strong>：领域语言、关键决策与接缝方案基本就绪后（阶段 2 第三步）合成首版架构描述与实现计划（init 模式）；实现期任一切片开工/完工/受阻时回写进度（update-progress 模式）；里程碑或重大决策后对账再收敛（reconcile 模式）。本仓库自研技能（mine），模板副本内置，项目内 <code>docs/templates/</code> 同名文件优先。</li>
+<li><strong>做了什么</strong>：把 <code>CONTEXT.md</code>、ADR、质量属性场景与地图决议合成为一份完整的架构描述 <code>docs/architecture.md</code>——讲清设计思想、干系人关注点、模块划分与必要视图；同时产出实现流程计划 <code>docs/action-plan.md</code>，规定治理脚手架先行、各模块实现、集成测试收尾的先后与并行分组（注意 <code>depends_on</code> 不决定施工顺序）。向上游汇齐分散决策，向下游为 <code>governed-arch</code> 的 TOML 翻译和 <code>to-spec</code> 的全局框架提供事实源。</li>
+<li><strong>怎么做的</strong>：先盘点既有工件，列决策清单与视点选择；缺口按类型分流给 <code>grill-with-docs</code>/<code>wayfinder</code>/<code>research</code>/<code>domain-modeling</code>，坚持零虚构。随后逐节起草架构描述与波次式 action-plan（含并行分组与串行依据），经用户逐节确认后落盘。action-plan 是半成品工程的自述文件——头部"当前位置"行与每切片状态随做随更，任何新会话只读它即可知道做到哪、从哪继续；里程碑以 reconcile 模式对 TOML 投影与真实实现对账。</li>
+</ul>
+<h3 id="governed-arch">governed-arch</h3>
+<ul>
+<li><strong>何时使用</strong>：设计落地为物理约束时，以及实现期、发布期的持续校验（阶段 2/4/5）。</li>
+<li><strong>做了什么</strong>：生成 <code>architecture.toml</code>、<code>module.toml</code> 及自动化边界测试，充当架构不被破坏的"执法者"；发布时生成架构 HTML 文档与依赖图。</li>
+<li><strong>怎么做的</strong>：用 TOML 声明结构与模块边界，公共 API 暴露即锁接口签名，跨模块只走 facade 网关导入；通过治理测试把关，并生成 HTML 文档呈现结果。</li>
+</ul>
+<h3 id="to-spec">to-spec</h3>
+<ul>
+<li><strong>何时使用</strong>：架构和需求稳定后（阶段 3 第一步）。</li>
+<li><strong>做了什么</strong>：生成结构化的 <code>spec.md</code>，明确功能需求、非功能需求和验收标准。</li>
+<li><strong>怎么做的</strong>：先探索代码库并用领域词汇起草 spec，确定最高价值的接缝并与用户确认，再按模板写 <code>spec.md</code> 发布并标记 ready-for-agent。</li>
+</ul>
+<h3 id="to-tickets">to-tickets</h3>
+<ul>
+<li><strong>何时使用</strong>：规格就绪后拆解为可执行开发切片（阶段 3 第二步）。上游原版技能，按锁定基线逐字节还原。</li>
+<li><strong>做了什么</strong>：按 <code>docs/agents/issue-tracker.md</code> 约定，将规格按垂直切片起草为 <code>.scratch/&lt;feature-slug&gt;/tickets/</code> 下的一张张临时开发票（<code>NN-&lt;slug&gt;.md</code>），逐张标注阻塞关系，宽重构改用 expand-contract 序列。</li>
+<li><strong>怎么做的</strong>：与用户确认粒度与依赖后写入 <code>.scratch/&lt;feature-slug&gt;/tickets/</code>；工单是短期规划脚手架，随特性结束即弃——不建索引、编号按依赖顺序从 <code>01</code> 起、不跨特性复用。</li>
+</ul>
+<h3 id="impl-loop">impl-loop</h3>
+<ul>
+<li><strong>何时使用</strong>：规格与工单拆解就绪后，需要推进端到端交付循环，或接续在途中特性时（阶段 3/4 编排器）。本仓库自研技能（mine）。</li>
+<li><strong>做了什么</strong>：串联 <code>/to-spec</code> -&gt; <code>/to-tickets</code> -&gt; <code>/implement</code> -&gt; 测试闸门，逐票闭环并实时更新恢复点；单 Spec 完工且集成闸门通过后，自动回写 <code>docs/action-plan.md</code> 标记 Slice 完成并推进波次。</li>
+<li><strong>怎么做的</strong>：按 DAG 认领工单并派发给 <code>implement</code>，单票以 unit test 验收并打点，最后过 spec 级 integration test；完工时执行原子回写：更新 Slice 状态行、更新 Notes 闸门记录、推进 Resume Point 头部、归档临时脚手架。</li>
+</ul>
+<h3 id="to-issues">to-issues</h3>
+<ul>
+<li><strong>何时使用</strong>：捕获 bug 报告、小型功能请求或独立任务，写入仓库级永久问题流；不用于把规格拆解成切片（那是 <code>/to-tickets</code> 的职责）。本仓库自研技能（mine）。</li>
+<li><strong>做了什么</strong>：在 <code>docs/issues/</code> 下以三位全局递增编号（永不复用）创建 <code>NNN-&lt;slug&gt;.md</code>，带 Type / Status / Created 元数据与 Evidence 证据节，并同步刷新 <code>_summary.md</code> 全局索引。</li>
+<li><strong>怎么做的</strong>：先收集上下文，bug 尝试低成本复现但不阻塞记录；生命周期 needs-triage ⇄ needs-info → ready-for-agent | ready-for-human → fixed，wontfix 任意状态可达，重复问题记 wontfix 并留指针。约定见 <code>docs/agents/issue-tracker.md</code>。</li>
+</ul>
+<h3 id="implement">implement</h3>
+<ul>
+<li><strong>何时使用</strong>：领取工单开始写代码时（阶段 4 主干，与 <code>tdd</code> 搭配）。</li>
+<li><strong>做了什么</strong>：按 TDD 节奏实现功能；若发现架构不落地（找不到缝隙、测试报错），暂停并回退到 <code>codebase-design</code>。</li>
+<li><strong>怎么做的</strong>：用 <code>tdd</code> 在预定接缝处实现，期间定期类型检查、跑单元测试，最后全量测试；完成后交 <code>code-review</code> 并提交。</li>
+</ul>
+<h3 id="tdd">tdd</h3>
+<ul>
+<li><strong>何时使用</strong>：伴随 <code>implement</code> 的必选节奏（阶段 4）。</li>
+<li><strong>做了什么</strong>：以红-绿-重构循环保证测试覆盖，让每个功能都可回归验证。</li>
+<li><strong>怎么做的</strong>：先写失败测试再最小实现变绿，一次只做一个切片；测试只测公开行为，避免实现耦合与同义反复测试。</li>
+</ul>
+<h3 id="code-review">code-review</h3>
+<ul>
+<li><strong>何时使用</strong>：功能开发完毕、准备合并到主分支前（阶段 4 合入前触发）。</li>
+<li><strong>做了什么</strong>：对照 <code>spec.md</code> 检查是否遵循仓库标准与规格要求，输出评审结论。</li>
+<li><strong>怎么做的</strong>：先固定 diff 基点并确认非空，找到 spec 来源与编码标准文档；派并行子代理分"标准"与"规格"两轴审查，最后聚合报告、两轴分开呈现。</li>
+</ul>
+<h3 id="handoff">handoff</h3>
+<ul>
+<li><strong>何时使用</strong>：会话结束、或要把工作交接给另一个 Agent / 人类时（阶段 4）。</li>
+<li><strong>做了什么</strong>：压缩当前上下文，留给下一位接手者一个清晰的起点。</li>
+<li><strong>怎么做的</strong>：把会话压缩成交接文档存入 <code>.scratch</code>，引用已有产物而不重复内容，脱敏后附上建议的技能清单。</li>
+</ul>
+<h3 id="failsafe-loop">failsafe-loop</h3>
+<ul>
+<li><strong>何时使用</strong>：遇到极易出错或破坏性极大的修改时（阶段 4 按需干预）。</li>
+<li><strong>做了什么</strong>：强行引入分阶段执行、每步验证与快照比对，失败即停，守住高风险闸门。</li>
+<li><strong>怎么做的</strong>：每步先定义边界、不变量与基线，再依次过测试、工作流、审计、对比四道门；发现意外漂移立即停止上报，通过后按格式提交并汇报。</li>
+</ul>
+<h3 id="triage">triage</h3>
+<ul>
+<li><strong>何时使用</strong>：问题入流后需要分类流转时（阶段 5 触发）；对 <code>docs/issues/</code> 的长期问题与 <code>.scratch/</code> 的临时工单都适用。</li>
+<li><strong>做了什么</strong>：把条目在五个 triage 角色间移动（如 <code>needs-triage</code> → <code>ready-for-agent</code>），排定处理顺序。</li>
+<li><strong>怎么做的</strong>：先按 Type 分类（bug/enhancement 等），收集上下文并查重、排除 out-of-scope；复现验证 claim，必要时用 grilling 补充信息，最后应用状态流转并写 agent brief 或转 needs-info。</li>
+</ul>
+<h3 id="diagnosing-bugs">diagnosing-bugs</h3>
+<ul>
+<li><strong>何时使用</strong>：出现复杂 Bug 或性能退化、不知从何下手时（阶段 5 故障触发）。</li>
+<li><strong>做了什么</strong>：启动专门的诊断循环，深入排查代码与日志，定位根本原因并形成闭环。</li>
+<li><strong>怎么做的</strong>：先构建紧致的红绿灯复现循环，复现并最小化到承重要素；生成 3-5 个可证伪假设逐一测试，修复前写回归测试，最后清理现场并预防复发。</li>
+</ul>
+<h3 id="research">research</h3>
+<ul>
+<li><strong>何时使用</strong>：关键事实不在手里——API 怎么设计、库是否支持某特性、竞品怎么做（按需辅助）。</li>
+<li><strong>做了什么</strong>：基于高可信来源输出一份 Markdown 调研报告，结论回流到主干继续推进。</li>
+<li><strong>怎么做的</strong>：派后台代理并行调研，只追踪一手权威资料并引用；结果写成 Markdown 存入仓库约定位置。</li>
+</ul>
+<h3 id="prototype">prototype</h3>
+<ul>
+<li><strong>何时使用</strong>：存在高不确定性风险——交互流、技术栈、状态机设计是否可行（进入正式实现之前）。</li>
+<li><strong>做了什么</strong>：写并运行抛弃型代码验证假设，结论回填 ADR 或架构设计，验证后废弃代码。</li>
+<li><strong>怎么做的</strong>：先判定是逻辑还是 UI 问题，用临时代码、单命令运行、无持久化；每次操作后展示完整状态，吸收决策后提交临时分支留痕。</li>
+</ul>
+<h3 id="improve-codebase-architecture">improve-codebase-architecture</h3>
+<ul>
+<li><strong>何时使用</strong>：实现期发现设计无法落地（找不到 seam、模块耦合），或维护期结构阻碍新特性加入。</li>
+<li><strong>做了什么</strong>：对接缝切分或职责重构，并联动 <code>governed-arch</code> 更新 TOML 约束，锁定重构成果。</li>
+<li><strong>怎么做的</strong>：先定扫描范围找出热点模块，生成 HTML 审查报告；选定候选后以 grilling 深挖设计，边决策边更新领域模型，重构后回写 TOML 约束。</li>
+</ul>
+<h3 id="teach">teach</h3>
+<ul>
+<li><strong>何时使用</strong>：解决了复杂的特定领域问题、沉淀了独特脚手架，或准备引入新成员时。</li>
+<li><strong>做了什么</strong>：提取最佳实践、隐式规则和领域专有词汇，生成 Tutorials、Glossary 等培训材料，转化为组织长期资产。</li>
+<li><strong>怎么做的</strong>：先明确 mission 并采集高可信资源，每课一个 HTML、小而可快速完成；用测验练习建立紧反馈环，产出 reference 与 learning-records。</li>
+</ul>
+<h3 id="to-questionnaire">to-questionnaire</h3>
+<ul>
+<li><strong>何时使用</strong>：决策取决于干系人、专家或第三方掌握、而你无法独自补充的信息时。</li>
+<li><strong>做了什么</strong>：把知识差距写成 Markdown 问卷（<code>to-questionnaire-&lt;slug&gt;.md</code>）交给对方填写，返回后回到主干继续澄清。</li>
+<li><strong>怎么做的</strong>：只盘问发送方（问卷发给谁、需要他回什么），瞄准用户与收件人的知识差距；按模板写问答卷、重要问题在前。</li>
+</ul>
+  </main>
+</body>
+</html>

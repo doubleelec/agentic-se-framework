@@ -8,8 +8,8 @@ param(
 # Markdown and inside the generated HTML are refreshed from it.
 #
 #   -Update (default): re-inject the standalone SVG block into
-#       docs/new_project_skill_panorama.en.md
-#       docs/html/new_project_skill_panorama.en.html
+#       docs/agentic_se_framework.en.md
+#       docs/html/agentic_se_framework.en.html
 #   -Check:             verify md + html match the standalone SVG (EOL-insensitive);
 #                       exit 1 on drift (for the release checklist)
 #
@@ -21,8 +21,8 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 $SvgSource = Join-Path $Root 'docs/html/panorama.en.svg'
 $Targets = @(
-    (Join-Path $Root 'docs/new_project_skill_panorama.en.md'),
-    (Join-Path $Root 'docs/html/new_project_skill_panorama.en.html')
+    (Join-Path $Root 'docs/agentic_se_framework.en.md'),
+    (Join-Path $Root 'docs/html/agentic_se_framework.en.html')
 )
 
 $SvgPattern = '<svg[\s\S]*?</svg>'
