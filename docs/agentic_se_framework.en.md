@@ -1,13 +1,12 @@
 # Agentic Software Engineering Framework
 
-<small>**Last modified**: 2026-08-31</small>
+<small>**Last modified**: 2026-09-01</small>
 
 <details>
 <summary><small>Maintainer info</small></summary>
 
 <ul>
   <li>Source: <code>docs/agentic_se_framework.en.md</code></li>
-  <li>This is the English counterpart of <a href="agentic_se_framework.zh.md"><code>agentic_se_framework.zh.md</code></a>. The two versions share identical section numbering, table structure, and figure geometry; the Chinese edition is the source of truth for content changes.</li>
   <li>Any change to content, heading numbering, or SVG geometry must be mirrored in the counterpart. <code>ops/check_bilingual.ps1</code> verifies heading parity; <code>ops/refresh_panorama.ps1 -Check</code> verifies SVG sync.</li>
 </ul>
 </details>
@@ -21,15 +20,15 @@ Over the past year, the rise of AI agents taking on real software engineering wo
 
 Both positions rest on real engineering evidence, and both admit falsifying counter-examples. They are not mutually exclusive; they expose two cross-sections of the same paradigm: **a large model is an unprecedented "code generator," but it is not, by default, a "software engineer."** When requirements are properly decomposed, boundaries are designed up front, and every intermediate output is constrained by explicit artifacts, it can genuinely deliver at ten-times scale; when those prerequisites are missing, it accrues technical debt at the same pace as a human developer — and sometimes faster.
 
-The core thesis of this plan is therefore: **to put classical software-engineering discipline around the model like a controlled harness, so that it produces code inside a strict artifact / boundary / review / verification system, and the entire pipeline remains fully visible, auditable, and rollback-capable for humans.**
+The core thesis of this framework is therefore: **to put classical software-engineering discipline around the model like a controlled harness, so that it produces code inside a strict artifact / boundary / review / verification system, and the entire pipeline remains fully visible, auditable, and rollback-capable for humans.**
 
-From this premise, the plan advances three governing principles:
+From this premise, the framework advances three governing principles:
 
 1. **Engineering discipline as the skeleton, the model as the muscle.** Domain language, architectural decisions, quality-attribute scenarios, ADRs, TDD gates, architecture-boundary TOML constraints — the mature practices codified in SWEBOK / ISO 12207 / ISO 42010 are not "legacy baggage." They are the necessary skeleton that lets AI output produce maintainable, evolvable, verifiable products.
 2. **Visibility first.** Every stage's output (`CONTEXT.md`, `ADR`s, `docs/architecture.md`, `docs/action-plan.md`, `spec.md`, ticket DAGs, `failsafe` snapshots) is a human-readable, diff-friendly, reviewable living document — never implicit state hidden inside a prompt.
 3. **Inspectable and rollback-capable.** Test gates, architecture-boundary checks, dual-axis `code-review`, and staged snapshot diffs together form a falsifiable acceptance loop. Any failing step is locatable and reversible on the spot — long before the "spaghetti mountain" finishes piling up.
 
-This plan takes the engineering-controlled route: it places the optimists' "accelerate" goal and the pessimists' "lose control" risk inside one executable document, addressing the former with pipeline acceleration and the latter with circuit-breaker gates.
+This framework takes the engineering-controlled route: it places the optimists' "accelerate" goal and the pessimists' "lose control" risk inside one executable framework, addressing the former with pipeline acceleration and the latter with circuit-breaker gates.
 
 ## 1. Purpose and Theoretical Positioning
 
@@ -612,3 +611,4 @@ Every skill appearing in this panorama is summarized here, ordered by trunk flow
 - **When to use**: decisions depend on information held by stakeholders, experts, or third parties that you cannot supply alone.
 - **What it does**: turns knowledge gaps into a Markdown questionnaire (`to-questionnaire-<slug>.md`) for the other party to fill; upon return, resume clarification on the trunk.
 - **How it works**: grills only the sender (whom the questionnaire goes to, what answers are needed), targeting knowledge gaps between user and recipient; writes the Q&A sheet from template, important questions first.
+

@@ -45,16 +45,14 @@
 
 ## Main Methodology Document
 
-The core methodology document of this framework — *Agentic Software Engineering Framework* (ZH: 基于 AI Agent 的软件工程实施方案) — rendered on GitHub Pages from `docs/html/`:
+The core methodology document of this framework — *Agentic Software Engineering Framework* — rendered on GitHub Pages from `docs/html/`:
 
 - English: <https://doubleelec.github.io/agentic-se-framework/html/agentic_se_framework.en.html>
 - Chinese: <https://doubleelec.github.io/agentic-se-framework/html/agentic_se_framework.zh.html>
 
-Static snapshot (English):
+Static snapshot:
 
-<img src="docs/html/panorama.en.svg" width="100%" alt="Agentic Software Engineering Framework (English)">
-
-Sources: [docs/agentic_se_framework.en.md](docs/agentic_se_framework.en.md) · [docs/agentic_se_framework.zh.md](docs/agentic_se_framework.zh.md)
+<img src="docs/html/panorama.en.svg" width="100%" alt="Agentic Software Engineering Framework">
 
 ## Community
 

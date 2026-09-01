@@ -87,6 +87,14 @@ Rules:
    the public `main` branch grows one normal commit per release, each commit's
    parent being the previous public release — not an orphan root, so the
    homepage commit count rises instead of staying stuck at `1 commit`.
+   Run this flow through `ops/release.ps1 -Note "<what's in the release>"`, never
+   by hand: it hard-fails if `git fetch public` fails (a snapshot built on a
+   stale base makes the next push a non-fast-forward), resets `public-main` to
+   the exact remote tip, skips the commit when the overlay has no delta, runs
+   the red-line scan before committing, and pushes with the public identity.
+   If the push fails (e.g. no GitHub credentials in this terminal), retry the
+   push from a credentialed terminal — never rebuild the snapshot.
+   What the script does, manually:
    ```bash
    git fetch public
    git checkout -B public-main public/main    # local release branch = latest public release

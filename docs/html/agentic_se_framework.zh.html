@@ -165,18 +165,17 @@
 <body>
   <main>
     <h1 id="ai-agent">基于 AI Agent 的软件工程实施方案</h1>
-<p><small><strong>最后修改时间</strong>：2026-08-31</small></p>
+<p><small><strong>最后修改时间</strong>：2026-09-01</small></p>
 <details>
 <summary><small>维护信息</small></summary>
 
 <ul>
   <li>Source：<code>docs/agentic_se_framework.zh.md</code></li>
-  <li>英文版：<a href="agentic_se_framework.en.md"><code>agentic_se_framework.en.md</code></a>（本地副本）。两份文档章节编号、表格结构、图的几何保持一致；中文版为内容修订的源真理。</li>
   <li>任何对内容、标题编号或 SVG 几何的修改，请同步更新英文版；<code>ops/check_bilingual.ps1</code> 会校验 heading 对齐，<code>ops/refresh_panorama.ps1 -Check</code> 会校验 SVG 同步。</li>
 </ul>
 </details>
 
-<h2 id="0-ai-agent">0. 缘起：在 AI Agent 替代编程的两极之间</h2>
+<h2 id="ch-0">0. 缘起：在 AI Agent 主导软件工程的两极之间</h2>
 <p>过去一年，AI Agent 接管部分软件工程活动的趋势成为业界最热也最具争议的话题之一，两种截然相反的论调同时流行：</p>
 <ul>
 <li><strong>乐观派</strong>：大模型让"写代码"的边际成本趋近于零，软件开发速度可以提升数十倍；个人或小团队就能撬动过去需要整支团队才能完成的产品。</li>
@@ -191,7 +190,7 @@
 <li><strong>可检查与可回滚</strong>。测试闸门、架构边界校验、双轴 <code>code-review</code>、分阶段快照比对共同构成可证伪的验收闭环——任何一步不通过都可被立刻定位、立刻回退，而不是等到"屎山堆完才发现"。</li>
 </ol>
 <p>本方案采用工程受控路线：把乐观派的"加速"目标与悲观派指出的"失控"风险放进同一份可执行方案，分别用流程提速与闸门熔断来同时应对。</p>
-<h2 id="1">1. 目的与理论定位</h2>
+<h2 id="ch-1">1. 目的与理论定位</h2>
 <p>本文不是一份“技能目录”，而是一套面向新软件项目的工程方法论说明书。它回答的核心问题是：</p>
 <ul>
 <li>当需求仍然模糊时，项目应如何启动而不仓促落入编码；</li>
@@ -199,7 +198,7 @@
 <li>如何把软件体系结构设计从“凭经验画图”提升为“有干系人、有关注点、有质量属性、有评估闭环”的严谨活动；</li>
 <li>当前 <code>agentic-se-framework</code> 工作区中的技能，应该如何映射到这套方法论中。</li>
 </ul>
-<h3 id="11">1.1 理论定位与核心原则</h3>
+<h3 id="sec-1-1">1.1 理论定位与核心原则</h3>
 <p>这套方法论在软件工程主线上与 <code>SWEBOK</code>、<code>ISO/IEC/IEEE 12207</code>、<code>29148</code>、<code>15289</code> 的精神保持一致；在软件体系结构上，以 <code>ISO/IEC/IEEE 42010</code>、质量属性场景、<code>QAW</code>、<code>ATAM</code>、<code>ADR</code> 为核心，建立完整、细致、审慎的架构工作流：</p>
 <ul>
 <li><strong>生命周期并发、迭代、递归</strong>：生命周期过程并非僵硬单线，需求、架构、设计、实现、验证、确认、运维和维护是同一条工程主线上的连续活动；</li>
@@ -208,12 +207,12 @@
 <li><strong>验证左移与真实场景确认</strong>：验证贯穿需求、设计、原型、代码评审与测试全过程；</li>
 <li><strong>流程可裁剪，但关键问题不可省略</strong>：小项目可压缩工件形式，但仍需回答“解决什么问题、哪些质量属性驱动结构、为何这样设计、如何证明有效”。</li>
 </ul>
-<h3 id="12">1.2 适用范围与技能源</h3>
+<h3 id="sec-1-2">1.2 适用范围与技能源</h3>
 <p>本文基于当前已发布的技能集合：<br>
 - <code>vendor/mattpocock/local/*</code>：本地维护与增强的软件工程衍生技能；<br>
 - <code>core/*</code>：本仓库自研的架构治理、工单追踪与交付演进技能。</p>
 <p>本文希望建立的是一条“可推广的主线 + 可裁剪的分支 + 可审计的工件体系”，而不是一条僵硬流水线。</p>
-<h2 id="2">2. 全局方法论总览</h2>
+<h2 id="ch-2">2. 全局方法论总览</h2>
 <p>从经典软件工程视角看，一个新项目的稳妥主线不是“先写代码”，而是：</p>
 <ol>
 <li>建立协作和治理底座；</li>
@@ -451,9 +450,9 @@
 </div>
 
 <p>上图把核心工程目标、工程主阶段、执行技能线、产物线、辅助/横切技能五条横带叠在同一画布上；阶段 0–5 的主线—技能对应关系在表格形式里重复给出（见第 2 章开头的"主线阶段—技能映射"），便于在阅读后续章节时按阶段反查。</p>
-<h2 id="3">3. 操作手册：按阶段详细指导</h2>
+<h2 id="ch-3">3. 操作手册：按阶段详细指导</h2>
 <p>以下是软件工程生命周期各个阶段的详细操作指南，包括每个阶段应该使用什么技能、如何使用以及预期产出的工件。</p>
-<h3 id="31-0">3.1 阶段 0：启动（协作底座）</h3>
+<h3 id="sec-3-1">3.1 阶段 0：启动（协作底座）</h3>
 <p><strong>目标</strong>：建立团队（Agent 与人类）的协作底座。</p>
 <p><strong>使用技能与逻辑关系</strong>：【必选单技能】</p>
 <ul>
@@ -468,7 +467,7 @@
 - <code>docs/agents/issue-tracker.md</code>：双流工单（Tickets / Issues）跟踪器约定<br>
 - <code>docs/agents/triage-labels.md</code>：分诊角色与状态标签定义<br>
 - <code>docs/agents/domain.md</code>：单上下文领域文档约定</p>
-<h3 id="32-1">3.2 阶段 1：需求获取</h3>
+<h3 id="sec-3-2">3.2 阶段 1：需求获取</h3>
 <p><strong>目标</strong>：从模糊的口号中提炼出确定的干系人关注点、目标和边界。</p>
 <p><strong>使用技能与逻辑关系</strong>：【互斥选择 1 + 按需辅助】</p>
 <ul>
@@ -494,7 +493,7 @@
 - <code>CONTEXT.md</code>：初版领域词汇与核心实体定义（术语敲定即落盘，阶段 2 持续收敛）<br>
 - <code>docs/adr/NNNN-*.md</code>：初版架构决策记录（若在盘问中敲定关键决策）<br>
 - <code>to-questionnaire-*.md</code>：（若使用）外发干系人问卷（临时外发，不入库）</p>
-<h3 id="33-2">3.3 阶段 2：架构与边界设计</h3>
+<h3 id="sec-3-3">3.3 阶段 2：架构与边界设计</h3>
 <p><strong>目标</strong>：识别质量属性，统一领域语言，设计逻辑边界，把它们合成为一份完整的架构描述，再转化为强制约束。这是一条从认知到代码的深水工作链。</p>
 <p><strong>使用技能与逻辑关系</strong>：【顺序协作，需依次执行】</p>
 <ol>
@@ -528,7 +527,7 @@
 - <code>docs/action-plan.md</code>：全系统波次施工计划与项目恢复点（由 <code>to-arch</code> 维护）<br>
 - <code>architecture.toml</code>：项目级架构边界与依赖规则<br>
 - <code>&lt;module&gt;/module.toml</code>：各模块私有/公开边界定义与测试约束</p>
-<h3 id="34-3">3.4 阶段 3：规格化与工单拆解</h3>
+<h3 id="sec-3-4">3.4 阶段 3：规格化与工单拆解</h3>
 <p><strong>目标</strong>：将抽象的设计和需求转化为可执行的规格说明书和具体开发任务。</p>
 <p><strong>范围边界</strong>：跨模块的系统级施工顺序已由阶段 2 的 <code>docs/action-plan.md</code> 规定（含治理脚手架与集成测试的位次）；本阶段的 <code>to-spec</code> 与 <code>to-tickets</code> 只负责单个特性内部的步骤顺序，二者互不越界。本阶段既可在 <code>impl-loop</code> 的编排下自动化执行，亦可独立调用。</p>
 <p><strong>使用技能与逻辑关系</strong>：【顺序协作，需依次执行】</p>
@@ -547,7 +546,7 @@
 <p><strong>阶段产出清单</strong>：<br>
 - <code>.scratch/&lt;feature-slug&gt;/spec.md</code>：单特性规格说明书<br>
 - <code>.scratch/&lt;feature-slug&gt;/tickets/NN-&lt;slug&gt;.md</code>：垂直切片开发工单（带 Blocked by 依赖 DAG，编号从 01 开始）</p>
-<h3 id="35-4">3.5 阶段 4：实现与迭代闭环</h3>
+<h3 id="sec-3-5">3.5 阶段 4：实现与迭代闭环</h3>
 <p><strong>目标</strong>：编写代码，满足规格要求，并在紧致的小循环中完成审查、测试闸门验证与计划状态回写。</p>
 <p><strong>使用技能与逻辑关系</strong>：【高频循环：领工单 -&gt; 实现（TDD + 审查） -&gt; 闸门验证 -&gt; 完工回写】</p>
 <ul>
@@ -571,7 +570,7 @@
 - <code>src/</code> 与 <code>tests/</code>：通过分层验证的代码与单元/集成测试用例<br>
 - <code>docs/action-plan.md</code>：更新后的施工波次进度与新恢复点（由 <code>impl-loop</code> 自动回写）<br>
 - （代码合入与特性上线后，清理 <code>.scratch/&lt;feature-slug&gt;/</code> 临时工单目录）</p>
-<h3 id="36-impl-loop">3.6 跨阶段交付编排引擎：<a href="#impl-loop"><code>impl-loop</code></a></h3>
+<h3 id="sec-3-6">3.6 跨阶段交付编排引擎：<a href="#impl-loop"><code>impl-loop</code></a></h3>
 <p>在 SVG 全景图中，<strong>阶段 3（规格与拆解）</strong> 与 <strong>阶段 4（迭代闭环）</strong> 被外层的绿色大虚线框整体包裹，其核心载体正是自研编排技能 <strong><code>impl-loop</code></strong>。</p>
 <h4 id="361">3.6.1 产生背景与核心价值</h4>
 <p>在传统或单点 Agent 协作中，开发者往往需要频繁手动执行多条独立命令：先调用 <code>/to-spec</code> 起草规格，再手动运行 <code>/to-tickets</code> 拆工单，接着逐张票敲 <code>/implement</code>，并在每张票完成后手动跑测试命令，最后还要手动打开 <code>docs/action-plan.md</code> 标记完成。这种割裂的交互模式极易出现<strong>状态悬挂（State Drift）</strong>或步骤遗漏。</p>
@@ -624,7 +623,7 @@
 <li><strong>单 Spec 完工原子回写</strong>：当前 Spec 的所有工单解决且集成测试通过后，<code>impl-loop</code> 自动在 <code>docs/action-plan.md</code> 中将该 Slice 标记为 <code>done (&lt;final_commit_sha&gt;)</code>、记录测试通过命令，并将头部恢复点推进到下一波次，确保施工进度 100% 真实。</li>
 <li><strong>断点恢复（Resume Semantics）</strong>：<code>impl-loop</code> 天生支持长链路与跨会话接续，任何新会话输入 <code>/impl-loop</code> 即可直接读取 <code>action-plan.md</code> 恢复点继续执行。</li>
 </ul>
-<h3 id="37-5">3.7 阶段 5：运行、诊断与演进</h3>
+<h3 id="sec-3-7">3.7 阶段 5：运行、诊断与演进</h3>
 <p><strong>目标</strong>：系统上线或形成里程碑后，应对外部反馈、排查线上故障，并更新全局治理资产。</p>
 <p><strong>使用技能与逻辑关系</strong>：【按外部事件触发】</p>
 <ul>
@@ -654,7 +653,7 @@
 - <code>docs/issues/_summary.md</code>：全局问题索引表（按状态与优先级分类并实时同步）<br>
 - 故障诊断分析报告与根因分析记录<br>
 - 重新导出的最新模块架构视图与演进知识库</p>
-<h2 id="4">4. 各阶段工件明细与模板规范</h2>
+<h2 id="ch-4">4. 各阶段工件明细与模板规范</h2>
 <p>为了确保工程质量的可追踪性和一致性，下表明确了每个阶段应产生的核心工件及其对应的参考模板。</p>
 <table>
 <thead>
@@ -707,9 +706,9 @@
 <blockquote>
 <p>活文档标注：<code>CONTEXT.md</code> 与 ADR 是跨阶段演进的活文档，不专属于单一阶段——在阶段 1 由 <code>grill-with-docs</code> 内嵌的 <code>domain-modeling</code> 即时创建（惰性建文件、术语敲定即落盘），在阶段 2 由显式调用 <code>domain-modeling</code> 做统一挑战与收敛定稿。</p>
 </blockquote>
-<h2 id="5">5. 辅助技能与实用判断表</h2>
+<h2 id="ch-5">5. 辅助技能与实用判断表</h2>
 <p>在主干路径之外，存在一组“辅助/横切技能”（对应 SVG 底部横条）。它们不直接推进流水线的状态流转，而是像“外挂工具箱”一样，在主干受阻、存在知识盲区、需要重构上下文或遇到高风险时按需触发（调用应当是非阻塞式和高度目的性的，解决完具体问题后迅速回到主干）。</p>
-<h3 id="51">5.1 辅助技能速览</h3>
+<h3 id="sec-5-1">5.1 辅助技能速览</h3>
 <table>
 <thead>
 <tr>
@@ -752,7 +751,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="52">5.2 实用判断表</h3>
+<h3 id="sec-5-2">5.2 实用判断表</h3>
 <table>
 <thead>
 <tr>

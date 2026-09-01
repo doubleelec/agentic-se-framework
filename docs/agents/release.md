@@ -120,6 +120,19 @@ one normal commit per release — each release commit's parent is the previous
 public release, so GitHub shows an accumulating commit count instead of a
 perpetual `1 commit` from orphan roots.
 
+**Automated script (preferred).** Run the flow through `ops/release.ps1`
+rather than the manual commands below. The script encodes this procedure and
+adds four guards against the classic failure modes: it hard-fails when
+`git fetch public` errors (a snapshot built on a stale `public/main` base
+makes the next push a non-fast-forward), resets `public-main` to the exact
+remote tip before overlaying, skips the commit entirely when the overlay
+produces no delta (a duplicated snapshot diverges the branch), and runs the
+red-line scan before committing. If its push step fails (e.g. a terminal
+without GitHub credentials), the snapshot commit is already safe on local
+`public-main` — retry the push from a credentialed terminal, never rebuild.
+
+Manual reference (what the script automates):
+
 ```bash
 # 1. sync the local release branch to the latest public release
 git fetch public
@@ -192,9 +205,20 @@ git checkout master
   the push only needs network auth, not a re-commit. To pre-cache the
   credential, run `git credential-manager github login` once, or use a
   Personal Access Token via `git -c credential.helper= -c credential.helper='!gh auth git-credential' push ...`.
-- Push rejected at `public` → confirm `public-main` is at the latest
-  `public/main` and you're pushing `public-main:main` as a fast-forward, never
-  a mirror of `origin/master`.
+- Push rejected at `public` with `non-fast-forward` → the local `public-main`
+  was rebuilt on a stale base (an earlier `git fetch public` failed, or the
+  remote advanced between two snapshot builds), so the branch shares no
+  ancestry with the remote tip. Prevention: always release through
+  `ops/release.ps1`, which gates on the fetch and resets to the remote tip
+  before building, and never rebuild a snapshot after a failed push. Recovery:
+  ```bash
+  git fetch public
+  git checkout public-main
+  git reset --hard public/main   # drop the diverged local snapshot commits
+  # re-run ops/release.ps1 (or redo the manual procedure) on the fresh base
+  ```
+  Do NOT `--force` push to fix this: overwriting a public release commit is a
+  history rewrite on a permanent outlet (see the privacy statement).
 - Forgot the identity override → rewrite the snapshot commit with the public
   identity and force-push only if the outlet has no collaborators yet;
   otherwise coordinate before rewriting public history.

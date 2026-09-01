@@ -28,6 +28,14 @@ _Avoid_: e2e test, full regression
 A pass/fail checkpoint, declared upstream by `to-arch`, that blocks progressing a ticket (unit then per-layer gate), finishing a spec (integration), or finishing an effort (system). A gate has pass/fail semantics and stop-on-failure rules - distinct from a mechanical test *run*, which has no decision attached.
 _Avoid_: test run, test suite, full test
 
+**AI Agent**:
+An AI-driven agent that takes local decisions during engineering activities (code generation, requirements elicitation, architecture decisions, diagnostics) and produces artifacts under explicit engineering constraints — artifact-level, boundary-level, gate-level.
+_Avoid_: LLM, AI coder, copilot, chatbot
+
+**Agentic Software Engineering Framework**:
+The repository itself: a methodology that constrains AI agents producing software through engineered artifacts (CONTEXT.md, ADR, architecture description, spec, tickets), architectural boundaries (TOML), and verification gates (test gates, code-review, failsafe-loop). Abbreviated ASEF.
+_Avoid_: Vibe-Coding framework, AI coding tool, automation framework, agentic-se (as a standalone term for the framework — `agentic-se-framework` is the repo slug only)
+
 ## Domain rule (term-level)
 
 Test scope follows **deliverable grain**, and the grains nest: `ticket ⊂ spec ⊂ effort`. Therefore unit ⊂ integration ⊂ system by construction, and a higher layer's gate subsumes (re-runs) the layers below it where the plan requires.

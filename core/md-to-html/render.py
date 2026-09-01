@@ -268,7 +268,7 @@ def extract_title(source: Path, text: str) -> str:
     return source.stem.replace("_", " ").replace("-", " ").strip() or "Document"
 
 
-def write_html(source: Path, output_path: Path, body_html: str, title: str) -> None:
+def write_html(output_path: Path, body_html: str, title: str) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     full_html = HTML_TEMPLATE.format(
         title=html.escape(title),
@@ -283,7 +283,7 @@ def write_index(output_root: Path, generated: list[tuple[Path, Path, str]]) -> P
         rel = output_path.relative_to(output_root).as_posix()
         items.append(
             f'<li><a href="{html.escape(rel)}">{html.escape(title)}</a>'
-            f"<br><small><code>{html.escape(str(source))}</code></small></li>"
+            f"<br><small><code>{html.escape(source.name)}</code></small></li>"
         )
     body = (
         "<h1>Document Index</h1>\n"
@@ -291,7 +291,7 @@ def write_index(output_root: Path, generated: list[tuple[Path, Path, str]]) -> P
         f'<ul class="index-list">{"".join(items)}</ul>'
     )
     index_path = output_root / "index.html"
-    write_html(Path("generated index"), index_path, body, "Document Index")
+    write_html(index_path, body, "Document Index")
     return index_path
 
 
@@ -310,7 +310,7 @@ def main() -> None:
         body_html = render_markdown(source, text)
         relative = source.relative_to(base).with_suffix(".html")
         output_path = output_root / relative
-        write_html(source, output_path, body_html, title)
+        write_html(output_path, body_html, title)
         generated.append((source, output_path, title))
         print(f"Rendered {source} -> {output_path}")
 
