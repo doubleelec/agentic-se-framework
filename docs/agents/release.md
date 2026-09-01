@@ -150,10 +150,11 @@ git add -A
 git status
 #   - no manifests/install-targets.toml (personal)
 #   - no logs/, no vendor/mattpocock/upstream/, no .scratch/
-git grep -I -i -n -E "doubleelec|qq\.com|weixin|[CDE]:[\\/]Users" -- . ':!docs/agents/release.md' ':!LICENSE' ':!README.md'
+git grep -I -i -n -E "doubleelec|qq\.com|weixin|[CDE]:[\\/]Users" -- . ':!docs/agents/release.md' ':!ops/release.ps1' ':!LICENSE' ':!README.md'
 #   - empty (license owner name allowed only in LICENSE; this file's own
-#     scan-string is excluded via ':!docs/agents/release.md'; README is
-#     excluded because it deliberately carries the public Pages URL)
+#     scan-string is excluded via ':!docs/agents/release.md'; the release
+#     script is excluded because it embeds the same scan-string literally;
+#     README is excluded because it deliberately carries the public Pages URL)
 
 # 5. commit with the PUBLIC identity override (see above)
 git commit -m "chore: release agentic-se-framework <version>"
@@ -174,6 +175,7 @@ git checkout master
 - [ ] `manifests/install-targets.toml` (personal) is NOT staged
 - [ ] `git grep -I -i -n -E "doubleelec|qq\.com|weixin|[CDE]:[\\/]Users"` empty
       outside LICENSE, `docs/agents/release.md` (the guide's own scan tokens),
+      `ops/release.ps1` (the script embeds the same scan-string literally),
       and `README.md` (its deliberate public Pages URL)
 - [ ] Author/committer metadata show the public identity, not the machine's
 - [ ] `ops/refresh_panorama.ps1 -Check` passes (English md/html match
